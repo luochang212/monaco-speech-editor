@@ -69,6 +69,22 @@
                 <div class="sidebar-top-title">
                     <p>Explorer</p>
                 </div>
+                <button class="nav-title" id="file-manager-title" onclick="hideSection(event, 'file-manager', 'title-icon-1-1');"><img class="title-icon" id="title-icon-1-1" src="./images/sort-down-solid.svg" alt="down"> File manager </button>
+                <button onclick="clcikAddFile();" id="title-button-add"><img class="title-icon" id="title-icon-add" src="./images/plus-circle-solid.svg" alt="plus-circle-solid" height="12px" width="12px" ></button>
+                <div id="file-manager">
+                    <div class="filename-div" id="filename-div-1" >
+                        <span class="filename-span" id="filename-span-1" onclick="clickSpan();">
+                        <input id="filename-input-1" class="filename-readonly" readonly value="Untitled-1" />
+                        </span>
+                        <button class="delete-button" onclick="clickDelete();">
+                            <img class="title-icon" src="./images/trash-alt-solid.svg" alt="trash-alt-solid" height="12px" width="12px">
+                        </button>
+                        <button id="edit-button-1" class="edit-button">
+                            <img class="title-icon" src="./images/pen-solid.svg" alt="pen-solid" height="12px" width="12px">
+                        </button>
+                    </div>
+                    
+                </div>
             </div>
     
             <div id="sidebar-2" class="tabcontent">
@@ -87,13 +103,13 @@
                 <div class="sidebar-top-title">
                     <p>Feature List</p>
                 </div>
-                <button class="nav-title" id="speach-controller-title" onclick="hideSection(event, 'speach-controller', 'title-icon-3-1');"><img class="title-icon" id="title-icon-3-1" src="./images/sort-down-solid.svg" alt="down" height="12px" width="12px" style="display:inline-block;"> Speech Synthesis</button>
+                <button class="nav-title" id="speach-controller-title" onclick="hideSection(event, 'speach-controller', 'title-icon-3-1');"><img class="title-icon" id="title-icon-3-1" src="./images/sort-down-solid.svg" alt="down"> Speech Synthesis</button>
                 <div class="navbar" id="speach-controller">
                     <button onclick="getEditorValue();">Speak Document</button>
                     <button onclick="speakByLine();">Speak By Line</button>
                     <button onclick="doStop();">Stop Speaking</button>
                 </div>
-                <button class="nav-title" id="position-controller-title" onclick="hideSection(event, 'position-controller', 'title-icon-3-2');"><img class="title-icon" id="title-icon-3-2" src="./images/sort-down-solid.svg" alt="down" height="12px" width="12px" style="display:inline-block;"> Cursor Position</button>
+                <button class="nav-title" id="position-controller-title" onclick="hideSection(event, 'position-controller', 'title-icon-3-2');"><img class="title-icon" id="title-icon-3-2" src="./images/sort-down-solid.svg" alt="down"> Cursor Position</button>
                 <div class="navbar" id="position-controller">
                     <button onclick="cursorPosition();">Search Cursor Position</button>
                     <button onclick="clickJumpToLine();">Cursor Jump To Line</button>
@@ -104,7 +120,7 @@
                 <div class="sidebar-top-title">
                     <p>Setting</p>
                 </div>
-                <button class="nav-title" id="voice-controller-title" onclick="hideSection(event, 'voice-controller', 'title-icon-4-1');"><img class="title-icon" id="title-icon-4-1" src="./images/sort-down-solid.svg" alt="down" height="12px" width="12px" style="display:inline-block;"> Voice</button>
+                <button class="nav-title" id="voice-controller-title" onclick="hideSection(event, 'voice-controller', 'title-icon-4-1');"><img class="title-icon" id="title-icon-4-1" src="./images/sort-down-solid.svg" alt="down"> Voice</button>
                 <div class="navbar" id="voice-controller">
                     <div class="option">
                         <label for="rate">Rate</label>
@@ -677,22 +693,58 @@
             }
 
             // editable textarea
-            function configureEditableTextarea(id) {
+            function configureEditableTextarea(id, modifyClassName, readOnlyClassName) {
                 var textarea = document.getElementById(id);
                 textarea.ondblclick = function() {
                     this.readOnly = false;
-                    this.className = "textarea-modify";
+                    this.className = modifyClassName;
                 }
                 textarea.onblur = function() {
                     this.readOnly = true;
-                    this.className = "textarea-readonly";
+                    this.className = readOnlyClassName;
                     document.getElementById("test").innerHTML = document.getElementById(id).value;
                 }
             }
 
-            configureEditableTextarea("editable-textarea");
+            configureEditableTextarea("editable-textarea", "textarea-modify", "textarea-readonly");
 
-            // document.getElementById("hide-header").click();
+            function configureFilenameText(id, button_id, modifyClassName, readOnlyClassName) {
+                var textarea = document.getElementById(id);
+                var button = document.getElementById(button_id);
+                    button.onclick = function() {
+                        textarea.readOnly = false;
+                        textarea.className = modifyClassName;
+                        textarea.focus();
+                        closeClickSpan = "y";
+                    }
+                    textarea.onblur = function() {
+                        this.readOnly = true;
+                        this.className = readOnlyClassName;
+                        closeClickSpan = "n";
+                        document.getElementById("test").innerHTML = document.getElementById(id).value;
+                    }
+            }
+
+            configureFilenameText("filename-input-1", "edit-button-1", "filename-modify", "filename-readonly");
+
+            // 点击span和点击span上的button事件的分离
+            var closeClickSpan = "n";
+
+            function clickSpan() {
+                if (closeClickSpan == "n") {
+                    alert('open file');
+                }
+            }
+
+            function clickDelete() {
+                alert('delete file');
+            }
+
+            function clcikAddFile() {
+                alert('add file');
+            }
+
+            document.getElementById("left-nav-button-1").click();
 
         </script>
     </body>

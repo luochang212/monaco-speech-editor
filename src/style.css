@@ -448,3 +448,92 @@ body {
     color: white;
     padding: 0 0 15px 0;
   }
+
+  #file-manager-title {
+    width: 220px;
+  }
+
+  #title-button-add {
+    background-color: #4b4b4b;
+    border: none;
+    color: white;
+    margin: 0;
+    overflow: hidden;
+    
+    text-align: left;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    outline:none;
+
+    float:right;
+    padding: 5px 8px;
+    width: 30px;
+    z-index: 99999;
+  }
+
+  .filename-readonly {
+    border: inherit;
+  }
+  
+  .filename-modify {
+    border: 1px solid #FFF;
+  }
+
+  .title-icon {
+    height: 12px; 
+    width: 12px;
+    display: inline-block;
+  }
+
+  .filename-div {
+    background-color: #252525;
+    /* background-color: #fff; */
+    border: none;
+    color: white;
+    
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    
+    font-size: 13px;
+    outline:none;
+    width: 250px;
+  }
+
+  .filename-div:hover {
+    background-color: #343434;
+    border: none;
+  }
+
+  .filename-div input{
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+    outline: none;
+    overflow: hidden;
+    background-color:transparent;
+    font-size: 13px;
+    color: #FFF;
+  }
+
+  .filename-div button {
+    background-color:transparent;
+    border: none;
+    color: white;
+    padding: 9px 8px 5px 8px;
+    overflow: hidden;
+    float: right;
+    text-align: left;
+    text-decoration: none;
+    font-size: 13px;
+    outline:none;
+    z-index: 99999;
+  }
+
+  .filename-span{
+    overflow: hidden;
+    padding-left: 35px; 
+    line-height: 30px;
+    width: 215px;  /* 250px - 35px */
+  }
