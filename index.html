@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Monaco Speech Editor</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <link rel="stylesheet" href="./src/style.css">
+        <script>
+            // // Check before leave website
+            // window.addEventListener('beforeunload', function (e) {
+            //     // Cancel the event
+            //     e.preventDefault();
+            //     // Chrome requires returnValue to be set
+            //     e.returnValue = 'Do you sure';
+            // });
+        </script>
+    </head>
+    <body>
+        <div id="header">
+            <!--<div class="navbar">
+                <button onclick="getEditorValue();">Speak Document</button>
+                <button onclick="speakByLine();">Speak By Line</button>
+                <button onclick="cursorPosition();">Search Cursor Position</button>
+                <button onclick="clickJumpToLine();">Cursor Jump To Line</button>
+                <button onclick="doStop();">Stop Speaking</button>
+                <span id="test"></span>
+            </div>-->
+
+            <!--<div id="show-file-name">
+                Untitled
+            </div>-->
+            <div id="show-file-name">
+                <input class="textarea-readonly" id="editable-textarea" readonly value="Untitled-1" />
+            </div>
+            <!--<div id="link">
+                <a onclick="clickOpenNav()">&#9776;</a>
+            </div>
+
+            <div class="navbar-right">
+                <button id="save" onclick="save();">Save</button>
+            </div>-->
+        </div>
+
+        <div id="left-nav">
+            <div role=button class="left-nav-button" id="left-nav-button-1" onclick="clickLeftNav(event, 'sidebar-1')">
+                <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="file-alt" class="svg-inline--fa fa-file-alt fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M288 248v28c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm-12 72H108c-6.6 0-12 5.4-12 12v28c0 6.6 5.4 12 12 12h168c6.6 0 12-5.4 12-12v-28c0-6.6-5.4-12-12-12zm108-188.1V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48C0 21.5 21.5 0 48 0h204.1C264.8 0 277 5.1 286 14.1L369.9 98c9 8.9 14.1 21.2 14.1 33.9zm-128-80V128h76.1L256 51.9zM336 464V176H232c-13.3 0-24-10.7-24-24V48H48v416h288z"></path></svg>
+            </div>
+
+            <div role=button class="left-nav-button" id="left-nav-button-2" onclick="clickLeftNav(event, 'sidebar-2')">
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="upload" class="svg-inline--fa fa-upload fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"></path></svg>
+            </div>
+
+            <div role=button class="left-nav-button" id="left-nav-button-3" onclick="clickLeftNav(event, 'sidebar-3')">
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tools" class="svg-inline--fa fa-tools fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M501.1 395.7L384 278.6c-23.1-23.1-57.6-27.6-85.4-13.9L192 158.1V96L64 0 0 64l96 128h62.1l106.6 106.6c-13.6 27.8-9.2 62.3 13.9 85.4l117.1 117.1c14.6 14.6 38.2 14.6 52.7 0l52.7-52.7c14.5-14.6 14.5-38.2 0-52.7zM331.7 225c28.3 0 54.9 11 74.9 31l19.4 19.4c15.8-6.9 30.8-16.5 43.8-29.5 37.1-37.1 49.7-89.3 37.9-136.7-2.2-9-13.5-12.1-20.1-5.5l-74.4 74.4-67.9-11.3L334 98.9l74.4-74.4c6.6-6.6 3.4-17.9-5.7-20.2-47.4-11.7-99.6.9-136.6 37.9-28.5 28.5-41.9 66.1-41.2 103.6l82.1 82.1c8.1-1.9 16.5-2.9 24.7-2.9zm-103.9 82l-56.7-56.7L18.7 402.8c-25 25-25 65.5 0 90.5s65.5 25 90.5 0l123.6-123.6c-7.6-19.9-9.9-41.6-5-62.7zM64 472c-13.2 0-24-10.8-24-24 0-13.3 10.7-24 24-24s24 10.7 24 24c0 13.2-10.7 24-24 24z"></path></svg>
+            </div>
+
+            <div role=button class="left-nav-button" id="left-nav-button-4" onclick="clickLeftNav(event, 'sidebar-4')">
+                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cog" class="svg-inline--fa fa-cog fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"></path></svg>
+            </div>
+
+            <div id="github-link">
+                <a href="https://github.com/luochang212" target="_blank"><img src="./images/GitHub-Mark-Light-64px.png" alt="github"></a>
+            </div>
+        </div>
+
+        <div id="left-sidebar">
+
+            <div id="sidebar-1" class="tabcontent">
+                <div class="sidebar-top-title">
+                    <p>Explorer</p>
+                </div>
+            </div>
+    
+            <div id="sidebar-2" class="tabcontent">
+                <div class="sidebar-top-title">
+                    <p>Upload</p>
+                </div>
+                <div id="upload-area">
+                <input id="upload" type=file size=30>
+                <div id="myDropZone" class="dropzone">
+                    <p>Drop your file here</p>
+                </div>
+                </div>
+            </div>
+    
+            <div id="sidebar-3" class="tabcontent">
+                <div class="sidebar-top-title">
+                    <p>Feature List</p>
+                </div>
+                <button class="nav-title" id="speach-controller-title" onclick="hideSection(event, 'speach-controller', 'title-icon-3-1');"><img class="title-icon" id="title-icon-3-1" src="./images/sort-down-solid.svg" alt="down" height="12px" width="12px" style="display:inline-block;"> Speech Synthesis</button>
+                <div class="navbar" id="speach-controller">
+                    <button onclick="getEditorValue();">Speak Document</button>
+                    <button onclick="speakByLine();">Speak By Line</button>
+                    <button onclick="doStop();">Stop Speaking</button>
+                </div>
+                <button class="nav-title" id="position-controller-title" onclick="hideSection(event, 'position-controller', 'title-icon-3-2');"><img class="title-icon" id="title-icon-3-2" src="./images/sort-down-solid.svg" alt="down" height="12px" width="12px" style="display:inline-block;"> Cursor Position</button>
+                <div class="navbar" id="position-controller">
+                    <button onclick="cursorPosition();">Search Cursor Position</button>
+                    <button onclick="clickJumpToLine();">Cursor Jump To Line</button>
+                </div>
+            </div>    
+    
+            <div id="sidebar-4" class="tabcontent">
+                <div class="sidebar-top-title">
+                    <p>Setting</p>
+                </div>
+                <button class="nav-title" id="voice-controller-title" onclick="hideSection(event, 'voice-controller', 'title-icon-4-1');"><img class="title-icon" id="title-icon-4-1" src="./images/sort-down-solid.svg" alt="down" height="12px" width="12px" style="display:inline-block;"> Voice</button>
+                <div class="navbar" id="voice-controller">
+                    <div class="option">
+                        <label for="rate">Rate</label>
+                        <input type="range" min="0.1" max="2" step="0.1" name="rate" id="rate" value="1">
+                        <div class="rate-value">1</div>
+                    </div>     
+                    <div class="option">
+                        <label for="pitch">Pitch</label>
+                        <input type="range" min="0.1" max="2" step="0.1" name="pitch" id="pitch" value="1">
+                        <div class="pitch-value">1</div>
+                    </div>
+                    <select class="voice-select"></select>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="toolbar">
+			<select class="language-picker"><option>apex</option><option>azcli</option><option>bat</option><option>c</option><option>clojure</option><option>coffeescript</option><option>cpp</option><option>csharp</option><option>csp</option><option>css</option><option>dockerfile</option><option>fsharp</option><option>go</option><option>graphql</option><option>handlebars</option><option>html</option><option>ini</option><option>java</option><option selected>javascript</option><option>json</option><option>kotlin</option><option>less</option><option>lua</option><option>markdown</option><option>msdax</option><option>mysql</option><option>objective-c</option><option>pascal</option><option>perl</option><option>pgsql</option><option>php</option><option>plaintext</option><option>postiats</option><option>powerquery</option><option>powershell</option><option>pug</option><option>python</option><option>r</option><option>razor</option><option>redis</option><option>redshift</option><option>ruby</option><option>rust</option><option>sb</option><option>scheme</option><option>scss</option><option>shell</option><option>sol</option><option>sql</option><option>st</option><option>swift</option><option>tcl</option><option>typescript</option><option>vb</option><option>xml</option><option>yaml</option></select>
+        
+            <input type="button" value="test" onclick="testFun()"/>
+
+            <div class="voice-controller">
+                <button onclick="backward();">
+                    <img src="./images/step-backward-solid.svg" alt="step-backward-solid" height="20px">
+                </button>
+
+                <button onclick="play();" style="padding:4px 7px 0 10px;">
+                    <img id="play-pause" src="./images/play-solid.svg" alt="pause-solid" height="18px" style="padding-bottom:1px;">
+                </button>
+
+                <button onclick="forward();">
+                    <img src="./images/step-forward-solid.svg" alt="step-forward-solid" height="20px">
+                </button>
+
+                <button onclick="hideHeader();" id="hide-header">
+                    <img src="./images/compress-solid.svg" alt="compress-solid" height="20px">
+                </button>
+            </div>
+
+            <sapn id="line-number">
+                <label for="showLineNumber">Jump To Line: </label>
+                <input type="number" id="showLineNumber" value="1" onkeyup="handleEnter(event);" style="width: 35px; text-align:left; font-style: oblique;">
+            </sapn>
+
+            <span id="show-line-column">Ln 1, Col 1</span>
+        </div>
+
+        <div id="container" style="height: h px;"></div>
+
+        <div id="overlay" onclick="closeByOverlay()"></div>
+
+        <div id="mySidenav" class="sidenav">
+            <div id="sidenav-content">
+                <h1>Setting</h1>
+
+                <!--<div class="option">
+					<label for="rate">Rate</label>
+                    <input type="range" min="0.1" max="2" step="0.1" name="rate" id="rate" value="1">
+                    <div class="rate-value">1</div>
+                </div>
+                    
+                <div class="option">
+                    <label for="pitch">Pitch</label>
+                    <input type="range" min="0.1" max="2" step="0.1" name="pitch" id="pitch" value="1">
+                    <div class="pitch-value">1</div>
+                </div>
+
+                <select class="voice-select"></select>-->
+
+                <br>
+
+                <h1>Shortcuts</h1>
+            </div>
+        </div>
+
+        <!-- OR ANY OTHER AMD LOADER HERE INSTEAD OF loader.js -->
+        <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+        <script src="./src/script.js"></script>
+        <script>
+            'use strict'
+
+            var editor;
+
+            var editorFontSize = 15;
+
+            require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' }});
+
+            require(['vs/editor/editor.main'], function() {
+
+                monaco.editor.defineTheme('myTheme', {
+                    base: 'vs',
+                    inherit: true,
+                    rules: [{ background: 'EDF9FA' }],
+                    colors: {
+                        // 'editor.foreground': '#000000',
+                        // 'editor.background': '#EDF9FA',
+                        // 'editorCursor.foreground': '#8B0000',
+                        'editor.lineHighlightBackground': '#0000FF20',
+                        // 'editorLineNumber.foreground': '#008800',
+                        // 'editor.selectionBackground': '#88000030',
+                        // 'editor.inactiveSelectionBackground': '#88000015'
+                    }
+                });
+                monaco.editor.setTheme('myTheme');
+
+                editor = monaco.editor.create(document.getElementById('container'), {
+                    value: [
+                        '/* Write your code here. */',
+                        '',
+                        'function isDeleted(element) {',
+                        '   var id_str = element.id;',
+                        '   id_str = id_str.replace("btn","");',
+                        '   var id_num = parseInt(id_str);',
+                        '',
+                        '   if (delete_flag == true) {',
+                        '       delete_flag = false;',
+                        '       subArray[id_num].isDelete = "true";',
+                        '       element.value="×";',
+                        '   } else {',
+                        '       delete_flag = true;',
+                        '       subArray[id_num].isDelete = "false";',
+                        '       element.value="";',
+                        '   }',
+                        '}',
+                    ].join('\n'),
+                    language: 'javascript',
+                    wordWrap: "on",   //自动换行，注意大小写
+                    wrappingIndent: "indent",
+                    // lineNumbers: "off",
+                    // roundedSelection: false,
+                    // scrollBeyondLastLine: false,
+                    readOnly: false,
+                    // theme: "vs-dark",
+                    // language: "text/plain",
+                    // fontFamily: "Arial",
+                    fontSize: editorFontSize
+                });
+
+                // var value = editor.getModel().getLineContent(1)
+                // var value = editor.getModel().getLineContent(editor.getPosition().lineNumber)
+            });
+
+            function easySpeak(val) {
+                doStop();
+                inputTxt = val;
+                speak();
+            }
+
+            function getEditorValue() {
+                easySpeak(editor.getValue());
+            }
+
+            function getEditorValueByLine(val) {
+                easySpeak(editor.getModel().getLineContent(val));
+            }
+
+            function speakByLine() {
+                var lineNumber = prompt("Please input the line number:", "");
+                if (lineNumber == null || lineNumber == "") {
+                    easySpeak("You didn't input anything");
+                    // alert("Please input something!");
+                } else {
+                    getEditorValueByLine(lineNumber);
+                }
+            }
+
+            function cursorPosition() {
+                easySpeak("Line number is " + editor.getPosition().lineNumber + "and column number is " + editor.getPosition().column);
+                // alert('Line number: ' + editor.getPosition().lineNumber);
+            }
+
+            // cursor focus
+            function cursorJumpToLine(val) {
+                editor.setSelection(new monaco.Selection(val,1,val,1));
+                editor.focus();
+
+                // a feature
+                // currentLineNumber = val;
+                // document.getElementById("showLineNumber").value = currentLineNumber;
+
+
+                // editor.setPosition({column: 1, lineNumber: val});
+                // editor.setScrollPosition({scrollTop: 0});   
+                // editor.revealLine(15);
+                // editor.revealLineInCenter(15);
+            }
+
+            // function jumpToPosition(x, y) {
+            //     editor.setSelection(new monaco.Selection(x,y,x,y));
+            //     editor.focus();
+            // }
+
+            function clickJumpToLine() {
+                var lineNumber = prompt("Please input the line number:", "");
+                var lineNumber_int = parseInt(lineNumber, 10);  // parseInt: string to int
+                if (lineNumber == null || lineNumber == "") {
+                    easySpeak("You didn't input anything");
+                } else if(lineNumber_int < 1 || lineNumber_int > editor.getModel().getLineCount()) {
+                    easySpeak("Your input is out of range");
+                } else {
+                    cursorJumpToLine(lineNumber_int);
+                }
+            }
+
+            // editor.onDidChangeCursorPosition(function () {
+            //     document.getElementById("test").innerHTML = "ditor.getPosition().lineNumber";
+            // });
+            // editor.onDidChangeModelContent(e => {
+            //     console.log(editor.getValue());
+            // });
+
+
+            function save() {
+                var filename = prompt("Please input filename:", "");
+                if (filename == null || filename == "") {
+                    // alert("Please input something!");
+                } else {
+                    var text = editor.getValue();
+                    download(filename, text);
+                }
+            }
+
+            function download(filename, text) {
+                var element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+                element.setAttribute('download', filename);
+
+                element.style.display = 'none';
+                document.body.appendChild(element);
+
+                element.click();
+
+                document.body.removeChild(element);
+            }
+
+            var languageSelect = document.querySelector('.language-picker');
+
+            function syntaxHighlight(langName) {
+                monaco.editor.setModelLanguage(window.monaco.editor.getModels()[0], langName)
+            }
+
+            languageSelect.onchange = function() {
+                syntaxHighlight(languageSelect.value);
+                // document.getElementById('test').innerHTML = languageSelect.value;
+            }
+
+            var currentLineNumber = 1;
+            var currentColumnNumber = 1;
+            var clickNumber = 0;
+
+            function play() {
+                var testTxt = editor.getModel().getLineContent(currentLineNumber);
+                if(testTxt == "") {
+                    easySpeak("Information from monaco speech editor: " + "This line is empty");
+                    // alert("This line is empty.");
+                    return -1;
+                }
+                
+                clickNumber ++;
+                if (clickNumber == 1) {
+                    // doStop();  // 没有必要，inputTxt只有一个，占用不会发生
+                    pauseResume = 'R';
+                    getEditorValueByLine(currentLineNumber);
+                    document.getElementById("play-pause").src = "./images/pause-solid.svg";
+                } else {
+                    doPauseResume();
+                }
+            }
+
+            function backward() {
+                doStop();
+                if (currentLineNumber <= 1) {
+                    easySpeak("This is the first line");
+                    // alert("This is the first line.");
+                    return -1;
+                } else {
+                    currentLineNumber--;
+                    cursorJumpToLine(currentLineNumber);
+                }
+                document.getElementById("showLineNumber").value = currentLineNumber;
+            }
+
+            function forward() {
+                doStop();
+                var maxLine = editor.getModel().getLineCount();
+                if (currentLineNumber >= maxLine) {
+                    easySpeak("This is the last line");
+                    // alert("This is the last line.");
+                    return -1;
+                } else {
+                    currentLineNumber ++;
+                    cursorJumpToLine(currentLineNumber);
+                }
+                document.getElementById("showLineNumber").value = currentLineNumber;
+            }
+
+            document.getElementById("showLineNumber").addEventListener("change", jumpToLine);
+
+            function jumpToLine() {
+                var x = document.getElementById("showLineNumber");
+                if (x.value >= 1 && x.value <= editor.getModel().getLineCount()) {
+                    currentLineNumber = x.value;
+                    cursorJumpToLine(parseInt(currentLineNumber, 10));
+                } else {
+                    x.value = currentLineNumber;
+                    easySpeak("Your input is out of range");
+                    // alert("Input is out of range.");
+                }
+            }
+
+            function valueChangeWithCursor() {
+                var x = document.getElementById("showLineNumber");
+                x.value = currentLineNumber;
+            }
+
+            function updateLineColumnNumber() {
+                currentLineNumber = editor.getPosition().lineNumber;
+                currentColumnNumber = editor.getPosition().column;
+            }
+
+            function showLineColumn() {
+                // updateLineColumnNumber();
+                document.getElementById("show-line-column").innerHTML = "Ln " + currentLineNumber + ", Col " + currentColumnNumber;
+            }
+
+            function bondUpdateFunction() {
+                updateLineColumnNumber();
+                showLineColumn();
+                valueChangeWithCursor();
+            }
+
+            function testFun() {
+                // document.getElementById("test").innerHTML = editor.getModel().getLineCount();
+
+                // jumpToPosition(7,3);
+                showLineColumn();
+                document.getElementById("test").innerHTML = editor.getModel().getLineCount();
+            }
+
+
+            // keyup event
+            document.onkeyup = function(e) {
+                if (e.ctrlKey && e.altKey && e.which == 80) {
+                    play();
+                } else if (e.ctrlKey && e.altKey && e.which == 83) {
+                    doStop();
+                } else if (e.which == 13 || e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40 || e.which == 8) {
+                    bondUpdateFunction();
+                }
+            };
+
+            // onclick event
+            document.onclick = function(e) {
+                bondUpdateFunction();
+            }
+
+            // 按下enter时光标移动，从这个函数我知道了keyup和keydown的区别，这里只能用keyup
+            function handleEnter(e) {
+                if (e.keyCode == 13) {
+                    document.getElementById("showLineNumber").blur();
+                }
+            }
+            
+            // overlay
+            var navStatus = "c";
+
+            function clickOpenNav() {
+                if (navStatus == "c") {
+                    openNav();
+                    navStatus = "o";
+                } else if (navStatus == "o") {
+                    off();
+                    navStatus = "c";
+                }
+            }
+
+            function closeByOverlay() {
+                off();
+                navStatus = "c"
+            }
+            
+            function openNav() {
+                on();
+                document.getElementById("mySidenav").style.width = "300px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+
+            function on() {
+                document.getElementById("overlay").style.display = "block";
+            }
+
+            function off() {
+                closeNav();
+                document.getElementById("overlay").style.display = "none";
+            }
+
+
+
+            var leftSidebarStatus = "c";
+            var leftSidebarSelected = "";
+            var leftSidebarSelect = "";
+
+
+            function openLeftSideBar() {
+              document.getElementById("left-sidebar").style.width = "250px";
+              document.getElementById("header").style.marginLeft = "250px";
+              document.getElementById("toolbar").style.marginLeft = "250px";
+              document.getElementById("container").style.marginLeft = "250px";
+            }
+
+            function closeLeftSideBar() {
+              document.getElementById("left-sidebar").style.width = "0";
+              document.getElementById("header").style.marginLeft = "0px";
+              document.getElementById("toolbar").style.marginLeft = "0px";
+              document.getElementById("container").style.marginLeft = "0px";
+
+              var i, tablinks;
+              tablinks = document.getElementsByClassName("left-nav-button");
+              for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+              }
+
+            }
+
+            function clickLeftNav(evt, sidebarName) {
+              // 选择对应tab的内容
+              var i, tabcontent, tablinks;
+              tabcontent = document.getElementsByClassName("tabcontent");
+              for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+              }
+
+              document.getElementById(sidebarName).style.display = "block";
+
+              tablinks = document.getElementsByClassName("left-nav-button");
+              for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+              }
+
+              evt.currentTarget.className += " active";
+
+              //控制sidebar的开关，因为closeLeftSideBar()内的语句，本节代码和上一节顺序不可对调
+              leftSidebarSelected = leftSidebarSelect;
+              leftSidebarSelect = sidebarName;
+              if (leftSidebarStatus == "c") {
+                openLeftSideBar();
+                leftSidebarStatus = "o";
+              } else if (leftSidebarSelected == leftSidebarSelect) {
+                closeLeftSideBar();
+                leftSidebarStatus = "c"
+                leftSidebarSelect = "";
+              }
+            }
+
+
+            // dropzone
+            var drop_code = "";
+
+            function uploadOn(e, callback) {
+                drop_code = e.dataTransfer.getData('text');
+
+                if (drop_code) {
+                    // console.log("CASE 1");
+                    callback();
+                } else {
+                    getUploadText(e, callback);
+                }
+            }
+
+            function getUploadText(e, callback) {
+                    var files = e.target.files || e.dataTransfer.files;
+                    var file = files[0];
+
+                    if (location.host.indexOf("sitepointstatic") >= 0) return;
+
+                    var request = new XMLHttpRequest();
+                    if (request.upload) {
+                        // console.log("CASE 2");
+                        var reader = new FileReader();
+                        var ext = file.name.toString().split('.').pop();
+                        var filename = file.name.toString().split('.').shift();
+                        var type;
+
+                        // 用于自动跳转语法高亮
+                        if (ext === "json") {
+                            type = "json";
+                        } else if (ext === "js") {
+                            type = "js";
+                        }
+
+                        reader.readAsText(file);
+
+                        reader.onloadend = function(e) {
+                            drop_code = reader.result;
+                            callback();
+                            // document.getElementById("showtext").innerHTML = filename;
+                        };
+                    }
+            }
+
+
+            function uploadFile(e) {
+                fileDragHover(e);
+                uploadOn(e, updateDropCode);
+            }
+
+            function fileDragHover(e) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+
+            function updateDropCode() {
+                document.getElementById("test").innerHTML = drop_code;
+            }
+
+            function configureDropZone(zone_id) {
+                var filedrag = document.getElementById(zone_id);
+                filedrag.addEventListener("dragover", fileDragHover, false);
+                filedrag.addEventListener("dragleave", fileDragHover, false);
+                filedrag.addEventListener("drop", uploadFile, false);
+            }
+
+            configureDropZone("myDropZone");
+
+
+            // upload by button
+            function handleFileSelect(e) {
+                getUploadText(e, updateDropCode);
+            }
+
+            function configureFileSelect(id) {
+                document.getElementById(id).addEventListener('change', handleFileSelect, false);
+            }
+
+            configureFileSelect("upload");
+
+            // sidebar
+            function hideSection(evt, section_id, icon_id) {
+                var selectedElement = document.getElementById(section_id);
+                var selectedIcon = document.getElementById(icon_id);
+                if (evt.currentTarget.className.toString().split(' ').pop() != "hidden") {
+                    selectedElement.style.display = "none";
+                    evt.currentTarget.className += " hidden";
+                    selectedIcon.style = "-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-o-transform: rotate(-90deg);-ms-transform: rotate(-90deg);transform: rotate(-90deg);";
+                } else {
+                    selectedElement.style.display = "block";
+                    evt.currentTarget.className = evt.currentTarget.className.replace(" hidden", "");
+                    selectedIcon.style = "";
+                }
+            }
+
+            // full screen
+            var headerHidden = "y"
+            function hideHeader() {
+                if (headerHidden == "n") {
+                    document.getElementById("header").style.display = "none";
+                    document.getElementById("toolbar").style.top = "0px";
+                    document.getElementById("container").style.top = "28px";
+                    headerHidden = "y";
+                } else {
+                    document.getElementById("header").style.display = "block";
+                    document.getElementById("toolbar").style.top = "50px";
+                    document.getElementById("container").style.top = "78px";
+                    headerHidden = "n";
+                }
+            }
+
+            // editable textarea
+            function configureEditableTextarea(id) {
+                var textarea = document.getElementById(id);
+                textarea.ondblclick = function() {
+                    this.readOnly = false;
+                    this.className = "textarea-modify";
+                }
+                textarea.onblur = function() {
+                    this.readOnly = true;
+                    this.className = "textarea-readonly";
+                    document.getElementById("test").innerHTML = document.getElementById(id).value;
+                }
+            }
+
+            configureEditableTextarea("editable-textarea");
+
+            // document.getElementById("hide-header").click();
+
+        </script>
+    </body>
+</html>
