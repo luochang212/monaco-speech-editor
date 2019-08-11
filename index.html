@@ -32,6 +32,7 @@
             <div id="show-file-name">
                 <input class="textarea-readonly" id="editable-textarea" readonly value="Untitled-1" />
             </div>
+            <div id="test"></div>
             <!--<div id="link">
                 <a onclick="clickOpenNav()">&#9776;</a>
             </div>
@@ -71,10 +72,21 @@
                 </div>
                 <button class="nav-title" id="file-manager-title" onclick="hideSection(event, 'file-manager', 'title-icon-1-1');"><img class="title-icon" id="title-icon-1-1" src="./images/sort-down-solid.svg" alt="down"> File manager </button>
                 <button onclick="clcikAddFile();" id="title-button-add"><img class="title-icon" id="title-icon-add" src="./images/plus-circle-solid.svg" alt="plus-circle-solid" height="12px" width="12px" ></button>
-                <div id="file-manager">
-
-                    <div id="file-view"></div>
                 
+                
+                
+                <div id="file-manager" >
+                    <ul id="my-file-list" class="file-list">
+
+                    <ul>
+                </div>
+                    
+                
+
+                
+                <!----------------------------------------------------------------------------->
+                <!--<div id="file-manager">
+                     <div id="file-view"></div>-->
                     <!--<div class="filename-div" id="filename-div-1" >
                         <span class="filename-span" id="filename-span-1" onclick="clickSpan();">
                             <input class="filename-readonly" id="filename-input-1" readonly value="Untitled-1" />
@@ -86,8 +98,10 @@
                             <img class="title-icon" src="./images/pen-solid.svg" alt="pen-solid">
                         </button>
                     </div>-->
+                <!--</div>-->
+                <!----------------------------------------------------------------------------->
 
-                </div>
+
             </div>
     
             <div id="sidebar-2" class="tabcontent">
@@ -172,7 +186,7 @@
             <span id="show-line-column">Ln 1, Col 1</span>
         </div>
 
-        <div id="container" style="height: h px;"></div>
+        <div id="container"></div>
 
         <div id="overlay" onclick="closeByOverlay()"></div>
 
@@ -724,6 +738,7 @@
                         this.readOnly = true;
                         this.className = readOnlyClassName;
                         closeClickSpan = "n";
+                        // textarea.onclick=event.stopPropagation();
                         document.getElementById("test").innerHTML = document.getElementById(id).value;
                     }
             }
@@ -731,14 +746,118 @@
             // 每次新增文件时需要运行此函数以配置文件管理器中该文件所属标签的文本框
             // configureFilenameText("filename-input-1", "edit-button-1", "filename-modify", "filename-readonly");
 
-            // 点击span和点击span上的button事件的分离
+            // // 点击span和点击span上的button事件的分离
+            // var closeClickSpan = "n";
+
+            // function clickSpan() {
+            //     if (closeClickSpan == "n") {
+            //         alert('open file');
+            //     }
+            // }
+
+            // function clickDelete(file_id) {
+            //     // alert('delete file');
+            //     deleteFile(file_id);
+            //     updateFileView();
+            // }
+
+            // function clcikAddFile() {
+            //     // alert('add file');
+            //     addFile();
+            //     updateFileView();
+            // }
+
+            // // 用面向对象的方法编写文件管理器
+            // // index.toString(10)
+            // // parseInt(id_str)
+            // // fileView = "<div class=\"filename-div\" id=\"filename-div-1\"><span class=\"filename-span\" id=\"filename-span-1\" onclick=\"clickSpan();\"><input class=\"filename-readonly\" id=\"filename-input-1\" readonly value=\"Untitled-1\" /></span><button class=\"delete-button\" id=\"delete-button-1\" onclick=\"clickDelete();\"><img class=\"title-icon\" src=\"./images/trash-alt-solid.svg\" alt=\"trash-alt-solid\"></button><button class=\"edit-button\" id=\"edit-button-1\" ><img class=\"title-icon\" src=\"./images/pen-solid.svg\" alt=\"pen-solid\"></button></div>";
+
+            // // 初始化变量
+            // var Files = {
+            //     fileId: "",
+            //     fileName: "",
+            //     editorId: "",
+            //     active: "",
+            //     isDelete: "false"
+	        // };
+            
+            // var fileViewHtml_1, fileViewHtml_2, fileViewHtml_3, fileViewHtml_4, fileViewHtml_5, fileViewHtml_6, fileViewHtml_7, fileViewHtml_8;
+            // fileViewHtml_1 = "<div class=\"filename-div\" id=\"filename-div-";
+            // fileViewHtml_2 = "\"><span class=\"filename-span\" id=\"filename-span-";
+            // fileViewHtml_3 = "\" onclick=\"clickSpan();\"><input class=\"filename-readonly\" id=\"filename-input-";
+            // fileViewHtml_4 = "\" readonly value=\"";
+            // fileViewHtml_5 = "\" /></span><button class=\"delete-button\" id=\"delete-button-";
+            // fileViewHtml_6 = "\" onclick=\"clickDelete('"
+            // fileViewHtml_7 = "');\"><img class=\"title-icon\" src=\"./images/trash-alt-solid.svg\" alt=\"trash-alt-solid\"></button><button class=\"edit-button\" id=\"edit-button-";
+            // fileViewHtml_8 = "\" ><img class=\"title-icon\" src=\"./images/pen-solid.svg\" alt=\"pen-solid\"></button></div>";
+
+            // var fileArray = [];
+            // var fileCounter = 1;
+            // var showFileView = document.getElementById("file-view");
+            
+            // function initFileArray() {
+            //     var file = Object.create(Files);
+            //     file.fileId = fileCounter.toString(10);
+            //     file.fileName = 'Untitled-' + file.fileId;
+            //     fileCounter += 1;
+            //     // editorId 暂略
+            //     file.active = "true";
+            //     fileArray.push(file);
+            // }
+
+            // // 在文件列表里新增一个文件，仅新增对象，不刷新视图
+            // function addFile() {
+            //     // 新建一个editor
+            //     var file = Object.create(Files);
+            //     file.fileId = fileCounter.toString(10);
+            //     file.fileName = 'Untitled-' + file.fileId;
+            //     fileCounter += 1;
+            //     // editorId 暂略
+            //     file.active = "false";
+            //     fileArray.push(file);    
+            // }
+
+            // // 刷新文件列表
+            // function updateFileView() {
+            //     var fileView = '';
+            //     for (var i = 0; i < fileArray.length; i++) {
+            //         if (fileArray[i].isDelete != "true" ) {
+            //             fileView += fileViewHtml_1 + fileArray[i].fileId + fileViewHtml_2 + fileArray[i].fileId + fileViewHtml_3 + fileArray[i].fileId + fileViewHtml_4 + fileArray[i].fileName + fileViewHtml_5 + fileArray[i].fileId + fileViewHtml_6 + fileArray[i].fileId + fileViewHtml_7 + fileArray[i].fileId + fileViewHtml_8;
+            //         }
+            //     }
+            //     showFileView.innerHTML = fileView;
+
+            //     // 配置文本框
+            //     for (var i = 0; i < fileArray.length; i++) {
+            //         if (fileArray[i].isDelete != "true" ) {
+            //             configureFilenameText("filename-input-" + fileArray[i].fileId, "edit-button-" + fileArray[i].fileId, "filename-modify", "filename-readonly");
+            //         }
+            //     }
+  
+            // }
+
+            // // 在文件列表中删除一个文件，仅删除对象，不刷新视图
+            // function deleteFile(file_id) {
+            //     var index = parseInt(file_id);
+            //     fileArray[index-1].isDelete = "true";
+            // }
+
+            // // 注册配置
+            // initFileArray();
+            // updateFileView();
+
+
+
+
+
+            // // 点击span和点击span上的button事件的分离
             var closeClickSpan = "n";
 
-            function clickSpan() {
-                if (closeClickSpan == "n") {
-                    alert('open file');
-                }
-            }
+            // function clickSpan() {
+            //     if (closeClickSpan == "n") {
+            //         alert('open file');
+            //     }
+            // }
 
             function clickDelete(file_id) {
                 // alert('delete file');
@@ -747,93 +866,112 @@
             }
 
             function clcikAddFile() {
-                // alert('add file');
-                addFile();
-                updateFileView();
+                newFile();
             }
 
-            // 用面向对象的方法编写文件管理器
-            // index.toString(10)
-            // parseInt(id_str)
-            // fileView = "<div class=\"filename-div\" id=\"filename-div-1\"><span class=\"filename-span\" id=\"filename-span-1\" onclick=\"clickSpan();\"><input class=\"filename-readonly\" id=\"filename-input-1\" readonly value=\"Untitled-1\" /></span><button class=\"delete-button\" id=\"delete-button-1\" onclick=\"clickDelete();\"><img class=\"title-icon\" src=\"./images/trash-alt-solid.svg\" alt=\"trash-alt-solid\"></button><button class=\"edit-button\" id=\"edit-button-1\" ><img class=\"title-icon\" src=\"./images/pen-solid.svg\" alt=\"pen-solid\"></button></div>";
 
+            // 重写file manager
             // 初始化变量
-            var Files = {
-                fileId: "",
-                fileName: "",
-                editorId: "",
-                active: "",
-                isDelete: "false"
-	        };
+            // var Files = {
+            //     fileId: "",
+            //     fileName: "",
+            //     editorId: "",
+            //     active: "",
+            //     isDelete: "false"
+	        // };
 
-            var fileViewHtml_1, fileViewHtml_2, fileViewHtml_3, fileViewHtml_4, fileViewHtml_5, fileViewHtml_6, fileViewHtml_7, fileViewHtml_8;
-            fileViewHtml_1 = "<div class=\"filename-div\" id=\"filename-div-";
-            fileViewHtml_2 = "\"><span class=\"filename-span\" id=\"filename-span-";
-            fileViewHtml_3 = "\" onclick=\"clickSpan();\"><input class=\"filename-readonly\" id=\"filename-input-";
-            fileViewHtml_4 = "\" readonly value=\"";
-            fileViewHtml_5 = "\" /></span><button class=\"delete-button\" id=\"delete-button-";
-            fileViewHtml_6 = "\" onclick=\"clickDelete('"
-            fileViewHtml_7 = "');\"><img class=\"title-icon\" src=\"./images/trash-alt-solid.svg\" alt=\"trash-alt-solid\"></button><button class=\"edit-button\" id=\"edit-button-";
-            fileViewHtml_8 = "\" ><img class=\"title-icon\" src=\"./images/pen-solid.svg\" alt=\"pen-solid\"></button></div>";
-
-            var fileArray = [];
+            // var fileArray = [];
             var fileCounter = 1;
-            var showFileView = document.getElementById("file-view");
-            
-            function initFileArray() {
-                var file = Object.create(Files);
-                file.fileId = fileCounter.toString(10);
-                file.fileName = 'Untitled-' + file.fileId;
-                fileCounter += 1;
-                // editorId 暂略
-                file.active = "true";
-                fileArray.push(file);
-            }
 
-            // 在文件列表里新增一个文件，仅新增对象，不刷新视图
-            function addFile() {
-                // 新建一个editor
-                var file = Object.create(Files);
-                file.fileId = fileCounter.toString(10);
-                file.fileName = 'Untitled-' + file.fileId;
-                fileCounter += 1;
-                // editorId 暂略
-                file.active = "false";
-                fileArray.push(file);    
-            }
+            var trash = document.getElementsByClassName("trash");
+            var editable = document.getElementsByClassName("editable");
+            var input = document.getElementsByClassName("editable");
+            var inputSpan = document.getElementsByClassName("input-span");
 
-            // 刷新文件列表
-            function updateFileView() {
-                var fileView = '';
-                for (var i = 0; i < fileArray.length; i++) {
-                    if (fileArray[i].isDelete != "true" ) {
-                        fileView += fileViewHtml_1 + fileArray[i].fileId + fileViewHtml_2 + fileArray[i].fileId + fileViewHtml_3 + fileArray[i].fileId + fileViewHtml_4 + fileArray[i].fileName + fileViewHtml_5 + fileArray[i].fileId + fileViewHtml_6 + fileArray[i].fileId + fileViewHtml_7 + fileArray[i].fileId + fileViewHtml_8;
+            var list = document.querySelector('.file-list');
+                list.addEventListener('click', function(ev) {
+                if (ev.target.tagName === 'LI' && closeClickSpan == 'n') {
+                    // 用了此方法注意其他地方不宜再用li
+                    var myList = document.getElementsByTagName("LI");
+                    for (i = 0; i < myList.length; i++) {
+                        myList[i].className = myList[i].className.replace("active", "");
                     }
+                    ev.target.classList.toggle('active');
                 }
-                showFileView.innerHTML = fileView;
+            }, false);
 
-                // 配置文本框
-               
-                for (var i = 0; i < fileArray.length; i++) {
-                    if (fileArray[i].isDelete != "true" ) {
-                        configureFilenameText("filename-input-" + fileArray[i].fileId, "edit-button-" + fileArray[i].fileId, "filename-modify", "filename-readonly");
+
+            function newFile() {
+                var li = document.createElement("li");
+                li.background = "#fff";
+                var file_name = "Untitled-" + fileCounter.toString(10);
+                var input = document.createElement("input");
+                input.readOnly = true;
+                input.className = "filename-readonly";
+                input.id = "file-list-input-" + fileCounter.toString(10);
+                input.type = "text";
+                input.value = file_name;
+                var input_span = document.createElement("SPAN");
+                input_span.className = "input-span";
+                li.appendChild(input_span);
+                input_span.appendChild(input);
+                document.getElementById("my-file-list").appendChild(li);
+                
+                var trash_span = document.createElement("SPAN");
+                trash_span.className = "trash";
+                var img = document.createElement("IMG");
+                img.src = "./images/trash-alt-solid.svg";
+                img.className = "title-icon";
+                trash_span.appendChild(img);
+                li.appendChild(trash_span);
+
+                var edit_span = document.createElement("SPAN");
+                edit_span.className = "editable";
+                edit_span.id = "file-list-edit-" + fileCounter.toString(10);
+                var img = document.createElement("IMG");
+                img.src = "./images/pen-solid.svg";
+                img.className = "title-icon";
+                edit_span.appendChild(img);
+                li.appendChild(edit_span);
+
+                fileCounter += 1;
+
+                for (var i = 0; i < trash.length; i++) {
+                    trash[i].onclick = function() {
+                        var ThisLi = this.parentElement;
+                        ThisLi.style.display = "none";
                     }
+
+                    inputSpan[i].onclick = function() {
+                        if (closeClickSpan == 'n') {
+                            // 用了此方法注意其他地方不宜再用li
+                            var myList = document.getElementsByTagName("LI");
+                            for (i = 0; i < myList.length; i++) {
+                                myList[i].className = myList[i].className.replace("active", "");
+                            }
+                            var ThisLi = this.parentElement;
+                            ThisLi.classList.toggle('active');
+                        }
+                    }
+
+                    configureFilenameText("file-list-input-" + (i+1).toString(10), "file-list-edit-" + (i+1).toString(10), "filename-modify", "filename-readonly");
                 }
-  
+
             }
 
-            // 在文件列表中删除一个文件，仅删除对象，不刷新视图
-            function deleteFile(file_id) {
-                var index = parseInt(file_id);
-                fileArray[index-1].isDelete = "true";
-            }
 
-            // 注册配置
-            initFileArray();
-            updateFileView();
+            newFile();
+            newFile();
+            newFile();
+
+
+
+
+
+
 
             // 模拟点击
-            // document.getElementById("left-nav-button-1").click();
+            document.getElementById("left-nav-button-1").click();
 
         </script>
     </body>

@@ -537,3 +537,64 @@ body {
     line-height: 30px;
     width: 215px;  /* 250px - 35px */
   }
+
+  #file-manager ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  #file-manager ul li {
+    cursor: pointer;
+    position: relative;
+    margin: 0;
+    padding: 4px 0px 4px 35px;
+    list-style-type: none;
+    background: transparent;
+    transition: 0.2s;
+
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  #file-manager ul li:hover {
+    background-color: #343434;
+    border: none;
+  }
+
+  #file-manager ul li.active {
+    background: #343434;
+  }
+  
+  .trash {
+    margin: 0;
+    overflow: hidden;
+    padding: 3px 4px 3px 4px;
+    /* background: #fff; */
+    float: right;
+  }
+
+  .editable {
+    margin: 0;
+    overflow: hidden;
+    padding: 3px 4px 3px 4px;
+    /* background: #fff; */
+    float: right;
+  }
+  
+  .input-span {
+    margin: 0;
+    padding: 0;
+  }
+
+  #file-manager input {
+    text-align: left;
+    outline: none;
+    overflow: hidden;
+    background-color:transparent;
+    font-size: 13px;
+    color: #FFF;
+    /* background: #fff; */
+  }
