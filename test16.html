@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>browser-amd-editor</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+</head>
+<body>
+
+<h2>Monaco Editor Sample</h2>
+<div id="container1" style="width:400px;height:200px;border:1px solid grey"></div>
+<div id="container2" style="width:400px;height:200px;border:1px solid grey"></div>
+<!-- <div class="monaco-multiple" id="container" style="height:200px;"></div>
+<div class="monaco-multiple" id="container2" style="height:200px"></div> -->
+<!-- <div class="monaco-multiple" id="container3" style="height:200px;"></div>
+<div class="monaco-multiple" id="container4" style="height:200px"></div> -->
+
+
+
+
+
+<!-- <div id="container" style="width:800px;height:600px;border:1px solid grey;"></div> -->
+<!-- <div id="container2" style="width:800px;height:600px;border:1px solid grey"></div> -->
+<!-- OR ANY OTHER AMD LOADER HERE INSTEAD OF loader.js -->
+<script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+<script>
+	// var editor
+	// require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' }});
+
+	// require(['vs/editor/editor.main'], function() {
+	// 	editor = monaco.editor.create(document.getElementById('container'), {
+	// 		value: ['q'].join('\n'),
+	// 		language: 'javascript'
+	// 	});
+	// });
+
+	// var value = "dddd";
+
+	// require(['vs/editor/editor.main'], function() {
+	// 	editor_2 = monaco.editor.create(document.getElementById('container'), {
+	// 		// value: [value].join('\n'),
+	// 		language: 'javascript'
+	// 	});
+	// });
+
+	// editor = editor_2;
+
+	// function getVal(model) {
+	// 	var text = model.getValue();
+	// 	console.log(text);
+	// }
+
+	// getVal();
+
+
+	// -------------------------------------------------
+
+
+	//This array will be populated dynamically from api call    
+	// var arr = ["default","web","mobileApps","messenger"]; 
+	// var modelUri;   
+	// var schemaConfigs = [];
+	// for(var i=0;i<arr.length;i++) {
+	//     modelUri = monaco.Uri.parse(`a://b/${arr[i]}.json`);
+
+	//     schemaConfigs.push({
+	//             uri: "http://myserver/foo-schema-" + i + ".json",
+	//             fileMatch: [modelUri.toString()],
+	//             schema: {
+	//                 type: "object",
+	//                 properties: {
+	//                     p1: {
+	//                         enum: ["v1", "v2"]
+	//                     },
+	//                     p2: {
+	//                         enum: ["v3", "v4"]
+	//                     }
+	//                 },
+	//                 additionalProperties: false
+	//             }
+	//         });
+
+	//     var jsonCode = [
+	//         '{',
+	//         '    "q1": "v3"',
+	//         "}"
+	//     ].join('\n');
+
+	//     var model = monaco.editor.createModel(jsonCode, "json", modelUri);    
+	//     monaco.editor.create(document.getElementsByClassName('monaco-multiple')[i], {
+	//         model: model
+	//     })
+	// }
+	// monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+	//     validate: true,
+	//     schemas: schemaConfigs
+	// });
+
+	// -------------------------------------------------
+
+	// var modelUri1 = monaco.Uri.parse("a://b/foo.json"); // a made up unique URI for our model
+    // var jsonCode1 = [
+    //     '{',
+    //     '    "p1": "v3",',
+    //     '    "p2": false',
+    //     "}"
+    // ].join('\n');
+    // var model1 = monaco.editor.createModel(jsonCode1, "json");
+
+    // // var modelUri2 = monaco.Uri.parse("a://b/bar.json"); // a made up unique URI for our model
+    // var jsonCode2 = [
+    //     '{',
+    //     '    "q1": "v3"',
+    //     "}"
+    // ].join('\n');
+    // var model2 = monaco.editor.createModel(jsonCode2, "json");
+
+
+    // monaco.editor.create(document.getElementById('container'), {
+    //     model: model1
+
+    // });
+    // monaco.editor.create(document.getElementById('container2'), {
+    //     model: model2
+	// })
+
+	// -------------------------------------------------------
+	
+// 	monaco.editor.create(document.getElementById("container"), {
+// 	value: "function hello() {\n\talert('Hello world!');\n}",
+// 	language: "javascript"
+// });
+
+// var myEditor;
+
+// require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' }});
+
+// var jsonCode1 = [
+//     '{',
+//     '    "q1": "v3"',
+//     "}"
+// ].join('\n');
+
+// var model1 = monaco.editor.createModel(jsonCode1);
+
+// require(['vs/editor/editor.main'], function() {
+// 	monaco.editor.create(document.getElementById("container"), {
+// 		model: model1
+// 	});
+// });
+
+
+// 	// function getVal(mymodel) {
+// 	// 	var text = mymodel.getValue();
+// 	// 	console.log(text);
+// 	// }
+
+// 	// getVal(model1);
+
+//------------------------------------------------------
+
+	require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' }});
+
+	require(['vs/editor/editor.main'], function() {
+		var model = monaco.editor.createModel([
+				'function x() {',
+				'\tconsole.log("Hello world!");',
+				'}'
+			].join('\n'),
+			'javascript'
+		);
+
+		var model2 = monaco.editor.createModel([
+				'function x() {'
+			].join('\n'),
+			'javascript'
+		);
+		var editor1 = monaco.editor.create(document.getElementById('container1'), {
+			model: model
+		});
+		var editor2 = monaco.editor.create(document.getElementById('container2'), {
+			model: model2
+		});
+		editor2.setValue('ddddddd');
+		getVal(model2);
+
+
+	});
+
+	function getVal(mymodel) {
+			var text = mymodel.getValue();
+			console.log(text);
+		}
+
+	//------------------------------------------------------
+
+	// require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' }});
+
+	// require(['vs/editor/editor.main'], function() {
+	// 	var model = monaco.editor.createModel([
+	// 			'function x() {',
+	// 			'\tconsole.log("Hello world!");',
+	// 			'}'
+	// 		].join('\n'),
+	// 		'javascript'
+	// 	);
+	// 	var editor1 = monaco.editor.create(document.getElementById('container1'), {
+	// 		model: model
+	// 	});
+	// 	var editor2 = monaco.editor.create(document.getElementById('container2'), {
+	// 		model: model
+	// 	});
+	// });
+
+
+
+
+</script>
+</body>
+</html>

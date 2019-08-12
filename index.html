@@ -186,7 +186,9 @@
             <span id="show-line-column">Ln 1, Col 1</span>
         </div>
 
-        <div id="container"></div>
+        <div id="myEditor"></div>
+
+        <!--<div id="container" class="container"></div>-->
 
         <div id="overlay" onclick="closeByOverlay()"></div>
 
@@ -224,62 +226,50 @@
 
             var editorFontSize = 15;
 
+            var defaultValue = "/* Write your code here. */\n\nfunction isDeleted(element) { \n    var id_str = element.id;\n    id_str = id_str.replace(\"btn\",\"\"); \n    var id_num = parseInt(id_str);\n\n    if (delete_flag == true) {\n        delete_flag = false;\n        subArray[id_num].isDelete = \"true\";\n        element.value=\"×\";\n    } else {\n        delete_flag = true;\n        subArray[id_num].isDelete = \"false\";\n        element.value=\"\";\n    }\n}";
+            var noneValue = "";
+
+
             require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' }});
 
-            require(['vs/editor/editor.main'], function() {
+            /* ------------------------------------------------------------------------ */
+            // require(['vs/editor/editor.main'], function() {
 
-                monaco.editor.defineTheme('myTheme', {
-                    base: 'vs',
-                    inherit: true,
-                    rules: [{ background: 'EDF9FA' }],
-                    colors: {
-                        // 'editor.foreground': '#000000',
-                        // 'editor.background': '#EDF9FA',
-                        // 'editorCursor.foreground': '#8B0000',
-                        'editor.lineHighlightBackground': '#0000FF20',
-                        // 'editorLineNumber.foreground': '#008800',
-                        // 'editor.selectionBackground': '#88000030',
-                        // 'editor.inactiveSelectionBackground': '#88000015'
-                    }
-                });
-                monaco.editor.setTheme('myTheme');
+            //     monaco.editor.defineTheme('myTheme', {
+            //         base: 'vs',
+            //         inherit: true,
+            //         rules: [{ background: 'EDF9FA' }],
+            //         colors: {
+            //             // 'editor.foreground': '#000000',
+            //             // 'editor.background': '#EDF9FA',
+            //             // 'editorCursor.foreground': '#8B0000',
+            //             'editor.lineHighlightBackground': '#0000FF20',
+            //             // 'editorLineNumber.foreground': '#008800',
+            //             // 'editor.selectionBackground': '#88000030',
+            //             // 'editor.inactiveSelectionBackground': '#88000015'
+            //         }
+            //     });
+            //     monaco.editor.setTheme('myTheme');
 
-                editor = monaco.editor.create(document.getElementById('container'), {
-                    value: [
-                        '/* Write your code here. */',
-                        '',
-                        'function isDeleted(element) {',
-                        '   var id_str = element.id;',
-                        '   id_str = id_str.replace("btn","");',
-                        '   var id_num = parseInt(id_str);',
-                        '',
-                        '   if (delete_flag == true) {',
-                        '       delete_flag = false;',
-                        '       subArray[id_num].isDelete = "true";',
-                        '       element.value="×";',
-                        '   } else {',
-                        '       delete_flag = true;',
-                        '       subArray[id_num].isDelete = "false";',
-                        '       element.value="";',
-                        '   }',
-                        '}',
-                    ].join('\n'),
-                    language: 'javascript',
-                    wordWrap: "on",   //自动换行，注意大小写
-                    wrappingIndent: "indent",
-                    // lineNumbers: "off",
-                    // roundedSelection: false,
-                    // scrollBeyondLastLine: false,
-                    readOnly: false,
-                    // theme: "vs-dark",
-                    // language: "text/plain",
-                    // fontFamily: "Arial",
-                    fontSize: editorFontSize
-                });
+            //     editor = monaco.editor.create(document.getElementById('container'), {
+            //         value: [defaultValue].join('\n'),
+            //         language: 'javascript',
+            //         wordWrap: "on",   //自动换行，注意大小写
+            //         wrappingIndent: "indent",
+            //         // lineNumbers: "off",
+            //         // roundedSelection: false,
+            //         // scrollBeyondLastLine: false,
+            //         readOnly: false,
+            //         // theme: "vs-dark",
+            //         // language: "text/plain",
+            //         // fontFamily: "Arial",
+            //         fontSize: editorFontSize
+            //     });
 
-                // var value = editor.getModel().getLineContent(1)
-                // var value = editor.getModel().getLineContent(editor.getPosition().lineNumber)
-            });
+            //     // var value = editor.getModel().getLineContent(1)
+            //     // var value = editor.getModel().getLineContent(editor.getPosition().lineNumber)
+            // });
+            /* ------------------------------------------------------------------------ */
 
             function easySpeak(val) {
                 doStop();
@@ -549,14 +539,22 @@
               document.getElementById("left-sidebar").style.width = "250px";
               document.getElementById("header").style.marginLeft = "250px";
               document.getElementById("toolbar").style.marginLeft = "250px";
-              document.getElementById("container").style.marginLeft = "250px";
+              var conta = document.getElementsByClassName("container");
+              for (var i = 0; i < conta.length; i++) {
+                conta[i].style.marginLeft = "250px";
+              }
+            //   document.getElementsByClassName("container").style.marginLeft = "250px";
             }
 
             function closeLeftSideBar() {
               document.getElementById("left-sidebar").style.width = "0";
               document.getElementById("header").style.marginLeft = "0px";
               document.getElementById("toolbar").style.marginLeft = "0px";
-              document.getElementById("container").style.marginLeft = "0px";
+              var conta = document.getElementsByClassName("container");
+              for (var i = 0; i < conta.length; i++) {
+                conta[i].style.marginLeft = "0px";
+              }
+            //   document.getElementsByClassName("container").style.marginLeft = "0px";
 
               var i, tablinks;
               tablinks = document.getElementsByClassName("left-nav-button");
@@ -850,7 +848,8 @@
 
 
 
-            // // 点击span和点击span上的button事件的分离
+            // 点击span和点击span上的button事件的分离
+            // 可以在不跳转编辑器的情况下修改别的编辑器的文件名
             var closeClickSpan = "n";
 
             // function clickSpan() {
@@ -859,28 +858,20 @@
             //     }
             // }
 
-            function clickDelete(file_id) {
-                // alert('delete file');
-                deleteFile(file_id);
-                updateFileView();
-            }
+            // function clickDelete(file_id) {
+            //     // alert('delete file');
+            //     deleteFile(file_id);
+            //     updateFileView();
+            // }
 
             function clcikAddFile() {
-                newFile();
+                addFile();
             }
 
 
             // 重写file manager
-            // 初始化变量
-            // var Files = {
-            //     fileId: "",
-            //     fileName: "",
-            //     editorId: "",
-            //     active: "",
-            //     isDelete: "false"
-	        // };
+            // UI 部分
 
-            // var fileArray = [];
             var fileCounter = 1;
 
             var trash = document.getElementsByClassName("trash");
@@ -891,6 +882,7 @@
             var list = document.querySelector('.file-list');
                 list.addEventListener('click', function(ev) {
                 if (ev.target.tagName === 'LI' && closeClickSpan == 'n') {
+                    // 激活文件
                     // 用了此方法注意其他地方不宜再用li
                     var myList = document.getElementsByTagName("LI");
                     for (i = 0; i < myList.length; i++) {
@@ -901,9 +893,9 @@
             }, false);
 
 
-            function newFile() {
+            function addFileView() {
                 var li = document.createElement("li");
-                li.background = "#fff";
+                li.id = "li-" + fileCounter.toString(10);
                 var file_name = "Untitled-" + fileCounter.toString(10);
                 var input = document.createElement("input");
                 input.readOnly = true;
@@ -934,16 +926,20 @@
                 edit_span.appendChild(img);
                 li.appendChild(edit_span);
 
-                fileCounter += 1;
-
                 for (var i = 0; i < trash.length; i++) {
                     trash[i].onclick = function() {
+                        // 如果被删除，不再在文件列表中显示该文件
                         var ThisLi = this.parentElement;
                         ThisLi.style.display = "none";
+                        // 如果被删除，将该对象的isDelete属性设置为true
+                        var index = parseInt(ThisLi.id.toString().split('-').pop());
+                        fileArray[index-1].isDelete = "true";
+                        // 如果被删除，第一个文件的li的class设为active
                     }
 
                     inputSpan[i].onclick = function() {
                         if (closeClickSpan == 'n') {
+                            // 激活文件
                             // 用了此方法注意其他地方不宜再用li
                             var myList = document.getElementsByTagName("LI");
                             for (i = 0; i < myList.length; i++) {
@@ -959,16 +955,83 @@
 
             }
 
+            // 用面向对象的方法控制页面切换
+            // 初始化变量
+            var Files = {
+                fileId: "",
+                fileName: "",
+                editorContent: "",
+                isDelete: "false"
+	        };
 
-            newFile();
-            newFile();
-            newFile();
+            var fileArray = [];
+
+            // 在文件列表里新增一个文件，先新增对象，然后刷新视图
+            function addFile() {
+                // 新建一个editor并
+                // newEditor();
+
+                // 新增编辑器向右移动
+                // document.getElementById("container-" + fileCounter.toString(10)).style.marginLeft = "250px";
+
+                // 更新对象的属性
+                var file = Object.create(Files);
+                file.fileId = fileCounter.toString(10);
+                file.fileName = 'Untitled-' + file.fileId;
+                fileArray.push(file);
+
+                // 刷新文件列表
+                addFileView();
+
+                // 将当前新增文件的文件列表的li的class设为active
+                var myList = document.getElementsByTagName("LI");
+                for (i = 0; i < myList.length; i++) {
+                    myList[i].className = myList[i].className.replace("active", "");
+                }
+                document.getElementById('li-' + fileCounter.toString(10)).className = "active";
+
+                // 文件计数器加一
+                fileCounter += 1;
+            }
+
+            function newEditor() {
+                var new_editor = document.createElement("div");
+                new_editor.id = "container-" + fileCounter.toString(10);
+                new_editor.className = "container";
+                document.getElementById("myEditor").append(new_editor)
+
+
+                require(['vs/editor/editor.main'], function() {
+                    monaco.editor.defineTheme('myTheme', {
+                        base: 'vs',
+                        inherit: true,
+                        rules: [{ background: 'EDF9FA' }],
+                        colors: {'editor.lineHighlightBackground': '#0000FF20',}
+                    });
+                    monaco.editor.setTheme('myTheme');
+                    editor = monaco.editor.create(document.getElementById("container-" + fileCounter.toString(10)), {
+                        value: [defaultValue].join('\n'),
+                        language: 'javascript',
+                        wordWrap: "on",
+                        wrappingIndent: "indent",
+                        readOnly: false,
+                        fontSize: editorFontSize
+                    });
+                });
+
+                return editor;
+            }
+
+            function activeEditor() {
+                
+            }
 
 
 
 
 
 
+            // addFile();
 
             // 模拟点击
             document.getElementById("left-nav-button-1").click();
