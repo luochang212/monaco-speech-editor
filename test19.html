@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Monaco Speech Editor</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <!-- <link rel="stylesheet" href="./src/style.css"> -->
+    </head>
+    <body>
+        
+        
+
+        <div id="container-1" style="width:400px;height:200px;border:1px solid grey"></div>
+
+        <div id="container-2" style="width:400px;height:200px;border:1px solid grey"></div>
+
+
+        <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+        <script>
+            'use strict'
+
+
+           
+
+            require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' }});
+
+require(['vs/editor/editor.main'], function() {
+
+    function newEditor() {
+        var model = monaco.editor.createModel([
+            'function x() {',
+            '\tconsole.log("Hello world!");',
+            '}'
+        ].join('\n'),
+        'javascript'
+    );
+
+    var model2 = monaco.editor.createModel([
+            'function x() {'
+        ].join('\n'),
+        'javascript'
+    );
+    var editor1 = monaco.editor.create(document.getElementById('container-1'), {
+        model: model
+    });
+    var editor2 = monaco.editor.create(document.getElementById('container-2'), {
+        model: model2
+    });
+    editor2.setValue('ddddddd');
+    
+        return model2
+    }
+
+
+    getVal(newEditor());
+
+    var ssss= "adfasdf";
+
+    console.log(ss);
+
+    
+
+});
+
+function getVal(x) {
+    console.log(x.getValue())
+}
+
+
+var ss = "asdfasdfsa"
+console.log(ssss);
+        
+
+        </script>
+    </body>
+</html>
