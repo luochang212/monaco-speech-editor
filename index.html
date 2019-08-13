@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
         <link rel="stylesheet" href="./src/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!-- <script>
             // Check before leave website
             window.addEventListener('beforeunload', function (e) {
@@ -75,10 +76,16 @@
                 
                 
                 
-                <div id="file-manager" >
+                <div id="file-manager">
                     <ul id="my-file-list" class="file-list">
 
                     <ul>
+                </div>
+
+
+                <button class="nav-title" id="demo-controller-title" onclick="hideSection(event, 'demo-controller', 'title-icon-1-2');"><img class="title-icon" id="title-icon-1-2" src="./images/sort-down-solid.svg" alt="down"> Demo</button>
+                <div class="navbar" id="demo-controller">
+                    <button id="load-demo">Load Demo</button>
                 </div>
                     
                 
@@ -140,6 +147,10 @@
 
                     <!-- <button onclick="cursorPosition();">Search Cursor Position</button>
                     <button onclick="clickJumpToLine();">Cursor Jump To Line</button> -->
+                </div>
+                <button class="nav-title" id="trash-controller-title" onclick="hideSection(event, 'trash-controller', 'title-icon-3-3');"><img class="title-icon" id="title-icon-3-3" src="./images/sort-down-solid.svg" alt="down"> Trash</button>
+                <div class="navbar" id="trash-controller">
+                    <button id="find-deleted-files">Find Deleted Files</button>
                 </div>
             </div>    
     
@@ -257,6 +268,9 @@
                     '}'
                 ].join('\n');
 
+                var goCode = "package main\n\nimport (\n    \"html/template\"\n    \"log\"\n    \"net/http\"\n    \"os\"\n    \"path/filepath\"\n)\n\nfunc main() {\n    fs := http.FileServer(http.Dir(\"static\"))\n    http.Handle(\"/static/\", http.StripPrefix(\"/static/\", fs))\n    http.HandleFunc(\"/\", serveTemplate)\n\nlog.Println(\"\\nWeb Server is available at http://localhost:3000/example.html\")\n    http.ListenAndServe(\":3000\", nil)\n}\n\nfunc serveTemplate(w http.ResponseWriter, r *http.Request) {\n    lp := filepath.Join(\"templates\", \"layout.html\")\n    fp := filepath.Join(\"templates\", filepath.Clean(r.URL.Path))\n\n    // Return a 404 if the template doesn't exist\n    info, err := os.Stat(fp)\n    if err != nil {\n        if os.IsNotExist(err) {\n            http.NotFound(w, r)\n            return\n        }\n    }\n\n    // Return a 404 if the request is for a directory\n    \n    if info.IsDir() {\n        http.NotFound(w, r)\n        return\n    }\n\n    tmpl, err := template.ParseFiles(lp, fp)\n    if err != nil {\n        // Log the detailed error log.Println(err.Error())\n        // Return a generic \"Internal Server Error\" message\n        http.Error(w, http.StatusText(500), 500)\n        return\n    }\n\n    if err := tmpl.ExecuteTemplate(w, \"layout\", nil); err != nil {\n        log.Println(err.Error())\n        http.Error(w, http.StatusText(500), 500)\n    }\n}";
+
+
                 var noCode = "";
 
                 function newEditor(container_id, code) {
@@ -297,6 +311,12 @@
                 document.getElementById("hide-header").addEventListener("click", function(){
                     hideHeader();
                 });
+                document.getElementById("find-deleted-files").addEventListener("click", function(){
+                    findDeletedFiles();
+                });
+
+
+                
 
                 
 
@@ -442,16 +462,19 @@
 
             var languageSelect = document.querySelector('.language-picker');
 
-            // --------------------------
+            // -------------------------- 语法高亮
             function syntaxHighlight(langName) {
-                monaco.editor.setModelLanguage(window.monaco.editor.getModels()[0], langName)
+                var index = findActiveEditor();
+                monaco.editor.setModelLanguage(window.monaco.editor.getModels()[index - 1], langName)
             }
-            // -----------------------------
+            
 
             languageSelect.onchange = function() {
                 syntaxHighlight(languageSelect.value);
                 // document.getElementById('test').innerHTML = languageSelect.value;
             }
+
+            // -----------------------------
 
             var currentLineNumber = 1;
             var currentColumnNumber = 1;
@@ -846,14 +869,14 @@
             var list = document.querySelector('.file-list');
                 list.addEventListener('click', function(ev) {
                 if (ev.target.tagName === 'LI' && closeClickSpan == 'n') {
-                    // 激活文件-li区
-                    // 文件列表被选中的文件背景高亮
-                    // 用了此方法注意其他地方不宜再用li
-                    var myList = document.getElementsByTagName("LI");
-                    for (var i = 0; i < myList.length; i++) {
-                        myList[i].className = myList[i].className.replace("active", "");
-                    }
-                    ev.target.classList.toggle('active');
+                    // // 激活文件-li区
+                    // // 文件列表被选中的文件背景高亮
+                    // // 用了此方法注意其他地方不宜再用li
+                    // var myList = document.getElementsByTagName("LI");
+                    // for (var i = 0; i < myList.length; i++) {
+                    //     myList[i].className = myList[i].className.replace("active", "");
+                    // }
+                    // ev.target.classList.toggle('active');
 
                     var index = parseInt(ev.target.id.toString(10).split('-').pop());
                     activeEditor(index)
@@ -932,6 +955,8 @@
                         // 如果被删除，将该对象的isDelete属性设置为true
                         var index = parseInt(ThisLi.id.toString(10).split('-').pop());
                         fileArray[index-1].isDelete = "true";
+                        // 如果被删除，更新editorContent
+                        fileArray[index-1].editorContent = fileArray[index-1].editor.getValue();
                         // 如果被删除，第一个文件的li的class设为active
                         // 先检查是否至少存在一个文件，如果一个文件都没有，那么新建一个
                         var fileIndex;
@@ -940,40 +965,36 @@
                             if (fileArray[i].isDelete == "false") {
                                 isAllDelete = "n";
                                 fileIndex = i + 1;
+                                
                                 break;
                             }
                         }
+                        
                         if (isAllDelete == "y") {
-                            fileIndex = fileCounter;
                             // 删除时调用addFile函数，addFile函数会调用activeEditor函数，因此此处不用激活
                             addFile(noCode);
+                            
+                        } else {
+                            // 目前文件序列中的第一个文件的li的class设为active
+                            console.log(fileIndex);
+                            activeEditor(fileIndex);
                         }
-                        // 目前文件序列中的第一个文件的li的class设为active
-                        // var myList = document.getElementsByTagName("LI");
-                        // for (var i = 0; i < myList.length; i++) {
-                        //     myList[i].className = myList[i].className.replace("active", "");
-                        // }
-                        // document.getElementById("li-" + fileIndex.toString(10)).classList.toggle('active');
-                        // // 显示该文件的editor
-                        // var allContainer = document.getElementsByClassName("container");
-                        // for (var i = 0; i < allContainer.length; i++) {
-                        //     allContainer[i].style.display = "none";
-                        // }
-                        // document.getElementById("container-" + fileIndex.toString(10)).style.display = "block";
+
                     }
 
                     inputSpan[i].onclick = function() {
                         if (closeClickSpan == 'n') {
-                            // 激活文件-span区
-                            // 文件列表被选中的文件背景高亮
-                            // 用了此方法注意其他地方不宜再用li
-                            var myList = document.getElementsByTagName("LI");
-                            for (var i = 0; i < myList.length; i++) {
-                                myList[i].className = myList[i].className.replace("active", "");
-                            }
+                            // // 激活文件-span区
+                            // // 文件列表被选中的文件背景高亮
+                            // // 用了此方法注意其他地方不宜再用li
+                            // var myList = document.getElementsByTagName("LI");
+                            // for (var i = 0; i < myList.length; i++) {
+                            //     myList[i].className = myList[i].className.replace("active", "");
+                            // }
+                            // var ThisLi = this.parentElement;
+                            // ThisLi.classList.toggle('active');
+                            
                             var ThisLi = this.parentElement;
-                            ThisLi.classList.toggle('active');
-
                             var index = parseInt(ThisLi.id.toString(10).split('-').pop());
                             activeEditor(index);
 
@@ -1016,7 +1037,8 @@
                 fileName: "",
                 isDelete: "false",
                 isActive: "",
-                editor: null
+                editor: null,
+                editorContent: ""
 	        };
 
             var fileArray = [];
@@ -1043,6 +1065,8 @@
                 file.fileId = fileCounter.toString(10);
                 file.fileName = 'Untitled-' + file.fileId;
                 file.editor = editor;
+                // editorContent服务于垃圾回收功能，仅在删除前更新
+                file.editorContent = editor.getValue();
                 // console.log(file.editor);
                 fileArray.push(file);
                 
@@ -1050,12 +1074,12 @@
                 // 刷新文件列表
                 addFileView();
 
-                // 将当前新增文件的文件列表的li的class设为active
-                var myList = document.getElementsByTagName("LI");
-                for (var i = 0; i < myList.length; i++) {
-                    myList[i].className = myList[i].className.replace("active", "");
-                }
-                document.getElementById('li-' + fileCounter.toString(10)).className = "active";
+                // // 将当前新增文件的文件列表的li的class设为active
+                // var myList = document.getElementsByTagName("LI");
+                // for (var i = 0; i < myList.length; i++) {
+                //     myList[i].className = myList[i].className.replace("active", "");
+                // }
+                // document.getElementById('li-' + fileCounter.toString(10)).className = "active";
 
                 var index = fileCounter;
                 activeEditor(index);
@@ -1083,6 +1107,15 @@
             }
 
             function activeEditor(index) {
+                // 文件列表该文件背景高亮
+                // 将当前新增文件的文件列表的li的class设为active
+                // 用了此方法注意其他地方不宜再用li
+                var myList = document.getElementsByTagName("LI");
+                for (var i = 0; i < myList.length; i++) {
+                    myList[i].className = myList[i].className.replace("active", "");
+                }
+                document.getElementById("li-" + index.toString(10)).classList.toggle('active');
+
                 // editor跳转
                 // 被选中的文件的display设置为block，其他设为none
                 var allContainer = document.getElementsByClassName("container");
@@ -1208,6 +1241,13 @@
 
             configureFileSelect("upload");
 
+            // trash
+            // 垃圾桶功能
+            function findDeletedFiles() {
+                alert("Please open the console in your browser.");
+                console.log(fileArray);
+            }
+
 
 
             // addFile();
@@ -1251,7 +1291,8 @@
 
                 function init() {
                     document.getElementById("left-nav-button-1").click();
-                    addFile(defaultCode);
+                    addFile(goCode);
+                    // addFile(defaultCode);
                     // document.getElementById("hide-header").click(); 必须在 addFile(); 之后
                     document.getElementById("hide-header").click();
                 }

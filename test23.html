@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+ <body>
+    <button id="load-demo">Load Demo</button>
+<script>
+// $(document).ready(function(){
+//   $("#load-demo").click(function(){
+    // $.getJSON("test.json", function(data){
+    // //   $.each(result, function(i, field){
+    // //     $("div").append(field + " ");
+    // var items = [];
+    // $.each( data, function( key, val ) {
+    //     items.push( "<li id='" + key + "'>" + val + "</li>" );
+    // });
+    
+    // $( "<ul/>", {
+    //     "class": "my-new-list",
+    //     html: items.join( "" )
+    // }).appendTo( "body" );
+
+    $.getJSON("https://api.github.com/users/luochang212", function(json) {
+    console.log(json); // this will show the info it in firebug console
+});
+
+    //   });
+    // });
+
+
+
+
+
+
+    var testCode = 
+
+"package main
+
+import (
+	"html/template"
+	"log"
+	"net/http"
+	"os"
+	"path/filepath"
+)
+
+func main() {
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.HandleFunc("/", serveTemplate)
+
+	log.Println("\nWeb Server is available at http://localhost:3000/example.html")
+	http.ListenAndServe(":3000", nil)
+}
+
+func serveTemplate(w http.ResponseWriter, r *http.Request) {
+	lp := filepath.Join("templates", "layout.html")
+	fp := filepath.Join("templates", filepath.Clean(r.URL.Path))
+
+	// Return a 404 if the template doesn't exist
+	info, err := os.Stat(fp)
+	if err != nil {
+		if os.IsNotExist(err) {
+			http.NotFound(w, r)
+			return
+		}
+	}
+
+	// Return a 404 if the request is for a directory
+	if info.IsDir() {
+		http.NotFound(w, r)
+		return
+	}
+
+	tmpl, err := template.ParseFiles(lp, fp)
+	if err != nil {
+		// Log the detailed error
+		log.Println(err.Error())
+		// Return a generic "Internal Server Error" message
+		http.Error(w, http.StatusText(500), 500)
+		return
+	}
+
+	if err := tmpl.ExecuteTemplate(w, "layout", nil); err != nil {
+		log.Println(err.Error())
+		http.Error(w, http.StatusText(500), 500)
+	}
+}"
+
+
+
+
+"package main import ( \"html/template\" \"log\" \"net/http\" \"os\" \"path/filepath\" ) func main() { fs := http.FileServer(http.Dir(\"static\")) http.Handle(\"/static/\", http.StripPrefix(\"/static/\", fs)) http.HandleFunc(\"/\", serveTemplate) log.Println(\"\nWeb Server is available at http://localhost:3000/example.html\") http.ListenAndServe(\":3000\", nil) } func serveTemplate(w http.ResponseWriter, r *http.Request) { lp := filepath.Join(\"templates\", \"layout.html\") fp := filepath.Join(\"templates\", filepath.Clean(r.URL.Path)) // Return a 404 if the template doesn't exist info, err := os.Stat(fp) if err != nil { if os.IsNotExist(err) { http.NotFound(w, r) return } } // Return a 404 if the request is for a directory if info.IsDir() { http.NotFound(w, r) return } tmpl, err := template.ParseFiles(lp, fp) if err != nil { // Log the detailed error log.Println(err.Error()) // Return a generic \"Internal Server Error\" message http.Error(w, http.StatusText(500), 500) return } if err := tmpl.ExecuteTemplate(w, \"layout\", nil); err != nil { log.Println(err.Error()) http.Error(w, http.StatusText(500), 500) } }"
+
+</script>
+ </body>
+</html>
