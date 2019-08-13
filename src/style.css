@@ -584,6 +584,14 @@ body {
     /* background: #fff; */
     float: right;
   }
+
+  .save {
+    margin: 0;
+    overflow: hidden;
+    padding: 3px 4px 3px 4px;
+    /* background: #fff; */
+    float: right;
+  }
   
   .input-span {
     margin: 0;
