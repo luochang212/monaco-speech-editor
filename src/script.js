@@ -40,53 +40,53 @@ if (speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = populateVoiceList;
 }
 
-function speak(){
-  pauseResume = 'R';
-  if (synth.speaking) {
-    console.error('speechSynthesis.speaking');
-    return;
-  }
+// function speak(){
+//   pauseResume = 'R';
+//   if (synth.speaking) {
+//     console.error('speechSynthesis.speaking');
+//     return;
+//   }
 
-	if (inputTxt !== '') {
-	var utterThis = new SpeechSynthesisUtterance(inputTxt);
-    utterThis.onend = function (event) {
-      document.getElementById("play-pause").src = "./images/play-solid.svg";
-      clickNumber = 0;
-      pauseResume = 'R';
-      console.log('SpeechSynthesisUtterance.onend');
-    }
-    utterThis.onerror = function (event) {
-      console.error('SpeechSynthesisUtterance.onerror');
-    }
-    var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');  // "Google UK English Female";
-	for(i = 0; i < voices.length ; i++) {
-    if(voices[i].name === selectedOption) {
-      utterThis.voice = voices[i];
-      break;
-    }
-  }
-    utterThis.pitch = pitch.value;
-    utterThis.rate = rate.value;
-    synth.speak(utterThis);
-  }
-}
+// 	if (inputTxt !== '') {
+// 	var utterThis = new SpeechSynthesisUtterance(inputTxt);
+//     utterThis.onend = function (event) {
+//       document.getElementById("play-pause").src = "./images/play-solid.svg";
+//       clickNumber = 0;
+//       pauseResume = 'R';
+//       console.log('SpeechSynthesisUtterance.onend');
+//     }
+//     utterThis.onerror = function (event) {
+//       console.error('SpeechSynthesisUtterance.onerror');
+//     }
+//     var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');  // "Google UK English Female";
+// 	for(i = 0; i < voices.length ; i++) {
+//     if(voices[i].name === selectedOption) {
+//       utterThis.voice = voices[i];
+//       break;
+//     }
+//   }
+//     utterThis.pitch = pitch.value;
+//     utterThis.rate = rate.value;
+//     synth.speak(utterThis);
+//   }
+// }
 
-function doPauseResume() {
-	if(pauseResume == 'R') {
-    window.speechSynthesis.pause();
-    document.getElementById("play-pause").src = "./images/play-solid.svg";
-    // document.getElementById('control-button').setAttribute("class", "play");
-		pauseResume = 'P';
-	} else if(pauseResume == 'P') {
-    window.speechSynthesis.resume();
-    document.getElementById("play-pause").src = "./images/pause-solid.svg";
-    // document.getElementById('control-button').setAttribute("class", "pause");
-		pauseResume = 'R';
-	} else {
-		console.log("Unknown state...");
-	}
-	return false;
-}
+// function doPauseResume() {
+// 	if(pauseResume == 'R') {
+//     window.speechSynthesis.pause();
+//     document.getElementById("play-pause").src = "./images/play-solid.svg";
+//     // document.getElementById('control-button').setAttribute("class", "play");
+// 		pauseResume = 'P';
+// 	} else if(pauseResume == 'P') {
+//     window.speechSynthesis.resume();
+//     document.getElementById("play-pause").src = "./images/pause-solid.svg";
+//     // document.getElementById('control-button').setAttribute("class", "pause");
+// 		pauseResume = 'R';
+// 	} else {
+// 		console.log("Unknown state...");
+// 	}
+// 	return false;
+// }
 
 function doStop() {
 	pauseResume = 'R';

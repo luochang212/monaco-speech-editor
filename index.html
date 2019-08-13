@@ -32,7 +32,7 @@
             <div id="show-file-name">
                 <input class="textarea-readonly" id="editable-textarea" readonly value="Untitled-1" />
             </div>
-            <div id="test"></div>
+            <!-- <div id="test"></div> -->
             <!--<div id="link">
                 <a onclick="clickOpenNav()">&#9776;</a>
             </div>
@@ -122,14 +122,24 @@
                 </div>
                 <button class="nav-title" id="speach-controller-title" onclick="hideSection(event, 'speach-controller', 'title-icon-3-1');"><img class="title-icon" id="title-icon-3-1" src="./images/sort-down-solid.svg" alt="down"> Speech Synthesis</button>
                 <div class="navbar" id="speach-controller">
-                    <button onclick="getEditorValue();">Speak Document</button>
+
+                    <button id="speak-document">Speak Document</button>
+                    <button id="speak-by-line">Speak By Line</button>
+                    <button id="stop-speaking">Stop Speaking</button>
+
+                    <!-- <button onclick="getEditorValue();">Speak Document</button>
                     <button onclick="speakByLine();">Speak By Line</button>
-                    <button onclick="doStop();">Stop Speaking</button>
+                    <button onclick="doStop();">Stop Speaking</button> -->
+                    
                 </div>
                 <button class="nav-title" id="position-controller-title" onclick="hideSection(event, 'position-controller', 'title-icon-3-2');"><img class="title-icon" id="title-icon-3-2" src="./images/sort-down-solid.svg" alt="down"> Cursor Position</button>
                 <div class="navbar" id="position-controller">
-                    <button onclick="cursorPosition();">Search Cursor Position</button>
-                    <button onclick="clickJumpToLine();">Cursor Jump To Line</button>
+
+                    <button id="search-cursor-position">Search Cursor Position</button>
+                    <button id="cursor-jump-to-line">Cursor Jump To Line</button>
+
+                    <!-- <button onclick="cursorPosition();">Search Cursor Position</button>
+                    <button onclick="clickJumpToLine();">Cursor Jump To Line</button> -->
                 </div>
             </div>    
     
@@ -158,29 +168,33 @@
         <div id="toolbar">
 			<select class="language-picker"><option>apex</option><option>azcli</option><option>bat</option><option>c</option><option>clojure</option><option>coffeescript</option><option>cpp</option><option>csharp</option><option>csp</option><option>css</option><option>dockerfile</option><option>fsharp</option><option>go</option><option>graphql</option><option>handlebars</option><option>html</option><option>ini</option><option>java</option><option selected>javascript</option><option>json</option><option>kotlin</option><option>less</option><option>lua</option><option>markdown</option><option>msdax</option><option>mysql</option><option>objective-c</option><option>pascal</option><option>perl</option><option>pgsql</option><option>php</option><option>plaintext</option><option>postiats</option><option>powerquery</option><option>powershell</option><option>pug</option><option>python</option><option>r</option><option>razor</option><option>redis</option><option>redshift</option><option>ruby</option><option>rust</option><option>sb</option><option>scheme</option><option>scss</option><option>shell</option><option>sol</option><option>sql</option><option>st</option><option>swift</option><option>tcl</option><option>typescript</option><option>vb</option><option>xml</option><option>yaml</option></select>
         
-            <input type="button" value="test" onclick="testFun()"/>
+            <!-- <input type="button" value="test" onclick="testFun()"/> -->
 
             <div class="voice-controller">
-                <button onclick="backward();">
+                <!-- <button onclick="backward();"> -->
+                <button id="backward">
                     <img src="./images/step-backward-solid.svg" alt="step-backward-solid" height="20px">
                 </button>
 
-                <button onclick="play();" style="padding:4px 7px 0 10px;">
+                <!-- <button onclick="play();" style="padding:4px 7px 0 10px;"> -->
+                <button id="play" style="padding:4px 7px 0 10px;">
                     <img id="play-pause" src="./images/play-solid.svg" alt="pause-solid" height="18px" style="padding-bottom:1px;">
                 </button>
 
-                <button onclick="forward();">
+                <!-- <button onclick="forward();"> -->
+                <button id="forward">
                     <img src="./images/step-forward-solid.svg" alt="step-forward-solid" height="20px">
                 </button>
 
-                <button onclick="hideHeader();" id="hide-header">
+                <!-- <button onclick="hideHeader();" id="hide-header"> -->
+                <button id="hide-header">
                     <img src="./images/compress-solid.svg" alt="compress-solid" height="20px">
                 </button>
             </div>
 
             <sapn id="line-number">
                 <label for="showLineNumber">Jump To Line: </label>
-                <input type="number" id="showLineNumber" value="1" onkeyup="handleEnter(event);" style="width: 35px; text-align:left; font-style: oblique;">
+                <input type="number" id="showLineNumber" value="1" style="width: 35px; text-align:left; font-style: oblique;">
             </sapn>
 
             <span id="show-line-column">Ln 1, Col 1</span>
@@ -245,15 +259,46 @@
 
                 var noCode = "";
 
-                function newEditor(container_id) {
-                    var model = monaco.editor.createModel(defaultCode);
+                function newEditor(container_id, code) {
+                    var model = monaco.editor.createModel(code);
                     var editor = monaco.editor.create(document.getElementById(container_id), {
-                        model: model
+                        model: model,
+                        // theme: "vs-dark"
                     });
                     editorArray.push(editor);
                     return editor;
                 }
 
+
+                document.getElementById("speak-document").addEventListener("click", function(){
+                    getEditorValue();
+                });
+                document.getElementById("speak-by-line").addEventListener("click", function(){
+                    speakByLine();
+                });
+                document.getElementById("stop-speaking").addEventListener("click", function(){
+                    doStop();
+                });
+                document.getElementById("search-cursor-position").addEventListener("click", function(){
+                    cursorPosition();
+                });
+                document.getElementById("cursor-jump-to-line").addEventListener("click", function(){
+                    clickJumpToLine();
+                });
+                document.getElementById("backward").addEventListener("click", function(){
+                    backward();
+                });
+                document.getElementById("play").addEventListener("click", function(){
+                    play();
+                });
+                document.getElementById("forward").addEventListener("click", function(){
+                    forward();
+                });
+                document.getElementById("hide-header").addEventListener("click", function(){
+                    hideHeader();
+                });
+
+                
 
 
                 
@@ -306,6 +351,7 @@
             }
 
             function getEditorValue() {
+                console.log(myEditor);
                 easySpeak(myEditor.getValue());
             }
 
@@ -409,6 +455,56 @@
             var currentColumnNumber = 1;
             var clickNumber = 0;
 
+            // 因为变量pauseResume无法传出，故把doPauseResume函数从script.js迁来这儿
+            function doPauseResume() {
+                if(pauseResume == 'R') {
+                window.speechSynthesis.pause();
+                document.getElementById("play-pause").src = "./images/play-solid.svg";
+                // document.getElementById('control-button').setAttribute("class", "play");
+                    pauseResume = 'P';
+                } else if(pauseResume == 'P') {
+                window.speechSynthesis.resume();
+                document.getElementById("play-pause").src = "./images/pause-solid.svg";
+                // document.getElementById('control-button').setAttribute("class", "pause");
+                    pauseResume = 'R';
+                } else {
+                    console.log("Unknown state...");
+                }
+                return false;
+            }
+
+            // 因为变量clickNumber无法传出，故把speak函数从script.js迁来这儿
+            function speak(){
+                pauseResume = 'R';
+                if (synth.speaking) {
+                    console.error('speechSynthesis.speaking');
+                    return;
+                }
+
+                    if (inputTxt !== '') {
+                    var utterThis = new SpeechSynthesisUtterance(inputTxt);
+                    utterThis.onend = function (event) {
+                    document.getElementById("play-pause").src = "./images/play-solid.svg";
+                    clickNumber = 0;
+                    pauseResume = 'R';
+                    console.log('SpeechSynthesisUtterance.onend');
+                    }
+                    utterThis.onerror = function (event) {
+                    console.error('SpeechSynthesisUtterance.onerror');
+                    }
+                    var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');  // "Google UK English Female";
+                    for(i = 0; i < voices.length ; i++) {
+                    if(voices[i].name === selectedOption) {
+                    utterThis.voice = voices[i];
+                    break;
+                    }
+                }
+                    utterThis.pitch = pitch.value;
+                    utterThis.rate = rate.value;
+                    synth.speak(utterThis);
+                }
+            }
+
             function play() {
                 var testTxt = myEditor.getModel().getLineContent(currentLineNumber);
                 if(testTxt == "") {
@@ -456,7 +552,9 @@
                 document.getElementById("showLineNumber").value = currentLineNumber;
             }
 
+            document.getElementById("showLineNumber").addEventListener("onkeyup", handleEnter);
             document.getElementById("showLineNumber").addEventListener("change", jumpToLine);
+
 
             function jumpToLine() {
                 var x = document.getElementById("showLineNumber");
@@ -498,27 +596,24 @@
             //     document.getElementById("test").innerHTML = myEditor.getModel().getLineCount();
             // }
 
-
             // keyup event
             document.onkeyup = function(e) {
                 if (e.ctrlKey && e.altKey && e.which == 80) {
                     play();
                 } else if (e.ctrlKey && e.altKey && e.which == 83) {
                     doStop();
-                } else if (e.which == 13 || e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40 || e.which == 8) {
-                    updateCursorPosition();
                 }
             };
 
             // onclick event
-            // ---------------------------------------------暂时关闭
+            // ---------------------------------------------
             // document.onclick = function(e) {
             //     updateCursorPosition();
             // }
             // ---------------------------------------------
 
             // 按下enter时光标移动，从这个函数我知道了keyup和keydown的区别，这里只能用keyup
-            function handleEnter(e) {
+            function handleEnter() {
                 if (e.keyCode == 13) {
                     document.getElementById("showLineNumber").blur();
                 }
@@ -532,23 +627,87 @@
 
 
             // --------------------------------------------------------
+            // editable textarea
+            function configureEditableTextarea(id, modifyClassName, readOnlyClassName) {
+                var textarea = document.getElementById(id);
+                textarea.ondblclick = function() {
+                    this.readOnly = false;
+                    this.className = modifyClassName;
+                }
+                textarea.onblur = function() {
+                    this.readOnly = true;
+                    this.className = readOnlyClassName;
+                    // document.getElementById("test").innerHTML = document.getElementById(id).value;
+                    // 找到当前激活的编辑器序号
+                    for (var i = 0; i < fileArray.length; i ++) {
+                        if (fileArray[i].isActive == "true") {
+                            var index = i + 1;
+                            break;
+                        }
+                    }
+                    // console.log(index);
+
+                    // 文件名不能为空
+                    if (document.getElementById(id).value == '') {
+                        document.getElementById(id).value = fileArray[index-1].fileName;
+                    } else {
+                        fileArray[index-1].fileName = document.getElementById(id).value;
+                        // 更新文件列表里的标题
+                        document.getElementById("file-list-input-" + index.toString(10)).value = fileArray[index-1].fileName;
+                    }
+                }
+
+            }
+
+            configureEditableTextarea("editable-textarea", "textarea-modify", "textarea-readonly");
+
+
             // editable textarea 2
             function configureFilenameText(id, button_id, modifyClassName, readOnlyClassName) {
                 var textarea = document.getElementById(id);
                 var button = document.getElementById(button_id);
-                    button.onclick = function() {
-                        textarea.readOnly = false;
-                        textarea.className = modifyClassName;
-                        textarea.focus();
-                        closeClickSpan = "y";
-                    }
+                button.onclick = function() {
+                    textarea.readOnly = false;
+                    textarea.className = modifyClassName;
+                    textarea.focus();
+                    closeClickSpan = "y";
+                }
+                
                     textarea.onblur = function() {
                         this.readOnly = true;
                         this.className = readOnlyClassName;
-                        closeClickSpan = "n";
+                        
                         // textarea.onclick=event.stopPropagation();
-                        document.getElementById("test").innerHTML = document.getElementById(id).value;
+                        var index = parseInt(id.toString(10).split('-').pop());
+                        // 文件名不能为空
+                        if (document.getElementById(id).value == '') {
+                            document.getElementById(id).value = fileArray[index-1].fileName;
+                        } else {
+                            fileArray[index-1].fileName = document.getElementById(id).value;
+                            // 这里的逻辑和editable textarea 2不完全相同，因为这里是一对多，一个框对多个名称
+                            // 标题只显示当前编辑器的名称，以下注释部分正是因为没有理解这一点而写错的
+                            // <del>更新编辑器顶上的那个标题，即id=editable-textarea</del>
+                            // document.getElementById("editable-textarea").value = fileArray[index-1].fileName;
+
+                            // 重写：每次激活编辑器，都要将题头设为fileArray[i].fileName
+                            // 但是，有一种情况例外，那就是正在修改的时候，没有激活，也需要变化题头
+                            // 判断当前正在编辑文件名的文件的标题，是不是当下激活的编辑器的标题
+
+                            // 找到当前激活的编辑器序号
+                            for (var i = 0; i < fileArray.length; i ++) {
+                                if (fileArray[i].isActive == "true") {
+                                    var active_index = i + 1;
+                                    break;
+                                }
+                            }
+                            
+                            if (closeClickSpan == "y" & active_index == index) {
+                                document.getElementById("editable-textarea").value = fileArray[index-1].fileName;
+                            }
+                        }
+                        closeClickSpan = "n";
                     }
+                
             }
 
             // 每次新增文件时需要运行此函数以配置文件管理器中该文件所属标签的文本框
@@ -676,7 +835,7 @@
 
             
             document.getElementById("title-button-add").addEventListener("click", function(){
-                addFile();
+                addFile(noCode);
                 // console.log("hi");
             });
             
@@ -703,15 +862,29 @@
                     }
                     ev.target.classList.toggle('active');
 
-                    // editor跳转
-                    // 被选中的文件的display设置为block，其他设为none
-                    var allContainer = document.getElementsByClassName("container")
-                    for (var i = 0; i < allContainer.length; i++) {
-                        allContainer[i].style.display = "none";
-                    }
-                    // 获取container序号(string)
-                    var index = ev.target.id.toString(10).split('-').pop();
-                    document.getElementById("container-" + index.toString(10)).style.display = "block";
+                    var index = parseInt(ev.target.id.toString(10).split('-').pop());
+                    activeEditor(index)
+
+                    // // editor跳转
+                    // // 被选中的文件的display设置为block，其他设为none
+                    // var allContainer = document.getElementsByClassName("container");
+                    // for (var i = 0; i < allContainer.length; i++) {
+                    //     allContainer[i].style.display = "none";
+                    // }
+                    // // 获取container序号(string)
+                    // var index = ev.target.id.toString(10).split('-').pop();
+                    // document.getElementById("container-" + index.toString(10)).style.display = "block";
+
+                    // // 将读屏功能相关的函数绑定到该active的editor上
+                    // myEditor = fileArray[parseInt(index) - 1].editor;
+
+
+                    // // 注册光标移动事件，每次移动触发更新
+                    // myEditor.onDidChangeCursorPosition((e) => {
+                    //     // console.log(JSON.stringify(e));
+                    //     updateCursorPosition();
+                    // });
+
                 }
             }, false);
 
@@ -749,6 +922,7 @@
                 edit_span.appendChild(img);
                 li.appendChild(edit_span);
 
+                // 此处投机取巧，除trash以外，其他原素是借用了trash的length值，因为数值相同
                 for (var i = 0; i < trash.length; i++) {
                     trash[i].onclick = function() {
                         // 如果被删除，不再在文件列表中显示该文件
@@ -758,6 +932,33 @@
                         var index = parseInt(ThisLi.id.toString(10).split('-').pop());
                         fileArray[index-1].isDelete = "true";
                         // 如果被删除，第一个文件的li的class设为active
+                        // 先检查是否至少存在一个文件，如果一个文件都没有，那么新建一个
+                        var fileIndex;
+                        for (var i = 0; i < fileArray.length; i++) {
+                            var isAllDelete = "y";
+                            if (fileArray[i].isDelete == "false") {
+                                isAllDelete = "n";
+                                fileIndex = i + 1;
+                                break;
+                            }
+                        }
+                        if (isAllDelete == "y") {
+                            fileIndex = fileCounter;
+                            // 删除时调用addFile函数，addFile函数会调用activeEditor函数，因此此处不用激活
+                            addFile(noCode);
+                        }
+                        // 目前文件序列中的第一个文件的li的class设为active
+                        // var myList = document.getElementsByTagName("LI");
+                        // for (var i = 0; i < myList.length; i++) {
+                        //     myList[i].className = myList[i].className.replace("active", "");
+                        // }
+                        // document.getElementById("li-" + fileIndex.toString(10)).classList.toggle('active');
+                        // // 显示该文件的editor
+                        // var allContainer = document.getElementsByClassName("container");
+                        // for (var i = 0; i < allContainer.length; i++) {
+                        //     allContainer[i].style.display = "none";
+                        // }
+                        // document.getElementById("container-" + fileIndex.toString(10)).style.display = "block";
                     }
 
                     inputSpan[i].onclick = function() {
@@ -772,15 +973,27 @@
                             var ThisLi = this.parentElement;
                             ThisLi.classList.toggle('active');
 
-                            // editor跳转
-                            // 被选中的文件的display设置为block，其他设为none
-                            var allContainer = document.getElementsByClassName("container")
-                            for (var i = 0; i < allContainer.length; i++) {
-                                allContainer[i].style.display = "none";
-                            }
-                            // 获取container序号(string)
-                            var index = ThisLi.id.toString(10).split('-').pop();
-                            document.getElementById("container-" + index.toString(10)).style.display = "block";
+                            var index = parseInt(ThisLi.id.toString(10).split('-').pop());
+                            activeEditor(index);
+
+                            // // editor跳转
+                            // // 被选中的文件的display设置为block，其他设为none
+                            // var allContainer = document.getElementsByClassName("container");
+                            // for (var i = 0; i < allContainer.length; i++) {
+                            //     allContainer[i].style.display = "none";
+                            // }
+                            // // 获取container序号(string)
+                            // var index = ThisLi.id.toString(10).split('-').pop();
+                            // document.getElementById("container-" + index).style.display = "block";
+
+                            // // 将读屏功能相关的函数绑定到该active的editor上
+                            // myEditor = fileArray[parseInt(index) - 1].editor;
+
+                            // // 注册光标移动事件，每次移动触发更新
+                            // myEditor.onDidChangeCursorPosition((e) => {
+                            //     // console.log(JSON.stringify(e));
+                            //     updateCursorPosition();
+                            // });
                         }
                     }
 
@@ -795,13 +1008,14 @@
                 fileId: "",
                 fileName: "",
                 isDelete: "false",
+                isActive: "",
                 editor: null
 	        };
 
             var fileArray = [];
 
             // 在文件列表里新增一个文件，先新增对象，然后刷新视图
-            function addFile() {
+            function addFile(code) {
                 
                 // console.log(fileCounter);
                 // 新建一个container
@@ -811,7 +1025,7 @@
                 new_editor.className = "container";
                 document.getElementById("monaco-speech-editor").appendChild(new_editor);
                 // 新建一个editor
-                var editor = newEditor(new_editor.id);
+                var editor = newEditor(new_editor.id, code);
 
 
                 // 新增编辑器向右移动
@@ -829,15 +1043,66 @@
                 // 刷新文件列表
                 addFileView();
 
-                // // 将当前新增文件的文件列表的li的class设为active
+                // 将当前新增文件的文件列表的li的class设为active
                 var myList = document.getElementsByTagName("LI");
                 for (var i = 0; i < myList.length; i++) {
                     myList[i].className = myList[i].className.replace("active", "");
                 }
                 document.getElementById('li-' + fileCounter.toString(10)).className = "active";
 
+                var index = fileCounter;
+                activeEditor(index);
+
+                // // 将新增文件的editor的display设为block，经实验是多此一举，因为新建的editor就是出现在最上层的，但是为了保险还是做了
+                // var allContainer = document.getElementsByClassName("container");
+                // for (var i = 0; i < allContainer.length; i++) {
+                //     allContainer[i].style.display = "none";
+                // }
+                // // 获取container序号(string)
+                // var index = fileCounter;
+                // document.getElementById("container-" + index.toString(10)).style.display = "block";
+
+                // // 将读屏功能相关的函数绑定到该active的editor上
+                // myEditor = fileArray[parseInt(index) - 1].editor;
+
+                // // 注册光标移动事件，每次移动触发更新
+                // myEditor.onDidChangeCursorPosition((e) => {
+                //     // console.log(JSON.stringify(e));
+                //     updateCursorPosition();
+                // });
+
                 // 文件计数器加一
                 fileCounter += 1;
+            }
+
+            function activeEditor(index) {
+                // editor跳转
+                // 被选中的文件的display设置为block，其他设为none
+                var allContainer = document.getElementsByClassName("container");
+                for (var i = 0; i < allContainer.length; i++) {
+                    allContainer[i].style.display = "none";
+                }
+                // 获取container序号(int)
+                document.getElementById("container-" + index.toString(10)).style.display = "block";
+
+                // 将读屏功能相关的函数绑定到该active的editor上
+                myEditor = fileArray[index - 1].editor;
+
+                // 注册光标移动事件，每次移动触发更新
+                myEditor.onDidChangeCursorPosition((e) => {
+                    // console.log(JSON.stringify(e));
+                    updateCursorPosition();
+                });
+
+                // 遍历所有文件，isActive设为false，然后把当前激活的editor的isActive设为true
+                for (var i = 0; i < fileArray.length; i ++) {
+                    fileArray[i].isActive = "false";
+                }
+                fileArray[index - 1].isActive = "true";
+
+                // 激活时题头要设为当前的文件名
+                document.getElementById("editable-textarea").value = fileArray[index-1].fileName;
+                
             }
 
             // addFile();
@@ -879,8 +1144,13 @@
 
 
 
-
-
+                function init() {
+                    document.getElementById("left-nav-button-1").click();
+                    addFile(defaultCode);
+                    // document.getElementById("hide-header").click(); 必须在 addFile(); 之后
+                    document.getElementById("hide-header").click();
+                }
+                init();
 
         });
 
@@ -1046,7 +1316,7 @@
             }
 
             function updateDropCode() {
-                document.getElementById("test").innerHTML = drop_code;
+                // document.getElementById("test").innerHTML = drop_code;
             }
 
             function configureDropZone(zone_id) {
@@ -1091,49 +1361,24 @@
                 if (headerHidden == "n") {
                     document.getElementById("header").style.display = "none";
                     document.getElementById("toolbar").style.top = "0px";
-                    document.getElementById("container").style.top = "28px";
+                    // document.getElementById("container").style.top = "28px";
+                    var conta = document.getElementsByClassName("container");
+                    for (var i = 0; i < conta.length; i++) {
+                        conta[i].style.top = "28px";
+                    }
                     headerHidden = "y";
                 } else {
                     document.getElementById("header").style.display = "block";
                     document.getElementById("toolbar").style.top = "50px";
-                    document.getElementById("container").style.top = "78px";
+                    // document.getElementById("container").style.top = "78px";
+                    var conta = document.getElementsByClassName("container");
+                    for (var i = 0; i < conta.length; i++) {
+                        conta[i].style.top = "78px";
+                    }
                     headerHidden = "n";
                 }
             }
 
-            // editable textarea
-            function configureEditableTextarea(id, modifyClassName, readOnlyClassName) {
-                var textarea = document.getElementById(id);
-                textarea.ondblclick = function() {
-                    this.readOnly = false;
-                    this.className = modifyClassName;
-                }
-                textarea.onblur = function() {
-                    this.readOnly = true;
-                    this.className = readOnlyClassName;
-                    document.getElementById("test").innerHTML = document.getElementById(id).value;
-                }
-            }
-
-            configureEditableTextarea("editable-textarea", "textarea-modify", "textarea-readonly");
-
-            
-
-
-
-
-
-
-            // addFile();
-
-            // 模拟点击
-
-            document.getElementById("left-nav-button-1").click();
-            
-
-            
-
-            
 
         </script>
     </body>
