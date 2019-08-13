@@ -607,3 +607,26 @@ body {
     color: #FFF;
     /* background: #fff; */
   }
+
+  #load-demo {
+    /* position:relative;  */
+    text-align: center; 
+    width:190px;
+    background: rgb(140, 48, 177);
+    padding: 8px 20px;
+    margin:13px 30px; 
+    font-size: 14px;
+    overflow: hidden;
+  }
+
+  #load-demo-text {
+    /* background: blue; */
+    width:190px;
+    font-weight: 100;
+    line-height: 23px;
+    font-size: 14px;
+    margin:13px 30px 0px 30px; 
+    padding: 0;
+    text-align: left; 
+          
+  }

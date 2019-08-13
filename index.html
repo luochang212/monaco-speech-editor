@@ -85,7 +85,8 @@
 
                 <button class="nav-title" id="demo-controller-title" onclick="hideSection(event, 'demo-controller', 'title-icon-1-2');"><img class="title-icon" id="title-icon-1-2" src="./images/sort-down-solid.svg" alt="down"> Demo</button>
                 <div class="navbar" id="demo-controller">
-                    <button id="load-demo">Load Demo</button>
+                    <p id="load-demo-text">You can load demo from a JSON file.</p>
+                    <button id="load-demo" >Load Demo</button>
                 </div>
                     
                 
@@ -268,18 +269,22 @@
                     '}'
                 ].join('\n');
 
-                var goCode = "package main\n\nimport (\n    \"html/template\"\n    \"log\"\n    \"net/http\"\n    \"os\"\n    \"path/filepath\"\n)\n\nfunc main() {\n    fs := http.FileServer(http.Dir(\"static\"))\n    http.Handle(\"/static/\", http.StripPrefix(\"/static/\", fs))\n    http.HandleFunc(\"/\", serveTemplate)\n\nlog.Println(\"\\nWeb Server is available at http://localhost:3000/example.html\")\n    http.ListenAndServe(\":3000\", nil)\n}\n\nfunc serveTemplate(w http.ResponseWriter, r *http.Request) {\n    lp := filepath.Join(\"templates\", \"layout.html\")\n    fp := filepath.Join(\"templates\", filepath.Clean(r.URL.Path))\n\n    // Return a 404 if the template doesn't exist\n    info, err := os.Stat(fp)\n    if err != nil {\n        if os.IsNotExist(err) {\n            http.NotFound(w, r)\n            return\n        }\n    }\n\n    // Return a 404 if the request is for a directory\n    \n    if info.IsDir() {\n        http.NotFound(w, r)\n        return\n    }\n\n    tmpl, err := template.ParseFiles(lp, fp)\n    if err != nil {\n        // Log the detailed error log.Println(err.Error())\n        // Return a generic \"Internal Server Error\" message\n        http.Error(w, http.StatusText(500), 500)\n        return\n    }\n\n    if err := tmpl.ExecuteTemplate(w, \"layout\", nil); err != nil {\n        log.Println(err.Error())\n        http.Error(w, http.StatusText(500), 500)\n    }\n}";
+                // var goCode = "package main\n\nimport (\n    \"html/template\"\n    \"log\"\n    \"net/http\"\n    \"os\"\n    \"path/filepath\"\n)\n\nfunc main() {\n    fs := http.FileServer(http.Dir(\"static\"))\n    http.Handle(\"/static/\", http.StripPrefix(\"/static/\", fs))\n    http.HandleFunc(\"/\", serveTemplate)\n\nlog.Println(\"\\nWeb Server is available at http://localhost:3000/example.html\")\n    http.ListenAndServe(\":3000\", nil)\n}\n\nfunc serveTemplate(w http.ResponseWriter, r *http.Request) {\n    lp := filepath.Join(\"templates\", \"layout.html\")\n    fp := filepath.Join(\"templates\", filepath.Clean(r.URL.Path))\n\n    // Return a 404 if the template doesn't exist\n    info, err := os.Stat(fp)\n    if err != nil {\n        if os.IsNotExist(err) {\n            http.NotFound(w, r)\n            return\n        }\n    }\n\n    // Return a 404 if the request is for a directory\n    \n    if info.IsDir() {\n        http.NotFound(w, r)\n        return\n    }\n\n    tmpl, err := template.ParseFiles(lp, fp)\n    if err != nil {\n        // Log the detailed error log.Println(err.Error())\n        // Return a generic \"Internal Server Error\" message\n        http.Error(w, http.StatusText(500), 500)\n        return\n    }\n\n    if err := tmpl.ExecuteTemplate(w, \"layout\", nil); err != nil {\n        log.Println(err.Error())\n        http.Error(w, http.StatusText(500), 500)\n    }\n}";
+                // var pythonCode = "from PyQt5.QtWidgets import *\nimport sys\n\n\nclass Window(QMainWindow):\n    def __init__(self):\n        super().__init__()\n\n        # set the title of main window\n        self.setWindowTitle('My first window - www.luochang.ink')\n\n        # set the size of window\n        self.Width = 500\n        self.height = int(0.618 * self.Width)\n        self.resize(self.Width, self.height)\n\n\nif __name__ == '__main__':\n    app = QApplication(sys.argv)\n    ex = Window()\n    ex.show()\n    sys.exit(app.exec_())";
+                // var jsCode = "// Open or close the navbar\n\nfunction openNav() {\n  on();\n  document.getElementById(\"mySidenav\").style.width = \"40%\";\n  document.body.style.backgroundColor = \"rgba(0,0,0,0.5)\";\n}\nfunction closeNav() {\n  document.getElementById(\"mySidenav\").style.width = \"0\";\n  document.body.style.backgroundColor = \"white\";\n}\nfunction on() {\n  document.getElementById(\"overlay\").style.display = \"block\";\n}\nfunction off() {\n  closeNav();\n  document.getElementById(\"overlay\").style.display = \"none\";\n}";
+                // var javaCode = "class Solution {\n    public ListNode swapPairs(ListNode head) {\n        ListNode p, q, pre;\n        ListNode headNode = new ListNode(0);\n        headNode.next = head; \n        p = head;\n        if ( p == null || p.next == null ) return headNode.next;\n        q = head.next;\n        pre = headNode;\n        while (p != null & p.next != null) {\n            p.next = q.next;\n            q.next = p;\n            pre.next = q;\n            p = p.next;\n            if (p == null) break;\n            q = p.next;\n            pre = pre.next.next;\n        }\n        return headNode.next;\n    }\n}";
 
 
                 var noCode = "";
 
-                function newEditor(container_id, code) {
-                    var model = monaco.editor.createModel(code);
+                function newEditor(container_id, code, language) {
+                    var model = monaco.editor.createModel(code, language);
                     var editor = monaco.editor.create(document.getElementById(container_id), {
                         model: model,
                         // theme: "vs-dark"
                     });
                     editorArray.push(editor);
+                    // console.log(editor.language);
                     return editor;
                 }
 
@@ -314,6 +319,13 @@
                 document.getElementById("find-deleted-files").addEventListener("click", function(){
                     findDeletedFiles();
                 });
+                document.getElementById("load-demo").addEventListener("click", function(){
+                    loadDemo();
+                });
+
+
+
+                
 
 
                 
@@ -466,6 +478,8 @@
             function syntaxHighlight(langName) {
                 var index = findActiveEditor();
                 monaco.editor.setModelLanguage(window.monaco.editor.getModels()[index - 1], langName)
+                fileArray[index - 1].editorLanguage = langName;
+                console.log(fileArray);
             }
             
 
@@ -850,7 +864,7 @@
 
             
             document.getElementById("title-button-add").addEventListener("click", function(){
-                addFile(noCode);
+                addFile(noCode, "javascript");
                 // console.log("hi");
             });
             
@@ -972,7 +986,7 @@
                         
                         if (isAllDelete == "y") {
                             // 删除时调用addFile函数，addFile函数会调用activeEditor函数，因此此处不用激活
-                            addFile(noCode);
+                            addFile(noCode, "javascript");
                             
                         } else {
                             // 目前文件序列中的第一个文件的li的class设为active
@@ -1038,13 +1052,14 @@
                 isDelete: "false",
                 isActive: "",
                 editor: null,
-                editorContent: ""
+                editorContent: "",
+                editorLanguage: ""
 	        };
 
             var fileArray = [];
 
             // 在文件列表里新增一个文件，先新增对象，然后刷新视图
-            function addFile(code) {
+            function addFile(code, language) {
                 
                 // console.log(fileCounter);
                 // 新建一个container
@@ -1054,7 +1069,7 @@
                 new_editor.className = "container";
                 document.getElementById("monaco-speech-editor").appendChild(new_editor);
                 // 新建一个editor
-                var editor = newEditor(new_editor.id, code);
+                var editor = newEditor(new_editor.id, code, language);
 
 
                 // 新增编辑器向右移动
@@ -1067,6 +1082,7 @@
                 file.editor = editor;
                 // editorContent服务于垃圾回收功能，仅在删除前更新
                 file.editorContent = editor.getValue();
+                file.editorLanguage = language;
                 // console.log(file.editor);
                 fileArray.push(file);
                 
@@ -1142,7 +1158,12 @@
 
                 // 激活时题头要设为当前的文件名
                 document.getElementById("editable-textarea").value = fileArray[index-1].fileName;
-                
+
+                // 激活时语法栏要设为当前model的语言
+                // 暂时没找到api
+                // languageSelect.value = 
+                // 用取巧的办法实现
+                languageSelect.value = fileArray[index - 1].editorLanguage;
             }
 
             function findActiveEditor() {
@@ -1182,6 +1203,8 @@
                     if (request.upload) {
                         // console.log("CASE 2");
                         var reader = new FileReader();
+
+                        // 下面这段代码有复用，考虑写成函数
                         var ext = file.name.toString().split('.').pop();
                         var filename = file.name.toString().split('.').shift();
                         var type;
@@ -1190,14 +1213,33 @@
                         if (ext === "json") {
                             type = "json";
                         } else if (ext === "js") {
-                            type = "js";
+                            type = "javascript";
+                        } else if (ext === "php") {
+                            type = "php";
+                        } else if (ext === "html") {
+                            type = "html";
+                        }else if (ext === "java") {
+                            type = "java";
+                        } else if (ext === "py") {
+                            type = "python";
+                        } else if (ext === "go") {
+                            type = "go";
+                        } else if (ext === "css") {
+                            type = "css";
                         }
 
                         reader.readAsText(file);
 
                         reader.onloadend = function(e) {
                             drop_code = reader.result;
-                            callback();
+                            if (type != null) {
+                                addFile(drop_code, type);
+                                // languageSelect.value = type;
+                            } else {
+                                addFile(drop_code, "javascript");
+                                // callback();
+                            }
+                            // callback();
                             // document.getElementById("showtext").innerHTML = filename;
                         };
                     }
@@ -1215,7 +1257,8 @@
             }
 
             function updateDropCode() {
-                addFile(drop_code);
+                addFile(drop_code, "javascript");
+                
                 // fileArray[findActiveEditor()]
                 // document.getElementById("test").innerHTML = drop_code;
             }
@@ -1246,6 +1289,51 @@
             function findDeletedFiles() {
                 alert("Please open the console in your browser.");
                 console.log(fileArray);
+            }
+
+
+            // load demo
+            // 从json加载示例代码
+            function loadDemo() {
+                $.getJSON("https://www.luochang.ink/gadget/monaco-speech-editor/data/code.json", function(data){
+                    $.each( data, function( key, val ) {
+                        var ext = key.toString().split('.').pop();
+                        // var filename = key.toString().split('.').shift();
+                        var type;
+
+                        // 用于自动跳转语法高亮
+                        if (ext === "json") {
+                            type = "json";
+                        } else if (ext === "js") {
+                            type = "javascript";
+                        } else if (ext === "php") {
+                            type = "php";
+                        } else if (ext === "html") {
+                            type = "html";
+                        }else if (ext === "java") {
+                            type = "java";
+                        } else if (ext === "py") {
+                            type = "python";
+                        } else if (ext === "go") {
+                            type = "go";
+                        } else if (ext === "css") {
+                            type = "css";
+                        }
+
+                        if (type != null) {
+                            addFile(val, type);
+                        } else {
+                            addFile(val, "javascript");
+                        }
+                        // 加入文件的函数是不能指定文件名的，下面这个方法取巧了，可以说是手动更新
+                        var index = fileCounter - 1;
+                        fileArray[index-1].fileName = key;
+                        document.getElementById("file-list-input-" + index.toString(10)).value = fileArray[index-1].fileName;
+                        document.getElementById("editable-textarea").value = fileArray[index-1].fileName;
+
+
+                    });
+                });
             }
 
 
@@ -1291,8 +1379,8 @@
 
                 function init() {
                     document.getElementById("left-nav-button-1").click();
-                    addFile(goCode);
-                    // addFile(defaultCode);
+                    // addFile(javaCode);
+                    addFile(defaultCode, "javascript");
                     // document.getElementById("hide-header").click(); 必须在 addFile(); 之后
                     document.getElementById("hide-header").click();
                 }
