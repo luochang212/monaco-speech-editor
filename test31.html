@@ -1,0 +1,62 @@
+<html>
+    <body>
+
+<ul> 
+    <li><a href="#/">turn white</a></li> 
+    <li><a href="#/blue">turn blue</a></li>  
+</ul> 
+
+
+
+
+<script>
+function Router() {
+    this.routes = {};
+    this.currentUrl = '';
+}
+Router.prototype.route = function(path, callback) {
+    this.routes[path] = callback || function(){};
+};
+Router.prototype.refresh = function() {
+    this.currentUrl = location.hash.slice(1) || '/';
+    this.routes[this.currentUrl]();
+};
+Router.prototype.init = function() {
+    window.addEventListener('load', this.refresh.bind(this), false);
+    window.addEventListener('hashchange', this.refresh.bind(this), false);
+}
+window.Router = new Router();
+window.Router.init();
+
+
+    var content = document.querySelector('body');
+    // change Page anything
+    function changeBgColor(color) {
+        content.style.backgroundColor = color;
+    }
+    Router.route('/', function() {
+        changeBgColor('white');
+        // content.style.display = "block";
+        // content.style.display = "none";
+    });
+    Router.route('test', function() {
+        content.style.display = "none";
+        var span = document.createElement("span");
+        var iimg = document.createElement("IMG");
+        iimg.src = "./images/logo.jpeg";
+        span.id = "test-span"
+        span.appendChild(iimg);
+        content.appendChild(span);
+        if (window.location.href.toString(10).split(':').shift() === "http" || window.location.href.toString(10).split(':').shift() === "https") {
+            window.open(window.location.href + '#test');
+        }
+        // window.open(window.location.href);
+        // window.open("http://www.baidu.com");
+        // document.getElementById("test-span").style = "none";
+
+        // window.open("file:///usr/local/Cellar/hugo/0.55.6/sites/luochang212.github.io-hugo/content/gadget/monaco-speech-editor/test30.html#/blue");
+        // content.style.display = "block";
+    });
+</script>
+    </body>
+</html>

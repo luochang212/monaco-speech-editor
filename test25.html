@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+<head>
+</head>
+ <body>
+     <textarea rows="15" cols="60" id="content"></textarea>
+    <button id="run" onclick="runData();">Run</button>
+    <iframe id="iframe1"></iframe>
+
+
+<script>
+function runData() {
+    var text = document.getElementById("content").value;
+    console.log(text);
+    var iframe = document.getElementById("iframe1").contentWindow.document.body.innerText = "";
+    iframe = document.getElementById('iframe1').contentDocument.write(text);
+}
+</script>
+ </body>
+</html>

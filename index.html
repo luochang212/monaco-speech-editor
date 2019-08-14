@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
         <link rel="stylesheet" href="./src/style.css">
+        <link rel="shortcut icon" type="image/png" href="./images/logo-1.jpeg">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!-- <script>
             // Check before leave website
@@ -19,7 +20,7 @@
     <body>
         <div id="header">
             <!--<div class="navbar">
-                <button onclick="getEditorValue();">Speak Document</button>
+                <button onclick="speakDocument();">Speak Document</button>
                 <button onclick="speakByLine();">Speak By Line</button>
                 <button onclick="cursorPosition();">Search Cursor Position</button>
                 <button onclick="clickJumpToLine();">Cursor Jump To Line</button>
@@ -135,7 +136,7 @@
                     <button id="speak-by-line">Speak By Line</button>
                     <button id="stop-speaking">Stop Speaking</button>
 
-                    <!-- <button onclick="getEditorValue();">Speak Document</button>
+                    <!-- <button onclick="speakDocument();">Speak Document</button>
                     <button onclick="speakByLine();">Speak By Line</button>
                     <button onclick="doStop();">Stop Speaking</button> -->
                     
@@ -226,6 +227,16 @@
 
         <div id="monaco-speech-editor"></div>
 
+        <div id="console-bar" class="console">
+            <button id="console-button">Console</button>
+            <button id="console-button-run" style="display: none;">Run</button>
+            <div id="compiler-bar" class="compiler">
+                <iframe id="compiler-iframe" scrolling="auto" marginheight="0px" marginwidth="0px"></iframe>
+            </div>
+        </div>
+
+
+
         <!--<div id="container" class="container"></div>-->
 
         <!--<div id="overlay" onclick="closeByOverlay()"></div>
@@ -285,7 +296,7 @@
                 // var pythonCode = "from PyQt5.QtWidgets import *\nimport sys\n\n\nclass Window(QMainWindow):\n    def __init__(self):\n        super().__init__()\n\n        # set the title of main window\n        self.setWindowTitle('My first window - www.luochang.ink')\n\n        # set the size of window\n        self.Width = 500\n        self.height = int(0.618 * self.Width)\n        self.resize(self.Width, self.height)\n\n\nif __name__ == '__main__':\n    app = QApplication(sys.argv)\n    ex = Window()\n    ex.show()\n    sys.exit(app.exec_())";
                 // var jsCode = "// Open or close the navbar\n\nfunction openNav() {\n  on();\n  document.getElementById(\"mySidenav\").style.width = \"40%\";\n  document.body.style.backgroundColor = \"rgba(0,0,0,0.5)\";\n}\nfunction closeNav() {\n  document.getElementById(\"mySidenav\").style.width = \"0\";\n  document.body.style.backgroundColor = \"white\";\n}\nfunction on() {\n  document.getElementById(\"overlay\").style.display = \"block\";\n}\nfunction off() {\n  closeNav();\n  document.getElementById(\"overlay\").style.display = \"none\";\n}";
                 // var javaCode = "class Solution {\n    public ListNode swapPairs(ListNode head) {\n        ListNode p, q, pre;\n        ListNode headNode = new ListNode(0);\n        headNode.next = head; \n        p = head;\n        if ( p == null || p.next == null ) return headNode.next;\n        q = head.next;\n        pre = headNode;\n        while (p != null & p.next != null) {\n            p.next = q.next;\n            q.next = p;\n            pre.next = q;\n            p = p.next;\n            if (p == null) break;\n            q = p.next;\n            pre = pre.next.next;\n        }\n        return headNode.next;\n    }\n}";
-
+                var htmlCode = "<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>what time is it?</title>\n<style type=\"text/css\">\n	body {\n		font-family: \"Source Han Sans\", \"San Francisco\", \"PingFang SC\", \"Hiragino Sans GB\", \"Droid Sans Fallback\", \"Microsoft YaHei\", sans-serif;\n		font-size: 14px;\n		color: #333;\n	}\n	p {\n		margin: 1em 0;\n	}\n	p:empty {\n		height: 1.5em;\n	}\n	main {\n		margin: 0 5em;\n		max-width: 48em;\n	}\n	h1 {\n		margin: 1em 0;\n		font-size: 24px;\n		font-weight: 300;\n	}\n	button {\n		background: #fff;\n		border: 1px solid #ccc;\n		border-radius: 2px;\n		line-height: 1;\n		padding: .5em;\n	}\n</style>\n</head>\n\n<body>\n<main>\n		\n	<h1>what time is it?</h1>\n	<p>© 2019 Chang Luo</p>\n	<hr>\n	\n	<p>Excuse me, what time is it now O_O ???</p>\n	<br>\n	\n	<button type=\"button\" onclick=\"document.getElementById('time').innerHTML = Date()\">\n		Click Me\n	</button>\n\n	<p id=\"time\"></p>\n	\n</main>\n</html>"
                 var noCode = "";
 
 
@@ -312,7 +323,7 @@
 
 
                 document.getElementById("speak-document").addEventListener("click", function(){
-                    getEditorValue();
+                    speakDocument();
                 });
                 document.getElementById("speak-by-line").addEventListener("click", function(){
                     speakByLine();
@@ -354,6 +365,9 @@
                         document.getElementById("toolbar").style.background = "#F5F5F5";
                         document.getElementById("toolbar").style.color = "#000000";
                     }
+                });
+                document.getElementById("console-button-run").addEventListener("click", function(){
+                    run();
                 });
 
 
@@ -415,12 +429,12 @@
                 speak();
             }
 
-            function getEditorValue() {
+            function speakDocument() {
                 // console.log(myEditor);
                 easySpeak(myEditor.getValue());
             }
 
-            function getEditorValueByLine(line_number) {
+            function speakByLine(line_number) {
                 easySpeak(myEditor.getModel().getLineContent(line_number));
             }
 
@@ -430,7 +444,7 @@
                     easySpeak("You didn't input anything");
                     // alert("Please input something!");
                 } else {
-                    getEditorValueByLine(lineNumber);
+                    speakByLine(lineNumber);
                 }
             }
 
@@ -590,7 +604,7 @@
                     // doStop();  // 没有必要，inputTxt只有一个，占用不会发生
                     // 第一次点击是播放，第二第三第n次该键的功能变成播放和暂停，一行播放结束以后clickNumber归零
                     pauseResume = 'R';
-                    getEditorValueByLine(currentLineNumber);
+                    speakByLine(currentLineNumber);
                     document.getElementById("play-pause").src = "./images/pause-solid.svg";
                 } else {
                     doPauseResume();
@@ -1369,6 +1383,15 @@
                 });
             }
 
+            // console
+            function run() {
+                var text = myEditor.getValue();
+                // console.log(text);
+                var iframe = document.getElementById("compiler-iframe").contentWindow.document.body.innerText = "";
+                iframe = document.getElementById("compiler-iframe").contentDocument.write(text);
+                console.log(document.getElementById("compiler-iframe").src);
+            }
+
 
 
             // addFile();
@@ -1413,14 +1436,14 @@
                 function init() {
                     document.getElementById("left-nav-button-1").click();
                     // addFile(javaCode);
-                    addFile(defaultCode, "javascript");
+                    addFile(htmlCode, "html");
                     // document.getElementById("hide-header").click(); 必须在 addFile(); 之后
                     document.getElementById("hide-header").click();
                 }
                 init();
 
-                document.getElementById("left-nav-button-4").click();
-                document.getElementById("night-mode-input").click();
+                // document.getElementById("left-nav-button-4").click();
+                // document.getElementById("night-mode-input").click();
                 
 
 
@@ -1475,6 +1498,7 @@
               document.getElementById("left-sidebar").style.width = "250px";
               document.getElementById("header").style.marginLeft = "250px";
               document.getElementById("toolbar").style.marginLeft = "250px";
+              document.getElementById("console-bar").style.marginLeft = "250px";
               var conta = document.getElementsByClassName("container");
               for (var i = 0; i < conta.length; i++) {
                 conta[i].style.marginLeft = "250px";
@@ -1484,8 +1508,9 @@
 
             function closeLeftSideBar() {
               document.getElementById("left-sidebar").style.width = "0";
-              document.getElementById("header").style.marginLeft = "0px";
-              document.getElementById("toolbar").style.marginLeft = "0px";
+              document.getElementById("header").style.marginLeft = "0";
+              document.getElementById("toolbar").style.marginLeft = "0";
+              document.getElementById("console-bar").style.marginLeft = "0";
               var conta = document.getElementsByClassName("container");
               for (var i = 0; i < conta.length; i++) {
                 conta[i].style.marginLeft = "0px";
@@ -1572,6 +1597,36 @@
                 }
             }
 
+            // console button
+            document.getElementById("console-button").addEventListener("click", function(){
+                hideConsole();
+            });
+
+
+            var consoleToggle = "h"
+            function hideConsole() {
+                if (consoleToggle == "h") {
+                    // 显示run button
+                    document.getElementById("console-button-run").style.display = "inline-block";
+                    // Code for Safari
+                    document.getElementById("console-bar").style.WebkitTransform = "translateY(-280px)"; 
+                    // Code for IE9
+                    document.getElementById("console-bar").style.msTransform = "translateY(-280px)"; 
+                    // Standard syntax
+                    document.getElementById("console-bar").style.transform = "translateY(-280px)"; 
+                    consoleToggle = "s";
+                } else {
+                    // 隐藏run button
+                    document.getElementById("console-button-run").style.display = "none";
+                    // Code for Safari
+                    document.getElementById("console-bar").style.WebkitTransform = "translateY(0)"; 
+                    // Code for IE9
+                    document.getElementById("console-bar").style.msTransform = "translateY(0)"; 
+                    // Standard syntax
+                    document.getElementById("console-bar").style.transform = "translateY(0)"; 
+                    consoleToggle = "h";
+                }
+            }
 
         </script>
     </body>
