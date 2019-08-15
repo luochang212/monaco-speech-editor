@@ -1393,9 +1393,13 @@
             function run() {
                 var text = myEditor.getValue();
                 // console.log(text);
-                var iframe = document.getElementById("compiler-iframe").contentWindow.document.body.innerText = "";
-                iframe = document.getElementById("compiler-iframe").contentDocument.write(text);
-                console.log(document.getElementById("compiler-iframe").src);
+                // refresh iframe
+                var iframe = document.getElementById("compiler-iframe");
+                iframe.contentWindow.document.body.innerHTML = "";
+                // fix bug: css can't refresh
+                iframe.contentWindow.document.getElementsByTagName("head")[0].innerHTML = "";  
+                iframe.contentDocument.write(text);
+                // console.log(document.getElementById("compiler-iframe").src);
             }
 
 
@@ -1450,6 +1454,8 @@
 
                 // document.getElementById("left-nav-button-4").click();
                 // document.getElementById("night-mode-input").click();
+                // document.getElementById("speak-document").click();
+                
                 
 
 
