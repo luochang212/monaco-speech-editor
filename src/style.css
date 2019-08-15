@@ -126,13 +126,13 @@ body {
     top: 28px;
     /* top: 78px; */
     left: 50px; 
-    bottom: 0; 
+    height: calc(100vh - 28px - 20px);
     right: 0;
     margin: 0 auto;
     display: block;
     transition: 0.2s;
     overflow: scroll; 
-    z-index: 99;
+    z-index: 98;
   }
   
   #overlay {
@@ -782,7 +782,7 @@ body {
     bottom: 0;
     left: calc((100vw - 50px)*0.6);
     right: 0;
-    background: #333;
+    background: #202020;
     overflow: auto;
   }
 
