@@ -725,7 +725,7 @@ body {
     z-index: 99999;
     overflow: hidden;
     transition: 0.2s;
-    /* border-top:1px solid #333;  */
+    /* border-top:1px solid #000000;  */
   }
 
   .console button {
@@ -739,7 +739,8 @@ body {
     width: auto;
     outline: none;
     border: none;
-    /* transition: 0.2s; */
+    font-size: 12px;
+    text-align: center;
     overflow: hidden;
   }
 
@@ -748,14 +749,14 @@ body {
     /* background: #FFF; */
   }
 
-  /* .compiler {
-    position: absolute;
+  .compiler {
+    /* position: absolute;
     top: 20px;
     bottom: 0;
     left: 0;
-    right: 0;
+    right: 0; */
     background: #FFF;
-  } */
+  }
 
   #compiler-iframe {
     height: calc(300px - 20px);
