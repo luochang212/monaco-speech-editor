@@ -326,7 +326,7 @@
                     speakDocument();
                 });
                 document.getElementById("speak-by-line").addEventListener("click", function(){
-                    speakByLine();
+                    speakByLineFunc();
                 });
                 document.getElementById("stop-speaking").addEventListener("click", function(){
                     doStop();
@@ -444,7 +444,7 @@
                 easySpeak(myEditor.getModel().getLineContent(line_number));
             }
 
-            function speakByLine() {
+            function speakByLineFunc() {
                 var lineNumber = prompt("Please input the line number:", "");
                 if (lineNumber == null || lineNumber == "") {
                     easySpeak("You didn't input anything");

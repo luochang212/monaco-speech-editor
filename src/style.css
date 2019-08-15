@@ -45,7 +45,7 @@ body {
     border: 1px solid #2c2c2c;
     background: #2c2c2c;
     text-align: center;
-    outline: none;
+    /* outline: none; */
   }
   
   .textarea-modify {
@@ -59,7 +59,7 @@ body {
     border: 1px solid #FFF;
     background: #333;
     text-align: center;
-    outline: none;
+    /* outline: none; */
   }
 
   .navbar-right {
@@ -78,7 +78,7 @@ body {
     border-radius: 5px;
     background-color: #664c4c;
     border: none;
-    outline:none;
+    /* outline:none; */
     z-index: 999;
   }
 
@@ -251,7 +251,7 @@ body {
     margin: 5px 0 0 12px;
     max-height:18px;
     font-size: 11px;
-    outline:none;
+    /* outline:none; */
   }
 
   .voice-controller {
@@ -273,7 +273,7 @@ body {
     
     text-decoration: none;
     display: inline-block;
-    outline:none;
+    /* outline:none; */
   }
 
   #line-number {
@@ -335,7 +335,7 @@ body {
     background:none;
     border:none;
     font: inherit;
-    outline:none;
+    /* outline:none; */
   }
 
   .left-nav-button:hover{
@@ -403,7 +403,7 @@ body {
     text-decoration: none;
     display: inline-block;
     font-size: 13px;
-    outline:none;
+    /* outline:none; */
   }
 
   .navbar button:hover {
@@ -425,7 +425,7 @@ body {
     display: inline-block;
     font-size: 15px;
     font-weight: bold;
-    outline:none;
+    /* outline:none; */
   }
 
   .dropzone {
@@ -465,7 +465,7 @@ body {
     text-decoration: none;
     font-size: 15px;
     font-weight: bold;
-    outline:none;
+    /* outline:none; */
 
     float:right;
     padding: 5px 8px;
@@ -498,7 +498,7 @@ body {
     display: inline-block;
     
     font-size: 13px;
-    outline:none;
+    /* outline:none; */
     width: 250px;
   }
 
@@ -511,7 +511,7 @@ body {
     display: inline-block;
     vertical-align: middle;
     text-align: left;
-    outline: none;
+    /* outline: none; */
     overflow: hidden;
     background-color:transparent;
     font-size: 13px;
@@ -528,7 +528,7 @@ body {
     text-align: left;
     text-decoration: none;
     font-size: 13px;
-    outline:none;
+    /* outline:none; */
     z-index: 99999;
   }
 
@@ -600,7 +600,7 @@ body {
 
   #file-manager input {
     text-align: left;
-    outline: none;
+    /* outline: none; */
     overflow: hidden;
     background-color:transparent;
     font-size: 13px;
@@ -645,7 +645,7 @@ body {
     text-decoration: none;
     display: inline-block;
     font-size: 15px;
-    outline:none;
+    /* outline:none; */
     /* background: #FFF; */
   }
 
@@ -737,7 +737,7 @@ body {
     padding-right: 20px;
     height: 20px;
     width: auto;
-    outline: none;
+    /* outline: none; */
     border: none;
     font-size: 12px;
     text-align: center;
