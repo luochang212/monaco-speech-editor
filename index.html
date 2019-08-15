@@ -90,7 +90,7 @@
                     <button id="load-demo" >Load Demo</button>
                 </div>
                     
-                
+                <!-- <button id="test-button">test</button> -->
 
                 
                 <!----------------------------------------------------------------------------->
@@ -228,10 +228,17 @@
         <div id="monaco-speech-editor"></div>
 
         <div id="console-bar" class="console">
-            <button id="console-button">Console</button>
-            <button id="console-button-run" style="display: none;">Run</button>
+            <div id="console-button-bar">
+                <button id="console-button">Console</button>
+                <button id="console-button-run" style="display: none;">Run</button>
+            </div>
+
             <div id="compiler-bar" class="compiler">
                 <iframe id="compiler-iframe" scrolling="auto" marginheight="0px" marginwidth="0px"></iframe>
+            </div>
+            <div id="console-log">
+                <!-- <pre id="logger"></pre> -->
+                <iframe id="log-iframe" scrolling="auto" marginheight="0px" marginwidth="0px"></iframe>
             </div>
         </div>
 
@@ -273,7 +280,7 @@
 
             // var editor;
 
-            // var editorFontSize = 15;
+            // var editorFontSize = 35;
 
             // var defaultValue = "/* Write your code here. */\n\nfunction isDeleted(element) { \n    var id_str = element.id;\n    id_str = id_str.replace(\"btn\",\"\"); \n    var id_num = parseInt(id_str);\n\n    if (delete_flag == true) {\n        delete_flag = false;\n        subArray[id_num].isDelete = \"true\";\n        element.value=\"×\";\n    } else {\n        delete_flag = true;\n        subArray[id_num].isDelete = \"false\";\n        element.value=\"\";\n    }\n}";
             // var noneValue = "";
@@ -296,7 +303,7 @@
                 // var pythonCode = "from PyQt5.QtWidgets import *\nimport sys\n\n\nclass Window(QMainWindow):\n    def __init__(self):\n        super().__init__()\n\n        # set the title of main window\n        self.setWindowTitle('My first window - www.luochang.ink')\n\n        # set the size of window\n        self.Width = 500\n        self.height = int(0.618 * self.Width)\n        self.resize(self.Width, self.height)\n\n\nif __name__ == '__main__':\n    app = QApplication(sys.argv)\n    ex = Window()\n    ex.show()\n    sys.exit(app.exec_())";
                 // var jsCode = "// Open or close the navbar\n\nfunction openNav() {\n  on();\n  document.getElementById(\"mySidenav\").style.width = \"40%\";\n  document.body.style.backgroundColor = \"rgba(0,0,0,0.5)\";\n}\nfunction closeNav() {\n  document.getElementById(\"mySidenav\").style.width = \"0\";\n  document.body.style.backgroundColor = \"white\";\n}\nfunction on() {\n  document.getElementById(\"overlay\").style.display = \"block\";\n}\nfunction off() {\n  closeNav();\n  document.getElementById(\"overlay\").style.display = \"none\";\n}";
                 // var javaCode = "class Solution {\n    public ListNode swapPairs(ListNode head) {\n        ListNode p, q, pre;\n        ListNode headNode = new ListNode(0);\n        headNode.next = head; \n        p = head;\n        if ( p == null || p.next == null ) return headNode.next;\n        q = head.next;\n        pre = headNode;\n        while (p != null & p.next != null) {\n            p.next = q.next;\n            q.next = p;\n            pre.next = q;\n            p = p.next;\n            if (p == null) break;\n            q = p.next;\n            pre = pre.next.next;\n        }\n        return headNode.next;\n    }\n}";
-                var htmlCode = "<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>what time is it?</title>\n<style type=\"text/css\">\n	body {\n		font-family: \"Source Han Sans\", \"San Francisco\", \"PingFang SC\", \"Hiragino Sans GB\", \"Droid Sans Fallback\", \"Microsoft YaHei\", sans-serif;\n		font-size: 14px;\n		color: #333;\n	}\n	p {\n		margin: 1em 0;\n	}\n	p:empty {\n		height: 1.5em;\n	}\n	main {\n		margin: 0 5em;\n		max-width: 48em;\n	}\n	h1 {\n		margin: 1em 0;\n		font-size: 24px;\n		font-weight: 300;\n	}\n	button {\n		background: #fff;\n		border: 1px solid #ccc;\n		border-radius: 2px;\n		line-height: 1;\n		padding: .5em;\n	}\n</style>\n</head>\n\n<body>\n<main>\n		\n	<h1>what time is it?</h1>\n	<p>© 2019 Chang Luo</p>\n	<hr>\n	\n	<p>Excuse me, what time is it now O_O ???</p>\n	<br>\n	\n	<button type=\"button\" onclick=\"document.getElementById('time').innerHTML = Date()\">\n		Click Me\n	</button>\n\n	<p id=\"time\"></p>\n	\n</main>\n</html>"
+                var htmlCode = "<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>what time is it?<" + "/title>\n<style type=\"text/css\">\n	body {\n		font-family: \"Source Han Sans\", \"San Francisco\", \"PingFang SC\", \"Hiragino Sans GB\", \"Droid Sans Fallback\", \"Microsoft YaHei\", sans-serif;\n		font-size: 14px;\n		color: #333;\n	}\n	p {\n		margin: 1em 0;\n	}\n	p:empty {\n		height: 1.5em;\n	}\n	main {\n		margin: 0 5em;\n		max-width: 48em;\n	}\n	h1 {\n		margin: 1em 0;\n		font-size: 24px;\n		font-weight: 300;\n	}\n	button {\n		background: #fff;\n		border: 1px solid #ccc;\n		border-radius: 2px;\n		line-height: 1;\n		padding: .5em;\n	}\n<" + "/style>\n<" + "/head>\n\n<body>\n<main>\n		\n	<h1>what time is it?<" + "/h1>\n	<p>© 2019 Chang Luo<" + "/p>\n	<hr>\n	\n	<p>Excuse me, what time is it now O_O ???<" + "/p>\n	<br>\n	\n	<button type=\"button\" onclick=\"document.getElementById('time').innerHTML = Date()\">\n		Click Me\n	<" + "/button>\n\n	<p id=\"time\"><" + "/p>\n	\n<" + "/main>"+ "\n<script" + ">\n	console.log('Hi there! Welcome to Monaco Speech Editor.');\n	console.log('Monaco Speech Editor is an open source web application.');\n	console.log('The repo address is https://github.com/luochang212/monaco-speech-editor');\n	console.log(\"If you like this web page or think it's useful,\");\n	console.log('could you give me a star on GitHub (●°u°●)​ 」');\n<" + "/script>" +"\n<" + "/body>\n<" + "/html>"
                 var noCode = "";
 
 
@@ -304,7 +311,7 @@
                     base: 'vs',
                     inherit: true,
                     rules: [{ background: 'EDF9FA' }],
-                    colors: {'editor.lineHighlightBackground': '#0000FF20'}
+                    colors: {'editor.lineHighlightBackground': '#0000FF20'}     
                 });
                 monaco.editor.setTheme('myTheme');
 
@@ -314,6 +321,7 @@
                     var model = monaco.editor.createModel(code, language);
                     var editor = monaco.editor.create(document.getElementById(container_id), {
                         model: model,
+                        // fontSize: editorFontSize
                         // theme: "vs-dark"
                     });
                     editorArray.push(editor);
@@ -375,7 +383,9 @@
                 document.getElementById("console-button-run").addEventListener("click", function(){
                     run();
                 });
-
+                // document.getElementById("test-button").addEventListener("click", function(){
+                //     // editorFontSize = 15;
+                // });
 
 
                 
@@ -1392,14 +1402,42 @@
             // console
             function run() {
                 var text = myEditor.getValue();
-                // console.log(text);
+                // new iframe
+                newIframe("compiler-iframe");
                 // refresh iframe
-                var iframe = document.getElementById("compiler-iframe");
-                iframe.contentWindow.document.body.innerHTML = "";
-                // fix bug: css can't refresh
-                iframe.contentWindow.document.getElementsByTagName("head")[0].innerHTML = "";  
-                iframe.contentDocument.write(text);
-                // console.log(document.getElementById("compiler-iframe").src);
+                document.getElementById("compiler-iframe").contentDocument.write(text);
+
+                // logger
+                // 重写console.log
+                // implement it by hack way
+                var injection = "<script" + ">(function (logger) {conso"+"le.old = console.log;console.log = function () {var output = \"\", arg, i;for (var i = 0; i < argu"+"ments.length; i++) {arg = argume"+"nts[i];output += \"<span class='log-\" + (typeof arg) + \"'>\";if (ty"+"peof arg === \"object\" \&"+"\&typeof JSON === \"object\" \&"+"\&typeof JSON.stringify === \"function\") {output += JSON.stringify(arg);   } else {output += arg;   }output += '<" + "/span>\&nbsp;';}logger.innerHTML += output + '<br>';console.old.apply(undefined, arguments);};})(document.getElementById('logger'));<" + "/script>";
+                // var displaySetting = "<script" + ">var nodes = document.all;for(var i=0;i<nodes.length;i++){var o = nodes[i];o.style.display = 'none';} document.getElementsByTagName('html')[0].style.display = 'block';document.getElementsByTagName('body')[0].style.display = 'block';var dddiv = document.createElement('div');dddiv.innerHTML = \"<pre id='logger'><" + "/pre>\";document.body.appendChild(dddiv);<" + "/script>";
+                // var sss = "<script"+">var x = document.getElementsByTagName('script');for(var i = 0; i < x.length; i++) {var s = x[i];s.style = '';}<"+"/script>";
+                // var addLogger = "<script"+">var dddiv = document.createElement('div');dddiv.innerHTML = \"<pre id='logger'><" + "/pre>\";document.body.appendChild(dddiv);<" + "/script>"
+                // var logInput = injection + text + displaySetting  + sss; // "<script"+">console.log('hi');<"+"/script>";
+                var hideAllElem = "<script" + ">var nodes = document.all;for(var i=0;i<nodes.length;i++){var o = nodes[i];o.style.display = 'none';}<"+"/script>";
+                // var showe = "<script" + ">var cn = document.getElementById('logger').childNodes;for (var i = 0; i < cn.length; i++) {cn[i].style = 'display: block;';}<"+"/script>";
+                var showLog = "<script" + ">document.getElementsByTagName('html')[0].style.display = 'block';document.getElementsByTagName('body')[0].style.display = 'block';document.getElementById('logger').style.display = 'block'; var cn = document.getElementById('logger').childNodes;for (var i = 0; i < cn.length; i++) {cn[i].style = 'display: block;';}<"+"/script>";
+                var logInput =  "<link rel=\"stylesheet\" href=\"./src/style.css\">" + "<pre id='logger'></pre>" + injection + text + hideAllElem + showLog;
+                newIframe("log-iframe");
+                document.getElementById("log-iframe").contentDocument.write(logInput);
+                // 防止myEditor里的代码注入导致的背景颜色变化
+                document.getElementById("log-iframe").contentDocument.body.style.background = "#333";
+            }
+
+            function newIframe(id) {
+                // remove iframe
+                var selectedIframe = document.getElementById(id);
+                var parent = selectedIframe.parentNode;
+                parent.removeChild(selectedIframe);
+
+                // create a new iframe
+                var iframe = document.createElement("iframe");
+                // iframe.setAttribute("src", "http://google.com/");
+                // iframe.style.width = "640px";
+                // iframe.style.height = "480px";
+                iframe.id = id;
+                parent.appendChild(iframe);
             }
 
 
@@ -1455,6 +1493,9 @@
                 // document.getElementById("left-nav-button-4").click();
                 // document.getElementById("night-mode-input").click();
                 // document.getElementById("speak-document").click();
+                // document.getElementById("console-button").click();
+                // document.getElementById("left-nav-button-1").click();
+
                 
                 
 
