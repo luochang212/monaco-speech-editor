@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>what time is it?</title>
+<style type="text/css">
+	body {
+		font-family: "Source Han Sans", "San Francisco", "PingFang SC", "Hiragino Sans GB", "Droid Sans Fallback", "Microsoft YaHei", sans-serif;
+		font-size: 14px;
+		color: #333;
+	}
+	p {
+		margin: 1em 0;
+	}
+	p:empty {
+		height: 1.5em;
+	}
+	main {
+		margin: 0 5em;
+		max-width: 48em;
+	}
+	h1 {
+		margin: 1em 0;
+		font-size: 24px;
+		font-weight: 300;
+	}
+	button {
+		background: #fff;
+		border: 1px solid #ccc;
+		border-radius: 2px;
+		line-height: 1;
+		padding: .5em;
+	}
+</style>
+</head>
+
+<body>
+<main>
+		
+	<h1>what time is it?</h1>
+	<p>© 2019 Chang Luo</p>
+	<hr>
+	
+	<p>Excuse me, what time is it now O_O ???</p>
+	<br>
+	
+	<button type="button" onclick="document.getElementById('time').innerHTML = Date()">
+		Click Me
+	</button>
+
+	<p id="time"></p>
+	
+</main>
+<script>
+
+var day;
+var d = 3;
+switch (d) {
+  case 0:
+    day = "Sunday";
+    break;
+  case 1:
+    day = "Monday";
+    break;
+  case 2:
+    day = "Tuesday";
+    break;
+  case 3:
+    d = "Wednesday";
+    break;
+  case 4:
+    day = "Thursday";
+    break;
+  case 5:
+    day = "Friday";
+    break;
+  case  6:
+    day = "Saturday";
+}
+console.log(d);
+
+var str = 'TILDE';
+console.log(str.toLowerCase());
+
+console.log(charSpeak('asdo_09)9aA'));
+
+function charSpeak(val) {
+	var res = '';
+	for (var i = 0; i < val.length; i++) {
+		var temp = val[i];
+		switch (temp) {
+			case ' ':
+				temp = "space";
+				break;
+  			case '!':
+				temp = "exclamation mark";
+				break;
+			case '\"':
+				temp = "quotation mark";
+				break;
+			case '#':
+				temp = "number sign";
+				break;
+			case '$':
+				temp = "dollar sign";
+				break;
+			case '%':
+				temp = "percent sign";
+				break;
+			case '&':
+				temp = "ampersand";
+				break;
+			case '\'':
+				temp = "apostrophe";
+				break;
+			case '(':
+				temp = "left parenthesis";
+				break;
+			case ')':
+				temp = "right parenthesis";
+				break;
+			case '*':
+				temp = "asterisk";
+				break;
+			case '+':
+				temp = "plus sign";
+				break;
+			case ',':
+				temp = "comma";
+				break;
+			case '-':
+				temp = "hyphen";
+				break;
+			case '.':
+				temp = "full stop";
+				break;
+			case '/':
+				temp = "solidus";
+				break;
+			case ':':
+				temp = "colon";
+				break;
+			case ';':
+				temp = "semicolon";
+				break;
+			case '<':
+				temp = "less than sign";
+				break;
+			case '=':
+				temp = "equals sign";
+				break;
+			case '>':
+				temp = "greater than sign";
+				break;
+			case '?':
+				temp = "question mark";
+				break;
+			case '@':
+				temp = "at";
+				break;
+			case 'A':
+				temp = "capital a";
+				break;
+			case 'B':
+				temp = "capital b";
+				break;
+			case 'C':
+				temp = "capital c";
+				break;
+			case 'D':
+				temp = "capital d";
+				break;
+			case 'E':
+				temp = "capital e";
+				break;
+			case 'F':
+				temp = "capital f";
+				break;
+			case 'G':
+				temp = "capital g";
+				break;
+			case 'H':
+				temp = "capital h";
+				break;
+			case 'I':
+				temp = "capital i";
+				break;
+			case 'J':
+				temp = "capital j";
+				break;
+			case 'K':
+				temp = "capital k";
+				break;
+			case 'L':
+				temp = "capital l";
+				break;
+			case 'M':
+				temp = "capital m";
+				break;
+			case 'N':
+				temp = "capital n";
+				break;
+			case 'O':
+				temp = "capital o";
+				break;
+			case 'P':
+				temp = "capital p";
+				break;
+			case 'Q':
+				temp = "capital q";
+				break;
+			case 'R':
+				temp = "capital r";
+				break;
+			case 'S':
+				temp = "capital s";
+				break;
+			case 'T':
+				temp = "capital t";
+				break;
+			case 'U':
+				temp = "capital u";
+				break;
+			case 'V':
+				temp = "capital v";
+				break;
+			case 'W':
+				temp = "capital w";
+				break;
+			case 'X':
+				temp = "capital x";
+				break;
+			case 'Y':
+				temp = "capital y";
+				break;
+			case 'Z':
+				temp = "capital z";
+				break;
+			case '[':
+				temp = "left square bracket";
+				break;
+			case '\\':
+				temp = "reverse solidus";
+				break;
+			case ']':
+				temp = "right square bracket";
+				break;
+			case '^':
+				temp = "circumflex accent";
+				break;
+			case '_':
+				temp = "low line";
+				break;
+			case '`':
+				temp = "grave accent";
+				break;
+			case '{':
+				temp = "left curly bracket";
+				break;
+			case '|':
+				temp = "vertical line";
+				break;
+			case '}':
+				temp = "right curly bracket";
+				break;
+			case '~':
+				temp = "tilde";
+				break;
+			default:
+			 	temp = val[i];
+		}
+		res += temp + ' ';
+	}
+	return res;
+}
+
+</script>
+</script>
+</body>
+</html>
