@@ -1191,7 +1191,8 @@
             // load demo
             // 从json加载示例代码
             function loadDemo() {
-                $.getJSON("http://luochang212.github.io/gadget/monaco-speech-editor/data/code.json", function(data){
+                // $.getJSON("https://www.luochang.ink/gadget/monaco-speech-editor/data/code.json", function(data){
+                $.getJSON("./data/code.json", function(data){
                     $.each( data, function( key, val ) {
                         var ext = key.toString().split('.').pop();
                         // var filename = key.toString().split('.').shift();
