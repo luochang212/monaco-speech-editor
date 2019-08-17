@@ -720,13 +720,24 @@ body {
     /* top: calc(100vh - 300px); */
     /* bottom: 0px; */
     /* background: #2b2b2b; */
-    top: calc(100vh - 20px);
-    height: 300px;
+    top: calc(100% - 20px);
+    height: 330px;
     background: #F5F5F5;
     z-index: 99999;
     overflow: hidden;
     transition: 0.2s;
     /* border-top:1px solid #bbbbbb; */
+  }
+
+  #console-button-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 29px;
+    /* border-top: 1px solid #bbbbbb;
+    border-bottom: 1px solid #bbbbbb; */
+    overflow: hidden;
   }
 
   .console button {
@@ -745,23 +756,14 @@ body {
     overflow: hidden;
   }
 
-  #console-button-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 20px;
-    overflow: hidden;
-  }
-
   .console button:hover {
     color: rgb(88, 86, 214);
     /* background: #FFF; */
   }
 
-  .compiler {
+  .result {
     position: absolute;
-    top: 20px;
+    top: 30px;
     bottom: 0;
     left: 0;
     width: calc((100vw - 50px)*0.6);
@@ -769,8 +771,8 @@ body {
     background: #FFF;
   }
 
-  #compiler-iframe {
-    height: calc(300px - 20px);
+  #result-iframe {
+    height: calc(330px - 30px);
     /* width: calc((100vw - 50px)*0.6); */
     width: 100%;
     border: 0px none #ffffff;
@@ -778,16 +780,18 @@ body {
 
   #console-log {
     position: absolute;
-    top: 20px;
+    top: 30px;
     bottom: 0;
     left: calc((100vw - 50px)*0.6);
     right: 0;
-    background: #202020;
+    /* background: #202020; */
+    background: #FFFFFF;
+    border-left: 1px solid #dddddd;
     overflow: auto;
   }
 
   #log-iframe {
-    height: calc(300px - 20px);
+    height: calc(330px - 30px);
     width: 100%;
     border: 0px none #ffffff;
   }

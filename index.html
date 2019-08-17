@@ -217,8 +217,34 @@
                         <span class="slider round"></span>
                     </label>
                 </span>
-
             </div>
+
+            <button class="nav-title" id="console-controller-title"
+                onclick="hideSection(event, 'console-controller', 'title-icon-4-4');"><img class="title-icon"
+                    id="title-icon-4-4" src="./images/sort-down-solid.svg" alt="down"> Console</button>
+            <div class="navbar" id="console-controller">
+                <span id="hide-log-area" class="navbar-toggle" style="padding-top: 10px;">
+                    Hide Console Log Area
+                    <label class="switch">
+                        <input id="log-area-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span id="hide-result-area" class="navbar-toggle" style="padding-top: 10px;">
+                    Hide Rendering Result Area
+                    <label class="switch">
+                        <input id="result-area-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                
+            </div>
+
+
+
+
+
+
         </div>
 
     </div>
@@ -323,10 +349,12 @@
         <div id="console-button-bar">
             <button id="console-button">Console</button>
             <button id="console-button-run" style="display: none;">Run</button>
+            <button id="console-button-open-window" style="display: none;">Open In New Window</button>
+            <button id="console-button-open-tab" style="display: none;">Open In New Tab</button>
         </div>
 
-        <div id="compiler-bar" class="compiler">
-            <iframe id="compiler-iframe" scrolling="auto" marginheight="0px" marginwidth="0px"></iframe>
+        <div id="console-result" class="result">
+            <iframe id="result-iframe" scrolling="auto" marginheight="0px" marginwidth="0px"></iframe>
         </div>
         <div id="console-log">
             <iframe id="log-iframe" scrolling="auto" marginheight="0px" marginwidth="0px"></iframe>
@@ -460,19 +488,39 @@
                     document.getElementById("toolbar").style.background = "#333";
                     document.getElementById("toolbar").style.color = "#FFFFF0";
                     document.getElementById("console-bar").style.background = "#333";
-                    document.getElementById("console-button").style.color = "#FFF";
-                    document.getElementById("console-button-run").style.color = "#FFF";
+                    // document.getElementById("console-button").style.color = "#FFF";
+                    // document.getElementById("console-button-run").style.color = "#FFF";
+                    var btn_bar = document.getElementById('console-button-bar');
+                    for (var i = 0; i < btn_bar.children.length; i ++) {
+                        btn_bar.children[i].style.color = "#FFF";
+                    }
                 } else {
                     monaco.editor.setTheme('myTheme');
                     document.getElementById("toolbar").style.background = "#F5F5F5";
                     document.getElementById("toolbar").style.color = "#000000";
                     document.getElementById("console-bar").style.background = "#F5F5F5";
-                    document.getElementById("console-button").style.color = "inherit";
-                    document.getElementById("console-button-run").style.color = "inherit";
+                    // document.getElementById("console-button").style.color = "inherit";
+                    // document.getElementById("console-button-run").style.color = "inherit";
+                    var btn_bar = document.getElementById('console-button-bar');
+                    for (var i = 0; i < btn_bar.children.length; i ++) {
+                        btn_bar.children[i].style.color = "inherit";
+                    }
+                }
+            });
+            document.getElementById("console-button").addEventListener("click", function () {
+                hideConsole();
+                if (consoleToggle == "s") {
+                    run();
                 }
             });
             document.getElementById("console-button-run").addEventListener("click", function () {
                 run();
+            });
+            document.getElementById("console-button-open-tab").addEventListener("click", function () {
+                openInNewTab();
+            });
+            document.getElementById("console-button-open-window").addEventListener("click", function () {
+                openInNewWindow();
             });
             document.getElementById("character-mode-input").addEventListener("click", function () {
                 document.getElementById("code-mode-input").checked = false;
@@ -503,6 +551,26 @@
                     modeController = 'easySpeak';
                 }
                 // console.log(modeController);
+            });
+            document.getElementById("result-area-input").addEventListener("click", function () {
+                document.getElementById("log-area-input").checked = false;
+                if (document.getElementById("result-area-input").checked === true) {
+                    document.getElementById("console-result").style.width = '0';
+                    document.getElementById("console-log").style.left = '0';
+                } else {
+                    document.getElementById("console-result").style.width = 'calc((100vw - 50px)*0.6)';
+                    document.getElementById("console-log").style.left = 'calc((100vw - 50px)*0.6)';
+                }
+            });
+            document.getElementById("log-area-input").addEventListener("click", function () {
+                document.getElementById("result-area-input").checked = false;
+                if (document.getElementById("log-area-input").checked === true) {
+                    document.getElementById("console-log").style.left = '100vw';
+                    document.getElementById("console-result").style.width = '100%';
+                } else {
+                    document.getElementById("console-result").style.width = 'calc((100vw - 50px)*0.6)';
+                    document.getElementById("console-log").style.left = 'calc((100vw - 50px)*0.6)';
+                }
             });
 
 
@@ -1645,9 +1713,9 @@
             function run() {
                 var text = myEditor.getValue();
                 // new iframe
-                newIframe("compiler-iframe");
+                newIframe("result-iframe");
                 // refresh iframe
-                document.getElementById("compiler-iframe").contentDocument.write(text);
+                document.getElementById("result-iframe").contentDocument.write(text);
 
                 // logger
                 // 重写console.log
@@ -1655,11 +1723,12 @@
                 var injection = "<script" + ">(function (logger) {conso" + "le.old = console.log;console.log = function () {var output = \"\", arg, i;for (var i = 0; i < argu" + "ments.length; i++) {arg = argume" + "nts[i];output += \"<span class='log-\" + (typeof arg) + \"'>\";if (ty" + "peof arg === \"object\" \&" + "\&typeof JSON === \"object\" \&" + "\&typeof JSON.stringify === \"function\") {output += JSON.stringify(arg);   } else {output += arg;   }output += '<" + "/span>\&nbsp;';}logger.innerHTML += output + '<br>';console.old.apply(undefined, arguments);};})(document.getElementById('logger'));<" + "/script>";
                 var hideAllElem = "<script" + ">var nodes = document.all;for(var i=0;i<nodes.length;i++){var o = nodes[i];o.style.display = 'none';}<" + "/script>";
                 var showLog = "<script" + ">document.getElementsByTagName('html')[0].style.display = 'block';document.getElementsByTagName('body')[0].style.display = 'block';document.getElementById('logger').style.display = 'block'; var cn = document.getElementById('logger').childNodes;for (var i = 0; i < cn.length; i++) {cn[i].style = 'display: block;';}<" + "/script>";
-                var logInput = "<link rel=\"stylesheet\" href=\"./src/style.css\">" + "<pre id='logger'></pre>" + injection + text + hideAllElem + showLog;
+                var logInput = "<link rel=\"stylesheet\" href=\"./src/style.css\">" + "<div id='logger'></div>" + injection + text + hideAllElem + showLog;
                 newIframe("log-iframe");
                 document.getElementById("log-iframe").contentDocument.write(logInput);
                 // 防止myEditor里的代码注入导致的背景颜色变化
-                document.getElementById("log-iframe").contentDocument.body.style.background = "#202020";
+                document.getElementById("log-iframe").contentDocument.body.style.background = "#FFFFFF";  // "#202020";
+                // document.getElementById("log-iframe").contentDocument.body.style.borderLeft = "1px solid #bbbbbb";
             }
 
             function newIframe(id) {
@@ -1674,6 +1743,21 @@
                 parent.appendChild(iframe);
             }
 
+            // open iframe in new window
+            function openInNewWindow() {
+                var win = window.open("", "Title", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=780,height=200,top="+(screen.height-400)+",left="+(screen.width-840));
+                var text = myEditor.getValue();
+                win.document.write(text);
+                // win.document.body.innerHTML = text;
+            }
+
+            function openInNewTab() {
+                var win = window.open("_blank");
+                var text = myEditor.getValue();
+                win.document.write(text);
+                // win.document.body.innerHTML = text;
+            }
+
             function init() {
                 document.getElementById("left-nav-button-1").click();
                 // addFile(javaCode);
@@ -1686,12 +1770,15 @@
             // document.getElementById("left-nav-button-4").click();
             // document.getElementById("night-mode-input").click();
             // document.getElementById("speak-document").click();
-            document.getElementById("console-button").click();
+            // document.getElementById("console-button").click();
             // document.getElementById("left-nav-button-4").click();
+
 
             // overDocSpeak();
             // overLineSpeak();
             // testSymbol();
+            // openInNewWindow();
+            // openInNewTab();
 
 
 
@@ -1845,33 +1932,48 @@
             }
         }
 
-        // console button
-        document.getElementById("console-button").addEventListener("click", function () {
-            hideConsole();
-        });
-
-
-        var consoleToggle = "h"
+        // console hide and show
+        var consoleToggle = "h";
         function hideConsole() {
             if (consoleToggle == "h") {
                 // 打开状态
-                // 显示run button
+                // 显示run button console-button-open-window console-button-open-tab
                 document.getElementById("console-button-run").style.display = "inline-block";
+                document.getElementById("console-button-open-window").style.display = "inline-block";
+                document.getElementById("console-button-open-tab").style.display = "inline-block";
+                // 打开状态下，所有console button类的按钮高度调为29px，字体大小调为14px
+                var btn_bar = document.getElementById('console-button-bar');
+                for (var i = 0; i < btn_bar.children.length; i ++) {
+                    btn_bar.children[i].style.height = '29px';
+                    btn_bar.children[i].style.fontSize = '14px';
+                }
                 // 打开状态下，为console bar 加一条上边线
-                document.getElementById("console-bar").style.borderTop = "1px solid #000000";
+                console_border_style = "1px solid";
+                document.getElementById("console-bar").style.borderTop = console_border_style + console_border_color;
+                // 打开状态下，为console button bar 加一条下边线
+                // document.getElementById("console-button-bar").style.borderBottom = "1px solid #bbbbbb"; //+ console_border_style + console_border_color;
                 // Code for Safari
-                document.getElementById("console-bar").style.WebkitTransform = "translateY(-280px)";
+                document.getElementById("console-bar").style.WebkitTransform = "translateY(-310px)";
                 // Code for IE9
-                document.getElementById("console-bar").style.msTransform = "translateY(-280px)";
+                document.getElementById("console-bar").style.msTransform = "translateY(-310px)";
                 // Standard syntax
-                document.getElementById("console-bar").style.transform = "translateY(-280px)";
+                document.getElementById("console-bar").style.transform = "translateY(-310px)";
                 consoleToggle = "s";
             } else {
                 // 关闭状态
-                // 隐藏run button
+                // 隐藏run button console-button-open-window console-button-open-tab
                 document.getElementById("console-button-run").style.display = "none";
+                document.getElementById("console-button-open-window").style.display = "none";
+                document.getElementById("console-button-open-tab").style.display = "none";
+                // 关闭状态下，所有console button类的按钮高度调为20px，字体大小调为12px
+                var btn_bar = document.getElementById('console-button-bar');
+                for (var i = 0; i < btn_bar.children.length; i ++) {
+                    btn_bar.children[i].style.height = '20px';
+                    btn_bar.children[i].style.fontSize = '12px';
+                }
                 // 关闭状态下，去掉上边线
-                document.getElementById("console-bar").style.borderTop = "0px none #FFFFFF";
+                console_border_style = "0px none";
+                document.getElementById("console-bar").style.borderTop = console_border_style + console_border_color;
                 // Code for Safari
                 document.getElementById("console-bar").style.WebkitTransform = "translateY(0)";
                 // Code for IE9
@@ -1881,6 +1983,27 @@
                 consoleToggle = "h";
             }
         }
+
+        var console_border_style = "0px none";
+        var console_border_color = "#bbbbbb";
+
+        document.getElementById("night-mode-input").addEventListener("click", function () {
+            // console.log('asdfasdf');
+                if (document.getElementById("night-mode-input").checked === true) {
+                    console_border_color = "#000000";
+                    // 夜间模式下，将console button bar 下边线的颜色改为#000000
+                    // document.getElementById("console-button-bar").style.borderBottom = "1px " + console_border_style + console_border_color;
+                    // 夜间模式下，将console bar 上边线的颜色改为#000000
+                    document.getElementById("console-bar").style.borderTop = console_border_style + console_border_color;
+                } else {
+                    console_border_color = "#bbbbbb";
+                    // 白天模式下，将console button bar 下边线的颜色改为#bbbbbb
+                    // document.getElementById("console-button-bar").style.borderBottom = "1px " + console_border_style + console_border_color;
+                    // 白天模式下，将console bar 上边线的颜色改为#bbbbbb
+                    document.getElementById("console-bar").style.borderTop = console_border_style + console_border_color;
+                }
+                console.log(document.getElementById("console-bar").style.borderTop)
+            });
 
 
         // router
@@ -1927,7 +2050,6 @@
         Router.route('dark+run', function () {
             document.getElementById("night-mode-input").click();
             document.getElementById("console-button").click();
-            document.getElementById("console-button-run").click();
         });
 
 
