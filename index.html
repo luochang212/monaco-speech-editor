@@ -581,7 +581,9 @@
             });
             document.getElementById("voice-feedback-input").addEventListener("click", function () {
                 if (document.getElementById("voice-feedback-input").checked === true) {
-                    voiceFeedback();
+                    voiceFbToggole = true;
+                } else {
+                    voiceFbToggole = false;
                 }
             });
 
@@ -860,24 +862,6 @@
                 // + 变量的数量，是否在函数里，是否在控制结构里 this line belong to function blablabla
                 var res = 'This is line ' + line_number + ' This line have ' + char_count + ' characters ';
                 return res;
-            }
-
-            // 输入文字时触发语音反馈，会念出刚刚输入的文字
-            function voiceFeedback() {
-                var row, col, char;
-                myEditor.onDidChangeCursorPosition((e) => {
-                    row = myEditor.getPosition().lineNumber;
-                    col = myEditor.getPosition().column;
-                    char = myEditor.getModel().getValueInRange({
-                        startLineNumber: row,
-                        startColumn: col - 1,
-
-                        endLineNumber: row,
-                        endColumn: col,
-                    });
-                    // console.log(char);
-                    easySpeak(charSpeak( char ));
-                });
             }
 
             // 这个api还是不会用，蛋疼 provideDocumentSymbols
@@ -1523,6 +1507,32 @@
                 fileCounter += 1;
             }
 
+            // var voiceFbToggole = '';
+            function voiceFeedback(editor) {
+                // console.log(toggle);
+                // console.log('a');
+                var row, col, char;
+                myEditor.onDidChangeCursorPosition((e) => {
+                    row = myEditor.getPosition().lineNumber;
+                    col = myEditor.getPosition().column;
+                    char = myEditor.getModel().getValueInRange({
+                        startLineNumber: row,
+                        startColumn: col - 1,
+
+                        endLineNumber: row,
+                        endColumn: col,
+                    });
+                    // console.log(char);
+                    if (voiceFbToggole === 't') {
+                        // console.log(toggle);
+                        // console.log('b');
+                        easySpeak(charSpeak( char ));
+                    }
+                });
+            }
+
+            // 当前所在编辑器发生变化时，激活一次当前编辑器
+            var voiceFbToggole = '';
             function activeEditor(index) {
                 // 文件列表该文件背景高亮
                 // 将当前新增文件的文件列表的li的class设为active
@@ -1546,9 +1556,21 @@
                 myEditor = fileArray[index - 1].editor;
 
                 // 注册光标移动事件，每次移动触发更新
+                var char;
                 myEditor.onDidChangeCursorPosition((e) => {
                     // console.log(JSON.stringify(e));
                     updateCursorPosition();
+                    // 输入文字时触发语音反馈 voice feedback，会念出刚刚输入的文字
+                    if (voiceFbToggole === true) {
+                        char = myEditor.getModel().getValueInRange({
+                            startLineNumber: currentLineNumber,
+                            startColumn: currentColumnNumber - 1,
+
+                            endLineNumber: currentLineNumber,
+                            endColumn: currentColumnNumber,
+                        });
+                        easySpeak(charSpeak( char ));
+                    }
                 });
 
                 // 遍历所有文件，isActive设为false，然后把当前激活的editor的isActive设为true
