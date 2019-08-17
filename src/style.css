@@ -726,7 +726,7 @@ body {
     z-index: 99999;
     overflow: hidden;
     transition: 0.2s;
-    /* border-top:1px solid #000000;  */
+    /* border-top:1px solid #bbbbbb; */
   }
 
   .console button {
@@ -764,7 +764,7 @@ body {
     top: 20px;
     bottom: 0;
     left: 0;
-    width: calc((100vw - 50px)*0.6);
+    width: calc((100vw - 50px)*0.5);
     overflow: hidden;
     background: #FFF;
   }
@@ -780,7 +780,7 @@ body {
     position: absolute;
     top: 20px;
     bottom: 0;
-    left: calc((100vw - 50px)*0.6);
+    left: calc((100vw - 50px)*0.5);
     right: 0;
     background: #202020;
     overflow: auto;

@@ -136,7 +136,35 @@
                     <select class="voice-select"></select>
                 </div>
 
-                <button class="nav-title" id="theme-controller-title" onclick="hideSection(event, 'theme-controller', 'title-icon-4-2');"><img class="title-icon" id="title-icon-4-2" src="./images/sort-down-solid.svg" alt="down"> Theme</button>
+                <button class="nav-title" id="mode-controller-title" onclick="hideSection(event, 'mode-controller', 'title-icon-4-2');"><img class="title-icon" id="title-icon-4-2" src="./images/sort-down-solid.svg" alt="down"> Mode</button>
+                <div class="navbar" id="mode-controller">
+                    <span id="character-mode" class="navbar-toggle" style="padding-top: 10px;">
+                        Character Mode
+                        <label class="switch">
+                            <input id="character-mode-input" type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </span>
+
+                    <span id="code-mode" class="navbar-toggle" style="padding-top: 10px;">
+                        Code Mode
+                        <label class="switch">
+                            <input id="code-mode-input" type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </span>
+
+                    <span id="overview-mode" class="navbar-toggle" style="padding-top: 10px;">
+                        Overview Mode
+                        <label class="switch">
+                            <input id="overview-mode-input" type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </span>
+                    
+                </div>
+
+                <button class="nav-title" id="theme-controller-title" onclick="hideSection(event, 'theme-controller', 'title-icon-4-3');"><img class="title-icon" id="title-icon-4-3" src="./images/sort-down-solid.svg" alt="down"> Theme</button>
                 <div class="navbar" id="theme-controller">
                     <span id="night-mode" class="navbar-toggle" style="padding-top: 10px;">
                         Night Mode
@@ -264,7 +292,7 @@
                 // var pythonCode = "from PyQt5.QtWidgets import *\nimport sys\n\n\nclass Window(QMainWindow):\n    def __init__(self):\n        super().__init__()\n\n        # set the title of main window\n        self.setWindowTitle('My first window - www.luochang.ink')\n\n        # set the size of window\n        self.Width = 500\n        self.height = int(0.618 * self.Width)\n        self.resize(self.Width, self.height)\n\n\nif __name__ == '__main__':\n    app = QApplication(sys.argv)\n    ex = Window()\n    ex.show()\n    sys.exit(app.exec_())";
                 // var jsCode = "// Open or close the navbar\n\nfunction openNav() {\n  on();\n  document.getElementById(\"mySidenav\").style.width = \"40%\";\n  document.body.style.backgroundColor = \"rgba(0,0,0,0.5)\";\n}\nfunction closeNav() {\n  document.getElementById(\"mySidenav\").style.width = \"0\";\n  document.body.style.backgroundColor = \"white\";\n}\nfunction on() {\n  document.getElementById(\"overlay\").style.display = \"block\";\n}\nfunction off() {\n  closeNav();\n  document.getElementById(\"overlay\").style.display = \"none\";\n}";
                 // var javaCode = "class Solution {\n    public ListNode swapPairs(ListNode head) {\n        ListNode p, q, pre;\n        ListNode headNode = new ListNode(0);\n        headNode.next = head; \n        p = head;\n        if ( p == null || p.next == null ) return headNode.next;\n        q = head.next;\n        pre = headNode;\n        while (p != null & p.next != null) {\n            p.next = q.next;\n            q.next = p;\n            pre.next = q;\n            p = p.next;\n            if (p == null) break;\n            q = p.next;\n            pre = pre.next.next;\n        }\n        return headNode.next;\n    }\n}";
-                var htmlCode = "<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>what time is it?<" + "/title>\n<style type=\"text/css\">\n	body {\n		font-family: \"Source Han Sans\", \"San Francisco\", \"PingFang SC\", \"Hiragino Sans GB\", \"Droid Sans Fallback\", \"Microsoft YaHei\", sans-serif;\n		font-size: 14px;\n		color: #333;\n	}\n	p {\n		margin: 1em 0;\n	}\n	p:empty {\n		height: 1.5em;\n	}\n	main {\n		margin: 0 5em;\n		max-width: 48em;\n	}\n	h1 {\n		margin: 1em 0;\n		font-size: 24px;\n		font-weight: 300;\n	}\n	button {\n		background: #fff;\n		border: 1px solid #ccc;\n		border-radius: 2px;\n		line-height: 1;\n		padding: .5em;\n	}\n<" + "/style>\n<" + "/head>\n\n<body>\n<main>\n		\n	<h1>what time is it?<" + "/h1>\n	<p>© 2019 Chang Luo<" + "/p>\n	<hr>\n	\n	<p>Excuse me, what time is it now O_O ???<" + "/p>\n	<br>\n	\n	<button type=\"button\" onclick=\"document.getElementById('time').innerHTML = Date()\">\n		Click Me\n	<" + "/button>\n\n	<p id=\"time\"><" + "/p>\n	\n<" + "/main>"+ "\n<script" + ">\n	console.log('Hi there! Welcome to Monaco Speech Editor.');\n	console.log('Monaco Speech Editor is an open source web application.');\n	console.log('The repo address is https://github.com/luochang212/monaco-speech-editor');\n	console.log(\"If you like this web page or think it's useful,\");\n	console.log('could you give me a star on GitHub (●°u°●)​ 」');\n<" + "/script>" +"\n<" + "/body>\n<" + "/html>"
+                var htmlCode = "<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>what time is it?<" + "/title>\n<style type=\"text/css\">\n	body {\n		font-family: \"Source Han Sans\", \"San Francisco\", \"PingFang SC\", \"Hiragino Sans GB\", \"Droid Sans Fallback\", \"Microsoft YaHei\", sans-serif;\n		font-size: 14px;\n		color: #333;\n	}\n	p {\n		margin: 1em 0;\n	}\n	p:empty {\n		height: 1.5em;\n	}\n	main {\n		margin: 0 5em;\n		max-width: 48em;\n	}\n	h1 {\n		margin: 1em 0;\n		font-size: 24px;\n		font-weight: 300;\n	}\n	button {\n		background: #fff;\n		border: 1px solid #ccc;\n		border-radius: 2px;\n		line-height: 1;\n		padding: .5em;\n	}\n<" + "/style>\n<" + "/head>\n\n<body>\n<main>\n		\n	<h1>what time is it?<" + "/h1>\n	<p>© 2019 Chang Luo<" + "/p>\n	<hr>\n	\n	<p>Excuse me, what time is it now O_O ???<" + "/p>\n	<br>\n	\n	<button type=\"button\" onclick=\"document.getElementById('time').innerHTML = Date()\">\n		Click Me\n	<" + "/button>\n\n	<p id=\"time\"><" + "/p>\n	\n<" + "/main>"+ "\n<script" + ">\n	console.log('Hi there! Welcome to Monaco Speech Editor.');\n	console.log('Monaco Speech Editor is an open source web application.');\n	console.log('The repo address is https://github.com/luochang212/monaco-speech-editor');\n	console.log(\"If you like this web application or think it's useful,\");\n	console.log('could you give me a star on GitHub (●°u°●)​ 」');\n<" + "/script>" +"\n<" + "/body>\n<" + "/html>"
                 var noCode = "";
 
 
@@ -344,13 +372,48 @@
                 document.getElementById("console-button-run").addEventListener("click", function(){
                     run();
                 });
+                document.getElementById("character-mode-input").addEventListener("click", function(){
+                    document.getElementById("code-mode-input").checked = false;
+                    document.getElementById("overview-mode-input").checked = false;
+                    if (document.getElementById("character-mode-input").checked === true) {
+                        modeController = 'charSpeak';
+                    } else {
+                        modeController = 'easySpeak';
+                    }
+                    // console.log(modeController);
+                });
+                document.getElementById("code-mode-input").addEventListener("click", function(){
+                    document.getElementById("character-mode-input").checked = false;
+                    document.getElementById("overview-mode-input").checked = false;
+                    if (document.getElementById("code-mode-input").checked === true) {
+                        modeController = 'codeSpeak';
+                    } else {
+                        modeController = 'easySpeak';
+                    }
+                    // console.log(modeController);
+                });
+                document.getElementById("overview-mode-input").addEventListener("click", function(){
+                    document.getElementById("code-mode-input").checked = false;
+                    document.getElementById("character-mode-input").checked = false;
+                    if (document.getElementById("overview-mode-input").checked === true) {
+                        modeController = 'overSpeak';
+                    } else {
+                        modeController = 'easySpeak';
+                    }
+                    // console.log(modeController);
+                });
+
+
+                
+                
+
                 // document.getElementById("test-button").addEventListener("click", function(){
                 //     // editorFontSize = 15;
                 // });
 
 
                 
-
+                
 
                 
 
@@ -406,6 +469,10 @@
                 speak();
             }
 
+            // 模式控制器，全局变量，始终只有一个值（废话）
+            var modeController = 'easySpeak';
+
+            // character mode
             function charSpeak(val) {
                 var res = '';
                 for (var i = 0; i < val.length; i++) {
@@ -596,17 +663,62 @@
                 return res;
             }
 
-            function charByChar(val) {
-                easySpeak(charSpeak(val));
+
+            // overview mode
+            function overDocSpeak() {
+                var index = findActiveEditor();
+                var file_name = fileArray[index - 1].fileName;
+                var max_line = myEditor.getModel().getLineCount();
+                var char_count = myEditor.getValue().length;
+                // + how many functions, how many variables
+                var res = 'the filename is ' + file_name + ' the row count is ' + max_line + '  and there are ' + char_count + 'characters in this file ';
+                return res;
             }
+            
+            function overLineSpeak(line_number) {
+                var char_count = myEditor.getModel().getLineContent(line_number).length;
+                // + 变量的数量，是否在函数里，是否在控制结构里 this line belong to function blablabla
+                var res = 'This is line ' + line_number + ' This line have ' + char_count + ' characters ';
+                return res;
+            }
+
+            // 这个api还是不会用，蛋疼 provideDocumentSymbols
+            // function testSymbol() {
+            //     var token = '';
+            //     var x;
+            //     // console.log( monaco.languages.getEncodedLanguageId() );
+            //     // console.log( monaco.languages.provideDocumentSymbols() );
+            //     // console.log(x);
+            //     console.log( myEditor.getModel().DocumentSymbol )
+            // }
 
             function speakDocument() {
                 // console.log(myEditor);
-                easySpeak(myEditor.getValue());
+                if (modeController == 'easySpeak') {
+                    easySpeak(myEditor.getValue());
+                } else if (modeController == 'charSpeak') {
+                    easySpeak(charSpeak(myEditor.getValue()));
+                } else if (modeController == 'codeSpeak') {
+                    // easySpeak(myEditor.getValue());
+                } else if (modeController == 'overSpeak') {
+                    easySpeak(overDocSpeak());
+                } else {
+                    console.log('Something wrong in speakDocument()');
+                }
             }
 
             function speakByLine(line_number) {
-                easySpeak(myEditor.getModel().getLineContent(line_number));
+                if (modeController == 'easySpeak') {
+                    easySpeak(myEditor.getModel().getLineContent(line_number));
+                } else if (modeController == 'charSpeak') {
+                    easySpeak(charSpeak(myEditor.getModel().getLineContent(line_number)));
+                } else if (modeController == 'codeSpeak') {
+                    // easySpeak(myEditor.getModel().getLineContent(line_number));
+                } else if (modeController == 'overSpeak') {
+                    easySpeak(overLineSpeak(line_number));
+                } else {
+                    console.log('Something wrong in speakByLine()');
+                }
             }
 
             function speakByLineFunc() {
@@ -1473,7 +1585,11 @@
             // document.getElementById("night-mode-input").click();
             // document.getElementById("speak-document").click();
             // document.getElementById("console-button").click();
-            // document.getElementById("left-nav-button-1").click();
+            // document.getElementById("left-nav-button-4").click();
+            
+            // overDocSpeak();
+            // overLineSpeak();
+            // testSymbol();
 
                 
                 
@@ -1640,7 +1756,7 @@
                     // 显示run button
                     document.getElementById("console-button-run").style.display = "inline-block";
                     // 打开状态下，为console bar 加一条上边线
-                    document.getElementById("console-bar").style.borderTop = "1px solid #000000";
+                    document.getElementById("console-bar").style.borderTop = "1px solid #bbbbbb";
                     // Code for Safari
                     document.getElementById("console-bar").style.WebkitTransform = "translateY(-280px)"; 
                     // Code for IE9
