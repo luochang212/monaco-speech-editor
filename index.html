@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Monaco Speech Editor</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
-        <link rel="stylesheet" href="./src/style.css">
-        <link rel="shortcut icon" type="image/png" href="./images/logo-1.jpeg">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <!-- <script>
+
+<head>
+    <title>Monaco Speech Editor</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link rel="stylesheet" href="./src/style.css">
+    <link rel="shortcut icon" type="image/png" href="./images/logo-1.jpeg">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <script>
             // Check before leave website
             window.addEventListener('beforeunload', function (e) {
                 // Cancel the event
@@ -16,226 +17,327 @@
                 e.returnValue = 'Do you sure';
             });
         </script> -->
-    </head>
-    <body>
-        <div id="header">
-            <div id="show-file-name">
-                <input class="textarea-readonly" id="editable-textarea" readonly value="Untitled-1" />
-            </div>
+</head>
+
+<body>
+    <div id="header">
+        <div id="show-file-name">
+            <input class="textarea-readonly" id="editable-textarea" readonly value="Untitled-1" />
+        </div>
+    </div>
+
+    <div id="left-nav">
+        <div role=button class="left-nav-button" id="left-nav-button-1" onclick="clickLeftNav(event, 'sidebar-1')">
+            <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="file-alt"
+                class="svg-inline--fa fa-file-alt fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 384 512">
+                <path fill="currentColor"
+                    d="M288 248v28c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm-12 72H108c-6.6 0-12 5.4-12 12v28c0 6.6 5.4 12 12 12h168c6.6 0 12-5.4 12-12v-28c0-6.6-5.4-12-12-12zm108-188.1V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48C0 21.5 21.5 0 48 0h204.1C264.8 0 277 5.1 286 14.1L369.9 98c9 8.9 14.1 21.2 14.1 33.9zm-128-80V128h76.1L256 51.9zM336 464V176H232c-13.3 0-24-10.7-24-24V48H48v416h288z">
+                </path>
+            </svg>
         </div>
 
-        <div id="left-nav">
-            <div role=button class="left-nav-button" id="left-nav-button-1" onclick="clickLeftNav(event, 'sidebar-1')">
-                <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="file-alt" class="svg-inline--fa fa-file-alt fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M288 248v28c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-28c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm-12 72H108c-6.6 0-12 5.4-12 12v28c0 6.6 5.4 12 12 12h168c6.6 0 12-5.4 12-12v-28c0-6.6-5.4-12-12-12zm108-188.1V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V48C0 21.5 21.5 0 48 0h204.1C264.8 0 277 5.1 286 14.1L369.9 98c9 8.9 14.1 21.2 14.1 33.9zm-128-80V128h76.1L256 51.9zM336 464V176H232c-13.3 0-24-10.7-24-24V48H48v416h288z"></path></svg>
-            </div>
-
-            <div role=button class="left-nav-button" id="left-nav-button-2" onclick="clickLeftNav(event, 'sidebar-2')">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="upload" class="svg-inline--fa fa-upload fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"></path></svg>
-            </div>
-
-            <div role=button class="left-nav-button" id="left-nav-button-3" onclick="clickLeftNav(event, 'sidebar-3')">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tools" class="svg-inline--fa fa-tools fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M501.1 395.7L384 278.6c-23.1-23.1-57.6-27.6-85.4-13.9L192 158.1V96L64 0 0 64l96 128h62.1l106.6 106.6c-13.6 27.8-9.2 62.3 13.9 85.4l117.1 117.1c14.6 14.6 38.2 14.6 52.7 0l52.7-52.7c14.5-14.6 14.5-38.2 0-52.7zM331.7 225c28.3 0 54.9 11 74.9 31l19.4 19.4c15.8-6.9 30.8-16.5 43.8-29.5 37.1-37.1 49.7-89.3 37.9-136.7-2.2-9-13.5-12.1-20.1-5.5l-74.4 74.4-67.9-11.3L334 98.9l74.4-74.4c6.6-6.6 3.4-17.9-5.7-20.2-47.4-11.7-99.6.9-136.6 37.9-28.5 28.5-41.9 66.1-41.2 103.6l82.1 82.1c8.1-1.9 16.5-2.9 24.7-2.9zm-103.9 82l-56.7-56.7L18.7 402.8c-25 25-25 65.5 0 90.5s65.5 25 90.5 0l123.6-123.6c-7.6-19.9-9.9-41.6-5-62.7zM64 472c-13.2 0-24-10.8-24-24 0-13.3 10.7-24 24-24s24 10.7 24 24c0 13.2-10.7 24-24 24z"></path></svg>
-            </div>
-
-            <div role=button class="left-nav-button" id="left-nav-button-4" onclick="clickLeftNav(event, 'sidebar-4')">
-                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cog" class="svg-inline--fa fa-cog fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"></path></svg>
-            </div>
-
-            <div id="github-link">
-                <a href="https://github.com/luochang212/monaco-speech-editor" target="_blank"><img src="./images/GitHub-Mark-Light-64px.png" alt="github"></a>
-            </div>
+        <div role=button class="left-nav-button" id="left-nav-button-2" onclick="clickLeftNav(event, 'sidebar-2')">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="upload"
+                class="svg-inline--fa fa-upload fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512">
+                <path fill="currentColor"
+                    d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z">
+                </path>
+            </svg>
         </div>
 
-        <div id="left-sidebar">
+        <div role=button class="left-nav-button" id="left-nav-button-3" onclick="clickLeftNav(event, 'sidebar-3')">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tools"
+                class="svg-inline--fa fa-tools fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512">
+                <path fill="currentColor"
+                    d="M501.1 395.7L384 278.6c-23.1-23.1-57.6-27.6-85.4-13.9L192 158.1V96L64 0 0 64l96 128h62.1l106.6 106.6c-13.6 27.8-9.2 62.3 13.9 85.4l117.1 117.1c14.6 14.6 38.2 14.6 52.7 0l52.7-52.7c14.5-14.6 14.5-38.2 0-52.7zM331.7 225c28.3 0 54.9 11 74.9 31l19.4 19.4c15.8-6.9 30.8-16.5 43.8-29.5 37.1-37.1 49.7-89.3 37.9-136.7-2.2-9-13.5-12.1-20.1-5.5l-74.4 74.4-67.9-11.3L334 98.9l74.4-74.4c6.6-6.6 3.4-17.9-5.7-20.2-47.4-11.7-99.6.9-136.6 37.9-28.5 28.5-41.9 66.1-41.2 103.6l82.1 82.1c8.1-1.9 16.5-2.9 24.7-2.9zm-103.9 82l-56.7-56.7L18.7 402.8c-25 25-25 65.5 0 90.5s65.5 25 90.5 0l123.6-123.6c-7.6-19.9-9.9-41.6-5-62.7zM64 472c-13.2 0-24-10.8-24-24 0-13.3 10.7-24 24-24s24 10.7 24 24c0 13.2-10.7 24-24 24z">
+                </path>
+            </svg>
+        </div>
 
-            <div id="sidebar-1" class="tabcontent">
-                <div class="sidebar-top-title">
-                    <p>Explorer</p>
-                </div>
-                <button class="nav-title" id="file-manager-title" onclick="hideSection(event, 'file-manager', 'title-icon-1-1');"><img class="title-icon" id="title-icon-1-1" src="./images/sort-down-solid.svg" alt="down"> File manager </button>
-                <button id="title-button-add"><img class="title-icon" id="title-icon-add" src="./images/plus-circle-solid.svg" alt="plus-circle-solid" height="12px" width="12px" ></button>
-                
-                
-                
-                <div id="file-manager">
-                    <ul id="my-file-list" class="file-list">
+        <div role=button class="left-nav-button" id="left-nav-button-4" onclick="clickLeftNav(event, 'sidebar-4')">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cog"
+                class="svg-inline--fa fa-cog fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512">
+                <path fill="currentColor"
+                    d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z">
+                </path>
+            </svg>
+        </div>
+
+        <div id="github-link">
+            <a href="https://github.com/luochang212/monaco-speech-editor" target="_blank"><img
+                    src="./images/GitHub-Mark-Light-64px.png" alt="github"></a>
+        </div>
+    </div>
+
+    <div id="left-sidebar">
+
+        <div id="sidebar-1" class="tabcontent">
+            <div class="sidebar-top-title">
+                <p>Explorer</p>
+            </div>
+            <button class="nav-title" id="file-manager-title"
+                onclick="hideSection(event, 'file-manager', 'title-icon-1-1');"><img class="title-icon"
+                    id="title-icon-1-1" src="./images/sort-down-solid.svg" alt="down"> File manager </button>
+            <button id="title-button-add"><img class="title-icon" id="title-icon-add"
+                    src="./images/plus-circle-solid.svg" alt="plus-circle-solid" height="12px" width="12px"></button>
+
+
+
+            <div id="file-manager">
+                <ul id="my-file-list" class="file-list">
 
                     <ul>
-                </div>
-
-
-                <button class="nav-title" id="demo-controller-title" onclick="hideSection(event, 'demo-controller', 'title-icon-1-2');"><img class="title-icon" id="title-icon-1-2" src="./images/sort-down-solid.svg" alt="down"> Demo</button>
-                <div class="navbar" id="demo-controller">
-                    <p id="load-demo-text">You can load demo from a JSON file.</p>
-                    <button id="load-demo" >Load Demo</button>
-                </div>
-                    
-                <!-- <button id="test-button">test</button> -->
-
             </div>
-    
-            <div id="sidebar-2" class="tabcontent">
-                <div class="sidebar-top-title">
-                    <p>Upload</p>
-                </div>
-                <div id="upload-area">
+
+
+            <button class="nav-title" id="demo-controller-title"
+                onclick="hideSection(event, 'demo-controller', 'title-icon-1-2');"><img class="title-icon"
+                    id="title-icon-1-2" src="./images/sort-down-solid.svg" alt="down"> Demo</button>
+            <div class="navbar" id="demo-controller">
+                <p id="load-demo-text">You can load demo from a JSON file.</p>
+                <button id="load-demo">Load Demo</button>
+            </div>
+
+            <!-- <button id="test-button">test</button> -->
+
+        </div>
+
+        <div id="sidebar-2" class="tabcontent">
+            <div class="sidebar-top-title">
+                <p>Upload</p>
+            </div>
+            <div id="upload-area">
                 <input id="upload" type=file size=30>
                 <div id="myDropZone" class="dropzone">
                     <p>Drop your file here</p>
                 </div>
-                </div>
             </div>
-    
-            <div id="sidebar-3" class="tabcontent">
-                <div class="sidebar-top-title">
-                    <p>Feature List</p>
-                </div>
-                <button class="nav-title" id="speach-controller-title" onclick="hideSection(event, 'speach-controller', 'title-icon-3-1');"><img class="title-icon" id="title-icon-3-1" src="./images/sort-down-solid.svg" alt="down"> Speech Synthesis</button>
-                <div class="navbar" id="speach-controller">
+        </div>
 
-                    <button id="speak-document">Speak Document</button>
-                    <button id="speak-by-line">Speak By Line</button>
-                    <button id="stop-speaking">Stop Speaking</button>
+        <div id="sidebar-3" class="tabcontent">
+            <div class="sidebar-top-title">
+                <p>Feature List</p>
+            </div>
+            <button class="nav-title" id="speach-controller-title"
+                onclick="hideSection(event, 'speach-controller', 'title-icon-3-1');"><img class="title-icon"
+                    id="title-icon-3-1" src="./images/sort-down-solid.svg" alt="down"> Speech Synthesis</button>
+            <div class="navbar" id="speach-controller">
 
-                    <!-- <button onclick="speakDocument();">Speak Document</button>
+                <button id="speak-document">Speak Document</button>
+                <button id="speak-by-line">Speak By Line</button>
+                <button id="stop-speaking">Stop Speaking</button>
+
+                <!-- <button onclick="speakDocument();">Speak Document</button>
                     <button onclick="speakByLine();">Speak By Line</button>
                     <button onclick="doStop();">Stop Speaking</button> -->
-                    
-                </div>
-                <button class="nav-title" id="position-controller-title" onclick="hideSection(event, 'position-controller', 'title-icon-3-2');"><img class="title-icon" id="title-icon-3-2" src="./images/sort-down-solid.svg" alt="down"> Cursor Position</button>
-                <div class="navbar" id="position-controller">
 
-                    <button id="search-cursor-position">Search Cursor Position</button>
-                    <button id="cursor-jump-to-line">Cursor Jump To Line</button>
+            </div>
+            <button class="nav-title" id="position-controller-title"
+                onclick="hideSection(event, 'position-controller', 'title-icon-3-2');"><img class="title-icon"
+                    id="title-icon-3-2" src="./images/sort-down-solid.svg" alt="down"> Cursor Position</button>
+            <div class="navbar" id="position-controller">
 
-                    <!-- <button onclick="cursorPosition();">Search Cursor Position</button>
+                <button id="search-cursor-position">Search Cursor Position</button>
+                <button id="cursor-jump-to-line">Cursor Jump To Line</button>
+
+                <!-- <button onclick="cursorPosition();">Search Cursor Position</button>
                     <button onclick="clickJumpToLine();">Cursor Jump To Line</button> -->
-                </div>
-                <button class="nav-title" id="trash-controller-title" onclick="hideSection(event, 'trash-controller', 'title-icon-3-3');"><img class="title-icon" id="title-icon-3-3" src="./images/sort-down-solid.svg" alt="down"> Trash</button>
-                <div class="navbar" id="trash-controller">
-                    <button id="find-deleted-files">Find Deleted Files</button>
-                </div>
-            </div>    
-    
-            <div id="sidebar-4" class="tabcontent">
-                <div class="sidebar-top-title">
-                    <p>Setting</p>
-                </div>
-                <button class="nav-title" id="voice-controller-title" onclick="hideSection(event, 'voice-controller', 'title-icon-4-1');"><img class="title-icon" id="title-icon-4-1" src="./images/sort-down-solid.svg" alt="down"> Voice</button>
-                <div class="navbar" id="voice-controller">
-                    <div class="option">
-                        <label for="rate">Rate</label>
-                        <input type="range" min="0.1" max="2" step="0.1" name="rate" id="rate" value="1">
-                        <div class="rate-value">1</div>
-                    </div>     
-                    <div class="option">
-                        <label for="pitch">Pitch</label>
-                        <input type="range" min="0.1" max="2" step="0.1" name="pitch" id="pitch" value="1">
-                        <div class="pitch-value">1</div>
-                    </div>
-                    <select class="voice-select"></select>
-                </div>
-
-                <button class="nav-title" id="mode-controller-title" onclick="hideSection(event, 'mode-controller', 'title-icon-4-2');"><img class="title-icon" id="title-icon-4-2" src="./images/sort-down-solid.svg" alt="down"> Mode</button>
-                <div class="navbar" id="mode-controller">
-                    <span id="character-mode" class="navbar-toggle" style="padding-top: 10px;">
-                        Character Mode
-                        <label class="switch">
-                            <input id="character-mode-input" type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
-                    </span>
-
-                    <span id="code-mode" class="navbar-toggle" style="padding-top: 10px;">
-                        Code Mode
-                        <label class="switch">
-                            <input id="code-mode-input" type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
-                    </span>
-
-                    <span id="overview-mode" class="navbar-toggle" style="padding-top: 10px;">
-                        Overview Mode
-                        <label class="switch">
-                            <input id="overview-mode-input" type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
-                    </span>
-                    
-                </div>
-
-                <button class="nav-title" id="theme-controller-title" onclick="hideSection(event, 'theme-controller', 'title-icon-4-3');"><img class="title-icon" id="title-icon-4-3" src="./images/sort-down-solid.svg" alt="down"> Theme</button>
-                <div class="navbar" id="theme-controller">
-                    <span id="night-mode" class="navbar-toggle" style="padding-top: 10px;">
-                        Night Mode
-                        <label class="switch">
-                            <input id="night-mode-input" type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
-                    </span>
-                    
-                </div>
             </div>
-
-        </div>
-
-        <div id="toolbar">
-			<select class="language-picker"><option>apex</option><option>azcli</option><option>bat</option><option>c</option><option>clojure</option><option>coffeescript</option><option>cpp</option><option>csharp</option><option>csp</option><option>css</option><option>dockerfile</option><option>fsharp</option><option>go</option><option>graphql</option><option>handlebars</option><option selected>html</option><option>ini</option><option>java</option><option>javascript</option><option>json</option><option>kotlin</option><option>less</option><option>lua</option><option>markdown</option><option>msdax</option><option>mysql</option><option>objective-c</option><option>pascal</option><option>perl</option><option>pgsql</option><option>php</option><option>plaintext</option><option>postiats</option><option>powerquery</option><option>powershell</option><option>pug</option><option>python</option><option>r</option><option>razor</option><option>redis</option><option>redshift</option><option>ruby</option><option>rust</option><option>sb</option><option>scheme</option><option>scss</option><option>shell</option><option>sol</option><option>sql</option><option>st</option><option>swift</option><option>tcl</option><option>typescript</option><option>vb</option><option>xml</option><option>yaml</option></select>
-        
-            <!-- <input type="button" value="test" onclick="testFun()"/> -->
-
-            <div class="voice-controller">
-                <!-- <button onclick="backward();"> -->
-                <button id="backward">
-                    <img src="./images/step-backward-solid.svg" alt="step-backward-solid" height="20px">
-                </button>
-
-                <!-- <button onclick="play();" style="padding:4px 7px 0 10px;"> -->
-                <button id="play" style="padding:4px 7px 0 10px;">
-                    <img id="play-pause" src="./images/play-solid.svg" alt="pause-solid" height="18px" style="padding-bottom:1px;">
-                </button>
-
-                <!-- <button onclick="forward();"> -->
-                <button id="forward">
-                    <img src="./images/step-forward-solid.svg" alt="step-forward-solid" height="20px">
-                </button>
-
-                <!-- <button onclick="hideHeader();" id="hide-header"> -->
-                <button id="hide-header">
-                    <img src="./images/compress-solid.svg" alt="compress-solid" height="20px">
-                </button>
-            </div>
-
-            <sapn id="line-number">
-                <label for="showLineNumber">Jump To Line: </label>
-                <input type="number" id="showLineNumber" value="1" style="width: 35px; text-align:left; font-style: oblique;">
-            </sapn>
-
-            <span id="show-line-column">Ln 1, Col 1</span>
-        </div>
-
-        <div id="monaco-speech-editor"></div>
-
-        <div id="console-bar" class="console">
-            <div id="console-button-bar">
-                <button id="console-button">Console</button>
-                <button id="console-button-run" style="display: none;">Run</button>
-            </div>
-
-            <div id="compiler-bar" class="compiler">
-                <iframe id="compiler-iframe" scrolling="auto" marginheight="0px" marginwidth="0px"></iframe>
-            </div>
-            <div id="console-log">
-                <!-- <pre id="logger"></pre> -->
-                <iframe id="log-iframe" scrolling="auto" marginheight="0px" marginwidth="0px"></iframe>
+            <button class="nav-title" id="trash-controller-title"
+                onclick="hideSection(event, 'trash-controller', 'title-icon-3-3');"><img class="title-icon"
+                    id="title-icon-3-3" src="./images/sort-down-solid.svg" alt="down"> Trash</button>
+            <div class="navbar" id="trash-controller">
+                <button id="find-deleted-files">Find Deleted Files</button>
             </div>
         </div>
 
+        <div id="sidebar-4" class="tabcontent">
+            <div class="sidebar-top-title">
+                <p>Setting</p>
+            </div>
+            <button class="nav-title" id="voice-controller-title"
+                onclick="hideSection(event, 'voice-controller', 'title-icon-4-1');"><img class="title-icon"
+                    id="title-icon-4-1" src="./images/sort-down-solid.svg" alt="down"> Voice</button>
+            <div class="navbar" id="voice-controller">
+                <div class="option">
+                    <label for="rate">Rate</label>
+                    <input type="range" min="0.1" max="2" step="0.1" name="rate" id="rate" value="1">
+                    <div class="rate-value">1</div>
+                </div>
+                <div class="option">
+                    <label for="pitch">Pitch</label>
+                    <input type="range" min="0.1" max="2" step="0.1" name="pitch" id="pitch" value="1">
+                    <div class="pitch-value">1</div>
+                </div>
+                <select class="voice-select"></select>
+            </div>
+
+            <button class="nav-title" id="mode-controller-title"
+                onclick="hideSection(event, 'mode-controller', 'title-icon-4-2');"><img class="title-icon"
+                    id="title-icon-4-2" src="./images/sort-down-solid.svg" alt="down"> Mode</button>
+            <div class="navbar" id="mode-controller">
+                <span id="character-mode" class="navbar-toggle" style="padding-top: 10px;">
+                    Character Mode
+                    <label class="switch">
+                        <input id="character-mode-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+
+                <span id="code-mode" class="navbar-toggle" style="padding-top: 10px;">
+                    Code Mode
+                    <label class="switch">
+                        <input id="code-mode-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+
+                <span id="overview-mode" class="navbar-toggle" style="padding-top: 10px;">
+                    Overview Mode
+                    <label class="switch">
+                        <input id="overview-mode-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+
+            </div>
+
+            <button class="nav-title" id="theme-controller-title"
+                onclick="hideSection(event, 'theme-controller', 'title-icon-4-3');"><img class="title-icon"
+                    id="title-icon-4-3" src="./images/sort-down-solid.svg" alt="down"> Theme</button>
+            <div class="navbar" id="theme-controller">
+                <span id="night-mode" class="navbar-toggle" style="padding-top: 10px;">
+                    Night Mode
+                    <label class="switch">
+                        <input id="night-mode-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="toolbar">
+        <select class="language-picker">
+            <option>apex</option>
+            <option>azcli</option>
+            <option>bat</option>
+            <option>c</option>
+            <option>clojure</option>
+            <option>coffeescript</option>
+            <option>cpp</option>
+            <option>csharp</option>
+            <option>csp</option>
+            <option>css</option>
+            <option>dockerfile</option>
+            <option>fsharp</option>
+            <option>go</option>
+            <option>graphql</option>
+            <option>handlebars</option>
+            <option selected>html</option>
+            <option>ini</option>
+            <option>java</option>
+            <option>javascript</option>
+            <option>json</option>
+            <option>kotlin</option>
+            <option>less</option>
+            <option>lua</option>
+            <option>markdown</option>
+            <option>msdax</option>
+            <option>mysql</option>
+            <option>objective-c</option>
+            <option>pascal</option>
+            <option>perl</option>
+            <option>pgsql</option>
+            <option>php</option>
+            <option>plaintext</option>
+            <option>postiats</option>
+            <option>powerquery</option>
+            <option>powershell</option>
+            <option>pug</option>
+            <option>python</option>
+            <option>r</option>
+            <option>razor</option>
+            <option>redis</option>
+            <option>redshift</option>
+            <option>ruby</option>
+            <option>rust</option>
+            <option>sb</option>
+            <option>scheme</option>
+            <option>scss</option>
+            <option>shell</option>
+            <option>sol</option>
+            <option>sql</option>
+            <option>st</option>
+            <option>swift</option>
+            <option>tcl</option>
+            <option>typescript</option>
+            <option>vb</option>
+            <option>xml</option>
+            <option>yaml</option>
+        </select>
+
+        <!-- <input type="button" value="test" onclick="testFun()"/> -->
+
+        <div class="voice-controller">
+            <!-- <button onclick="backward();"> -->
+            <button id="backward">
+                <img src="./images/step-backward-solid.svg" alt="step-backward-solid" height="20px">
+            </button>
+
+            <!-- <button onclick="play();" style="padding:4px 7px 0 10px;"> -->
+            <button id="play" style="padding:4px 7px 0 10px;">
+                <img id="play-pause" src="./images/play-solid.svg" alt="pause-solid" height="18px"
+                    style="padding-bottom:1px;">
+            </button>
+
+            <!-- <button onclick="forward();"> -->
+            <button id="forward">
+                <img src="./images/step-forward-solid.svg" alt="step-forward-solid" height="20px">
+            </button>
+
+            <!-- <button onclick="hideHeader();" id="hide-header"> -->
+            <button id="hide-header">
+                <img src="./images/compress-solid.svg" alt="compress-solid" height="20px">
+            </button>
+        </div>
+
+        <sapn id="line-number">
+            <label for="showLineNumber">Jump To Line: </label>
+            <input type="number" id="showLineNumber" value="1"
+                style="width: 35px; text-align:left; font-style: oblique;">
+        </sapn>
+
+        <span id="show-line-column">Ln 1, Col 1</span>
+    </div>
+
+    <div id="monaco-speech-editor"></div>
+
+    <div id="console-bar" class="console">
+        <div id="console-button-bar">
+            <button id="console-button">Console</button>
+            <button id="console-button-run" style="display: none;">Run</button>
+        </div>
+
+        <div id="compiler-bar" class="compiler">
+            <iframe id="compiler-iframe" scrolling="auto" marginheight="0px" marginwidth="0px"></iframe>
+        </div>
+        <div id="console-log">
+            <iframe id="log-iframe" scrolling="auto" marginheight="0px" marginwidth="0px"></iframe>
+        </div>
+    </div>
 
 
-        <!--<div id="container" class="container"></div>-->
 
-        <!--<div id="overlay" onclick="closeByOverlay()"></div>
+    <!--<div id="container" class="container"></div>-->
+
+    <!--<div id="overlay" onclick="closeByOverlay()"></div>
 
         <div id="mySidenav" class="sidenav">
             <div id="sidenav-content">
@@ -261,169 +363,169 @@
             </div>
         </div>-->
 
-        <!-- OR ANY OTHER AMD LOADER HERE INSTEAD OF loader.js -->
-        <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
-        <script src="./src/script.js"></script>
-        <script>
-            'use strict'
+    <!-- OR ANY OTHER AMD LOADER HERE INSTEAD OF loader.js -->
+    <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script src="./src/script.js"></script>
+    <script>
+        'use strict'
 
-            // var editor;
+        // var editor;
 
-            // var editorFontSize = 35;
+        // var editorFontSize = 35;
 
-            // var defaultValue = "/* Write your code here. */\n\nfunction isDeleted(element) { \n    var id_str = element.id;\n    id_str = id_str.replace(\"btn\",\"\"); \n    var id_num = parseInt(id_str);\n\n    if (delete_flag == true) {\n        delete_flag = false;\n        subArray[id_num].isDelete = \"true\";\n        element.value=\"×\";\n    } else {\n        delete_flag = true;\n        subArray[id_num].isDelete = \"false\";\n        element.value=\"\";\n    }\n}";
-            // var noneValue = "";
-
-
-            require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' }});
-
-            require(['vs/editor/editor.main'], function() {
-
-                var myEditor;
-                var editorArray = [];
-
-                var defaultCode = [
-                    'function helloWorld() {',
-                    '   console.log("Hello world!");',
-                    '}'
-                ].join('\n');
-
-                // var goCode = "package main\n\nimport (\n    \"html/template\"\n    \"log\"\n    \"net/http\"\n    \"os\"\n    \"path/filepath\"\n)\n\nfunc main() {\n    fs := http.FileServer(http.Dir(\"static\"))\n    http.Handle(\"/static/\", http.StripPrefix(\"/static/\", fs))\n    http.HandleFunc(\"/\", serveTemplate)\n\nlog.Println(\"\\nWeb Server is available at http://localhost:3000/example.html\")\n    http.ListenAndServe(\":3000\", nil)\n}\n\nfunc serveTemplate(w http.ResponseWriter, r *http.Request) {\n    lp := filepath.Join(\"templates\", \"layout.html\")\n    fp := filepath.Join(\"templates\", filepath.Clean(r.URL.Path))\n\n    // Return a 404 if the template doesn't exist\n    info, err := os.Stat(fp)\n    if err != nil {\n        if os.IsNotExist(err) {\n            http.NotFound(w, r)\n            return\n        }\n    }\n\n    // Return a 404 if the request is for a directory\n    \n    if info.IsDir() {\n        http.NotFound(w, r)\n        return\n    }\n\n    tmpl, err := template.ParseFiles(lp, fp)\n    if err != nil {\n        // Log the detailed error log.Println(err.Error())\n        // Return a generic \"Internal Server Error\" message\n        http.Error(w, http.StatusText(500), 500)\n        return\n    }\n\n    if err := tmpl.ExecuteTemplate(w, \"layout\", nil); err != nil {\n        log.Println(err.Error())\n        http.Error(w, http.StatusText(500), 500)\n    }\n}";
-                // var pythonCode = "from PyQt5.QtWidgets import *\nimport sys\n\n\nclass Window(QMainWindow):\n    def __init__(self):\n        super().__init__()\n\n        # set the title of main window\n        self.setWindowTitle('My first window - www.luochang.ink')\n\n        # set the size of window\n        self.Width = 500\n        self.height = int(0.618 * self.Width)\n        self.resize(self.Width, self.height)\n\n\nif __name__ == '__main__':\n    app = QApplication(sys.argv)\n    ex = Window()\n    ex.show()\n    sys.exit(app.exec_())";
-                // var jsCode = "// Open or close the navbar\n\nfunction openNav() {\n  on();\n  document.getElementById(\"mySidenav\").style.width = \"40%\";\n  document.body.style.backgroundColor = \"rgba(0,0,0,0.5)\";\n}\nfunction closeNav() {\n  document.getElementById(\"mySidenav\").style.width = \"0\";\n  document.body.style.backgroundColor = \"white\";\n}\nfunction on() {\n  document.getElementById(\"overlay\").style.display = \"block\";\n}\nfunction off() {\n  closeNav();\n  document.getElementById(\"overlay\").style.display = \"none\";\n}";
-                // var javaCode = "class Solution {\n    public ListNode swapPairs(ListNode head) {\n        ListNode p, q, pre;\n        ListNode headNode = new ListNode(0);\n        headNode.next = head; \n        p = head;\n        if ( p == null || p.next == null ) return headNode.next;\n        q = head.next;\n        pre = headNode;\n        while (p != null & p.next != null) {\n            p.next = q.next;\n            q.next = p;\n            pre.next = q;\n            p = p.next;\n            if (p == null) break;\n            q = p.next;\n            pre = pre.next.next;\n        }\n        return headNode.next;\n    }\n}";
-                var htmlCode = "<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>what time is it?<" + "/title>\n<style type=\"text/css\">\n	body {\n		font-family: \"Source Han Sans\", \"San Francisco\", \"PingFang SC\", \"Hiragino Sans GB\", \"Droid Sans Fallback\", \"Microsoft YaHei\", sans-serif;\n		font-size: 14px;\n		color: #333;\n	}\n	p {\n		margin: 1em 0;\n	}\n	p:empty {\n		height: 1.5em;\n	}\n	main {\n		margin: 0 5em;\n		max-width: 48em;\n	}\n	h1 {\n		margin: 1em 0;\n		font-size: 24px;\n		font-weight: 300;\n	}\n	button {\n		background: #fff;\n		border: 1px solid #ccc;\n		border-radius: 2px;\n		line-height: 1;\n		padding: .5em;\n	}\n<" + "/style>\n<" + "/head>\n\n<body>\n<main>\n		\n	<h1>what time is it?<" + "/h1>\n	<p>© 2019 Chang Luo<" + "/p>\n	<hr>\n	\n	<p>Excuse me, what time is it now O_O ???<" + "/p>\n	<br>\n	\n	<button type=\"button\" onclick=\"document.getElementById('time').innerHTML = Date()\">\n		Click Me\n	<" + "/button>\n\n	<p id=\"time\"><" + "/p>\n	\n<" + "/main>"+ "\n<script" + ">\n	console.log('Hi there! Welcome to Monaco Speech Editor.');\n	console.log('Monaco Speech Editor is an open source web application.');\n	console.log('The repo address is https://github.com/luochang212/monaco-speech-editor');\n	console.log(\"If you like this web application or think it's useful,\");\n	console.log('could you give me a star on GitHub (●°u°●)​ 」');\n<" + "/script>" +"\n<" + "/body>\n<" + "/html>"
-                var noCode = "";
+        // var defaultValue = "/* Write your code here. */\n\nfunction isDeleted(element) { \n    var id_str = element.id;\n    id_str = id_str.replace(\"btn\",\"\"); \n    var id_num = parseInt(id_str);\n\n    if (delete_flag == true) {\n        delete_flag = false;\n        subArray[id_num].isDelete = \"true\";\n        element.value=\"×\";\n    } else {\n        delete_flag = true;\n        subArray[id_num].isDelete = \"false\";\n        element.value=\"\";\n    }\n}";
+        // var noneValue = "";
 
 
-                monaco.editor.defineTheme('myTheme', {
-                    base: 'vs',
-                    inherit: true,
-                    rules: [{ background: 'EDF9FA' }],
-                    colors: {'editor.lineHighlightBackground': '#0000FF20'}     
+        require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' } });
+
+        require(['vs/editor/editor.main'], function () {
+
+            var myEditor;
+            var editorArray = [];
+
+            var defaultCode = [
+                'function helloWorld() {',
+                '   console.log("Hello world!");',
+                '}'
+            ].join('\n');
+
+            // var goCode = "package main\n\nimport (\n    \"html/template\"\n    \"log\"\n    \"net/http\"\n    \"os\"\n    \"path/filepath\"\n)\n\nfunc main() {\n    fs := http.FileServer(http.Dir(\"static\"))\n    http.Handle(\"/static/\", http.StripPrefix(\"/static/\", fs))\n    http.HandleFunc(\"/\", serveTemplate)\n\nlog.Println(\"\\nWeb Server is available at http://localhost:3000/example.html\")\n    http.ListenAndServe(\":3000\", nil)\n}\n\nfunc serveTemplate(w http.ResponseWriter, r *http.Request) {\n    lp := filepath.Join(\"templates\", \"layout.html\")\n    fp := filepath.Join(\"templates\", filepath.Clean(r.URL.Path))\n\n    // Return a 404 if the template doesn't exist\n    info, err := os.Stat(fp)\n    if err != nil {\n        if os.IsNotExist(err) {\n            http.NotFound(w, r)\n            return\n        }\n    }\n\n    // Return a 404 if the request is for a directory\n    \n    if info.IsDir() {\n        http.NotFound(w, r)\n        return\n    }\n\n    tmpl, err := template.ParseFiles(lp, fp)\n    if err != nil {\n        // Log the detailed error log.Println(err.Error())\n        // Return a generic \"Internal Server Error\" message\n        http.Error(w, http.StatusText(500), 500)\n        return\n    }\n\n    if err := tmpl.ExecuteTemplate(w, \"layout\", nil); err != nil {\n        log.Println(err.Error())\n        http.Error(w, http.StatusText(500), 500)\n    }\n}";
+            // var pythonCode = "from PyQt5.QtWidgets import *\nimport sys\n\n\nclass Window(QMainWindow):\n    def __init__(self):\n        super().__init__()\n\n        # set the title of main window\n        self.setWindowTitle('My first window - www.luochang.ink')\n\n        # set the size of window\n        self.Width = 500\n        self.height = int(0.618 * self.Width)\n        self.resize(self.Width, self.height)\n\n\nif __name__ == '__main__':\n    app = QApplication(sys.argv)\n    ex = Window()\n    ex.show()\n    sys.exit(app.exec_())";
+            // var jsCode = "// Open or close the navbar\n\nfunction openNav() {\n  on();\n  document.getElementById(\"mySidenav\").style.width = \"40%\";\n  document.body.style.backgroundColor = \"rgba(0,0,0,0.5)\";\n}\nfunction closeNav() {\n  document.getElementById(\"mySidenav\").style.width = \"0\";\n  document.body.style.backgroundColor = \"white\";\n}\nfunction on() {\n  document.getElementById(\"overlay\").style.display = \"block\";\n}\nfunction off() {\n  closeNav();\n  document.getElementById(\"overlay\").style.display = \"none\";\n}";
+            // var javaCode = "class Solution {\n    public ListNode swapPairs(ListNode head) {\n        ListNode p, q, pre;\n        ListNode headNode = new ListNode(0);\n        headNode.next = head; \n        p = head;\n        if ( p == null || p.next == null ) return headNode.next;\n        q = head.next;\n        pre = headNode;\n        while (p != null & p.next != null) {\n            p.next = q.next;\n            q.next = p;\n            pre.next = q;\n            p = p.next;\n            if (p == null) break;\n            q = p.next;\n            pre = pre.next.next;\n        }\n        return headNode.next;\n    }\n}";
+            var htmlCode = "<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>what time is it?<" + "/title>\n<style type=\"text/css\">\n	body {\n		font-family: \"Source Han Sans\", \"San Francisco\", \"PingFang SC\", \"Hiragino Sans GB\", \"Droid Sans Fallback\", \"Microsoft YaHei\", sans-serif;\n		font-size: 14px;\n		color: #333;\n	}\n	p {\n		margin: 1em 0;\n	}\n	p:empty {\n		height: 1.5em;\n	}\n	main {\n		margin: 0 5em;\n		max-width: 48em;\n	}\n	h1 {\n		margin: 1em 0;\n		font-size: 24px;\n		font-weight: 300;\n	}\n	button {\n		background: #fff;\n		border: 1px solid #ccc;\n		border-radius: 2px;\n		line-height: 1;\n		padding: .5em;\n	}\n<" + "/style>\n<" + "/head>\n\n<body>\n<main>\n		\n	<h1>what time is it?<" + "/h1>\n	<p>© 2019 Chang Luo<" + "/p>\n	<hr>\n	\n	<p>Excuse me, what time is it now O_O ???<" + "/p>\n	<br>\n	\n	<button type=\"button\" onclick=\"document.getElementById('time').innerHTML = Date()\">\n		Click Me\n	<" + "/button>\n\n	<p id=\"time\"><" + "/p>\n	\n<" + "/main>" + "\n<script" + ">\n	console.log('Hi there! Welcome to Monaco Speech Editor.');\n	console.log('Monaco Speech Editor is an open source web application.');\n	console.log('The repo address is https://github.com/luochang212/monaco-speech-editor');\n	console.log(\"If you like this web application or think it's useful,\");\n	console.log('could you give me a star on GitHub (●°u°●)​ 」');\n<" + "/script>" + "\n<" + "/body>\n<" + "/html>"
+            var noCode = "";
+
+
+            monaco.editor.defineTheme('myTheme', {
+                base: 'vs',
+                inherit: true,
+                rules: [{ background: 'EDF9FA' }],
+                colors: { 'editor.lineHighlightBackground': '#0000FF20' }
+            });
+            monaco.editor.setTheme('myTheme');
+
+
+
+            function newEditor(container_id, code, language) {
+                var model = monaco.editor.createModel(code, language);
+                var editor = monaco.editor.create(document.getElementById(container_id), {
+                    model: model,
+                    // fontSize: editorFontSize
+                    // theme: "vs-dark"
                 });
-                monaco.editor.setTheme('myTheme');
+                editorArray.push(editor);
+                // console.log(editor.language);
+                return editor;
+            }
 
 
-
-                function newEditor(container_id, code, language) {
-                    var model = monaco.editor.createModel(code, language);
-                    var editor = monaco.editor.create(document.getElementById(container_id), {
-                        model: model,
-                        // fontSize: editorFontSize
-                        // theme: "vs-dark"
-                    });
-                    editorArray.push(editor);
-                    // console.log(editor.language);
-                    return editor;
+            document.getElementById("speak-document").addEventListener("click", function () {
+                speakDocument();
+            });
+            document.getElementById("speak-by-line").addEventListener("click", function () {
+                speakByLineFunc();
+            });
+            document.getElementById("stop-speaking").addEventListener("click", function () {
+                doStop();
+            });
+            document.getElementById("search-cursor-position").addEventListener("click", function () {
+                cursorPosition();
+            });
+            document.getElementById("cursor-jump-to-line").addEventListener("click", function () {
+                clickJumpToLine();
+            });
+            document.getElementById("backward").addEventListener("click", function () {
+                backward();
+            });
+            document.getElementById("play").addEventListener("click", function () {
+                play();
+            });
+            document.getElementById("forward").addEventListener("click", function () {
+                forward();
+            });
+            document.getElementById("hide-header").addEventListener("click", function () {
+                hideHeader();
+            });
+            document.getElementById("find-deleted-files").addEventListener("click", function () {
+                findDeletedFiles();
+            });
+            document.getElementById("load-demo").addEventListener("click", function () {
+                loadDemo();
+            });
+            document.getElementById("night-mode-input").addEventListener("click", function () {
+                if (document.getElementById("night-mode-input").checked == true) {
+                    monaco.editor.setTheme('vs-dark');
+                    document.getElementById("toolbar").style.background = "#333";
+                    document.getElementById("toolbar").style.color = "#FFFFF0";
+                    document.getElementById("console-bar").style.background = "#333";
+                    document.getElementById("console-button").style.color = "#FFF";
+                    document.getElementById("console-button-run").style.color = "#FFF";
+                } else {
+                    monaco.editor.setTheme('myTheme');
+                    document.getElementById("toolbar").style.background = "#F5F5F5";
+                    document.getElementById("toolbar").style.color = "#000000";
+                    document.getElementById("console-bar").style.background = "#F5F5F5";
+                    document.getElementById("console-button").style.color = "inherit";
+                    document.getElementById("console-button-run").style.color = "inherit";
                 }
+            });
+            document.getElementById("console-button-run").addEventListener("click", function () {
+                run();
+            });
+            document.getElementById("character-mode-input").addEventListener("click", function () {
+                document.getElementById("code-mode-input").checked = false;
+                document.getElementById("overview-mode-input").checked = false;
+                if (document.getElementById("character-mode-input").checked === true) {
+                    modeController = 'charSpeak';
+                } else {
+                    modeController = 'easySpeak';
+                }
+                // console.log(modeController);
+            });
+            document.getElementById("code-mode-input").addEventListener("click", function () {
+                document.getElementById("character-mode-input").checked = false;
+                document.getElementById("overview-mode-input").checked = false;
+                if (document.getElementById("code-mode-input").checked === true) {
+                    modeController = 'codeSpeak';
+                } else {
+                    modeController = 'easySpeak';
+                }
+                // console.log(modeController);
+            });
+            document.getElementById("overview-mode-input").addEventListener("click", function () {
+                document.getElementById("code-mode-input").checked = false;
+                document.getElementById("character-mode-input").checked = false;
+                if (document.getElementById("overview-mode-input").checked === true) {
+                    modeController = 'overSpeak';
+                } else {
+                    modeController = 'easySpeak';
+                }
+                // console.log(modeController);
+            });
 
 
-                document.getElementById("speak-document").addEventListener("click", function(){
-                    speakDocument();
-                });
-                document.getElementById("speak-by-line").addEventListener("click", function(){
-                    speakByLineFunc();
-                });
-                document.getElementById("stop-speaking").addEventListener("click", function(){
-                    doStop();
-                });
-                document.getElementById("search-cursor-position").addEventListener("click", function(){
-                    cursorPosition();
-                });
-                document.getElementById("cursor-jump-to-line").addEventListener("click", function(){
-                    clickJumpToLine();
-                });
-                document.getElementById("backward").addEventListener("click", function(){
-                    backward();
-                });
-                document.getElementById("play").addEventListener("click", function(){
-                    play();
-                });
-                document.getElementById("forward").addEventListener("click", function(){
-                    forward();
-                });
-                document.getElementById("hide-header").addEventListener("click", function(){
-                    hideHeader();
-                });
-                document.getElementById("find-deleted-files").addEventListener("click", function(){
-                    findDeletedFiles();
-                });
-                document.getElementById("load-demo").addEventListener("click", function(){
-                    loadDemo();
-                });
-                document.getElementById("night-mode-input").addEventListener("click", function(){
-                    if (document.getElementById("night-mode-input").checked == true) {
-                        monaco.editor.setTheme('vs-dark');
-                        document.getElementById("toolbar").style.background = "#333";
-                        document.getElementById("toolbar").style.color = "#FFFFF0";
-                        document.getElementById("console-bar").style.background = "#333";
-                        document.getElementById("console-button").style.color = "#FFF";
-                        document.getElementById("console-button-run").style.color = "#FFF";
-                    } else {
-                        monaco.editor.setTheme('myTheme');
-                        document.getElementById("toolbar").style.background = "#F5F5F5";
-                        document.getElementById("toolbar").style.color = "#000000";
-                        document.getElementById("console-bar").style.background = "#F5F5F5";
-                        document.getElementById("console-button").style.color = "inherit";
-                        document.getElementById("console-button-run").style.color = "inherit";
-                    }
-                });
-                document.getElementById("console-button-run").addEventListener("click", function(){
-                    run();
-                });
-                document.getElementById("character-mode-input").addEventListener("click", function(){
-                    document.getElementById("code-mode-input").checked = false;
-                    document.getElementById("overview-mode-input").checked = false;
-                    if (document.getElementById("character-mode-input").checked === true) {
-                        modeController = 'charSpeak';
-                    } else {
-                        modeController = 'easySpeak';
-                    }
-                    // console.log(modeController);
-                });
-                document.getElementById("code-mode-input").addEventListener("click", function(){
-                    document.getElementById("character-mode-input").checked = false;
-                    document.getElementById("overview-mode-input").checked = false;
-                    if (document.getElementById("code-mode-input").checked === true) {
-                        modeController = 'codeSpeak';
-                    } else {
-                        modeController = 'easySpeak';
-                    }
-                    // console.log(modeController);
-                });
-                document.getElementById("overview-mode-input").addEventListener("click", function(){
-                    document.getElementById("code-mode-input").checked = false;
-                    document.getElementById("character-mode-input").checked = false;
-                    if (document.getElementById("overview-mode-input").checked === true) {
-                        modeController = 'overSpeak';
-                    } else {
-                        modeController = 'easySpeak';
-                    }
-                    // console.log(modeController);
-                });
 
 
-                
-                
 
-                // document.getElementById("test-button").addEventListener("click", function(){
-                //     // editorFontSize = 15;
-                // });
+            // document.getElementById("test-button").addEventListener("click", function(){
+            //     // editorFontSize = 15;
+            // });
 
 
-                
-                
-
-                
-
-                
 
 
-                
-                
+
+
+
+
+
+
+
+
             // editor2.setValue('ddddddd');
-                
+
             /* ------------------------------------------------------------------------ */
             // require(['vs/editor/editor.main'], function() {
 
@@ -674,7 +776,7 @@
                 var res = 'the filename is ' + file_name + ' the row count is ' + max_line + '  and there are ' + char_count + 'characters in this file ';
                 return res;
             }
-            
+
             function overLineSpeak(line_number) {
                 var char_count = myEditor.getModel().getLineContent(line_number).length;
                 // + 变量的数量，是否在函数里，是否在控制结构里 this line belong to function blablabla
@@ -738,7 +840,7 @@
 
             // cursor focus
             function cursorJumpToLine(line_number) {
-                myEditor.setSelection(new monaco.Selection(line_number,1,line_number,1));
+                myEditor.setSelection(new monaco.Selection(line_number, 1, line_number, 1));
                 myEditor.focus();
 
                 // a feature
@@ -762,7 +864,7 @@
                 var lineNumber_int = parseInt(lineNumber, 10);  // parseInt: string to int
                 if (lineNumber == null || lineNumber == "") {
                     easySpeak("You didn't input anything");
-                } else if(lineNumber_int < 1 || lineNumber_int > myEditor.getModel().getLineCount()) {
+                } else if (lineNumber_int < 1 || lineNumber_int > myEditor.getModel().getLineCount()) {
                     easySpeak("Your input is out of range");
                 } else {
                     cursorJumpToLine(lineNumber_int);
@@ -811,9 +913,9 @@
                 fileArray[index - 1].editorLanguage = langName;
                 console.log(fileArray);
             }
-            
 
-            languageSelect.onchange = function() {
+
+            languageSelect.onchange = function () {
                 syntaxHighlight(languageSelect.value);
                 // document.getElementById('test').innerHTML = languageSelect.value;
             }
@@ -826,15 +928,15 @@
 
             // 因为变量pauseResume无法传出，故把doPauseResume函数从script.js迁来这儿
             function doPauseResume() {
-                if(pauseResume == 'R') {
-                window.speechSynthesis.pause();
-                document.getElementById("play-pause").src = "./images/play-solid.svg";
-                // document.getElementById('control-button').setAttribute("class", "play");
+                if (pauseResume == 'R') {
+                    window.speechSynthesis.pause();
+                    document.getElementById("play-pause").src = "./images/play-solid.svg";
+                    // document.getElementById('control-button').setAttribute("class", "play");
                     pauseResume = 'P';
-                } else if(pauseResume == 'P') {
-                window.speechSynthesis.resume();
-                document.getElementById("play-pause").src = "./images/pause-solid.svg";
-                // document.getElementById('control-button').setAttribute("class", "pause");
+                } else if (pauseResume == 'P') {
+                    window.speechSynthesis.resume();
+                    document.getElementById("play-pause").src = "./images/pause-solid.svg";
+                    // document.getElementById('control-button').setAttribute("class", "pause");
                     pauseResume = 'R';
                 } else {
                     console.log("Unknown state...");
@@ -843,31 +945,31 @@
             }
 
             // 因为变量clickNumber无法传出，故把speak函数从script.js迁来这儿
-            function speak(){
+            function speak() {
                 pauseResume = 'R';
                 if (synth.speaking) {
                     console.error('speechSynthesis.speaking');
                     return;
                 }
 
-                    if (inputTxt !== '') {
+                if (inputTxt !== '') {
                     var utterThis = new SpeechSynthesisUtterance(inputTxt);
                     utterThis.onend = function (event) {
-                    document.getElementById("play-pause").src = "./images/play-solid.svg";
-                    clickNumber = 0;
-                    pauseResume = 'R';
-                    console.log('SpeechSynthesisUtterance.onend');
+                        document.getElementById("play-pause").src = "./images/play-solid.svg";
+                        clickNumber = 0;
+                        pauseResume = 'R';
+                        console.log('SpeechSynthesisUtterance.onend');
                     }
                     utterThis.onerror = function (event) {
-                    console.error('SpeechSynthesisUtterance.onerror');
+                        console.error('SpeechSynthesisUtterance.onerror');
                     }
                     var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');  // "Google UK English Female";
-                    for(var i = 0; i < voices.length ; i++) {
-                    if(voices[i].name === selectedOption) {
-                    utterThis.voice = voices[i];
-                    break;
+                    for (var i = 0; i < voices.length; i++) {
+                        if (voices[i].name === selectedOption) {
+                            utterThis.voice = voices[i];
+                            break;
+                        }
                     }
-                }
                     utterThis.pitch = pitch.value;
                     utterThis.rate = rate.value;
                     synth.speak(utterThis);
@@ -876,13 +978,13 @@
 
             function play() {
                 var testTxt = myEditor.getModel().getLineContent(currentLineNumber);
-                if(testTxt == "") {
+                if (testTxt == "") {
                     easySpeak("Information from monaco speech editor: " + "This line is empty");
                     // alert("This line is empty.");
                     return -1;
                 }
-                
-                clickNumber ++;
+
+                clickNumber++;
                 if (clickNumber == 1) {
                     // doStop();  // 没有必要，inputTxt只有一个，占用不会发生
                     // 第一次点击是播放，第二第三第n次该键的功能变成播放和暂停，一行播放结束以后clickNumber归零
@@ -915,7 +1017,7 @@
                     // alert("This is the last line.");
                     return -1;
                 } else {
-                    currentLineNumber ++;
+                    currentLineNumber++;
                     cursorJumpToLine(currentLineNumber);
                 }
                 document.getElementById("showLineNumber").value = currentLineNumber;
@@ -958,7 +1060,7 @@
             }
 
             // keyup event
-            document.onkeyup = function(e) {
+            document.onkeyup = function (e) {
                 if (e.ctrlKey && e.altKey && e.which == 80) {
                     play();
                 } else if (e.ctrlKey && e.altKey && e.which == 83) {
@@ -981,11 +1083,11 @@
             // editable textarea
             function configureEditableTextarea(id, modifyClassName, readOnlyClassName) {
                 var textarea = document.getElementById(id);
-                textarea.ondblclick = function() {
+                textarea.ondblclick = function () {
                     this.readOnly = false;
                     this.className = modifyClassName;
                 }
-                textarea.onblur = function() {
+                textarea.onblur = function () {
                     this.readOnly = true;
                     this.className = readOnlyClassName;
                     // document.getElementById("test").innerHTML = document.getElementById(id).value;
@@ -995,11 +1097,11 @@
 
                     // 文件名不能为空
                     if (document.getElementById(id).value == '') {
-                        document.getElementById(id).value = fileArray[index-1].fileName;
+                        document.getElementById(id).value = fileArray[index - 1].fileName;
                     } else {
-                        fileArray[index-1].fileName = document.getElementById(id).value;
+                        fileArray[index - 1].fileName = document.getElementById(id).value;
                         // 更新文件列表里的标题
-                        document.getElementById("file-list-input-" + index.toString(10)).value = fileArray[index-1].fileName;
+                        document.getElementById("file-list-input-" + index.toString(10)).value = fileArray[index - 1].fileName;
                     }
                 }
 
@@ -1012,43 +1114,43 @@
             function configureFilenameText(id, button_id, modifyClassName, readOnlyClassName) {
                 var textarea = document.getElementById(id);
                 var button = document.getElementById(button_id);
-                button.onclick = function() {
+                button.onclick = function () {
                     textarea.readOnly = false;
                     textarea.className = modifyClassName;
                     textarea.focus();
                     closeClickSpan = "y";
                 }
-                
-                    textarea.onblur = function() {
-                        this.readOnly = true;
-                        this.className = readOnlyClassName;
-                        
-                        // textarea.onclick=event.stopPropagation();
-                        var index = parseInt(id.toString(10).split('-').pop());
-                        // 文件名不能为空
-                        if (document.getElementById(id).value == '') {
-                            document.getElementById(id).value = fileArray[index-1].fileName;
-                        } else {
-                            fileArray[index-1].fileName = document.getElementById(id).value;
-                            // 这里的逻辑和editable textarea 2不完全相同，因为这里是一对多，一个框对多个名称
-                            // 标题只显示当前编辑器的名称，以下注释部分正是因为没有理解这一点而写错的
-                            // <del>更新编辑器顶上的那个标题，即id=editable-textarea</del>
-                            // document.getElementById("editable-textarea").value = fileArray[index-1].fileName;
 
-                            // 重写：每次激活编辑器，都要将题头设为fileArray[i].fileName
-                            // 但是，有一种情况例外，那就是正在修改的时候，没有激活，也需要变化题头
-                            // 判断当前正在编辑文件名的文件的标题，是不是当下激活的编辑器的标题
+                textarea.onblur = function () {
+                    this.readOnly = true;
+                    this.className = readOnlyClassName;
 
-                            // 找到当前激活的编辑器序号
-                            var active_index = findActiveEditor();
-                            
-                            if (closeClickSpan == "y" & active_index == index) {
-                                document.getElementById("editable-textarea").value = fileArray[index-1].fileName;
-                            }
+                    // textarea.onclick=event.stopPropagation();
+                    var index = parseInt(id.toString(10).split('-').pop());
+                    // 文件名不能为空
+                    if (document.getElementById(id).value == '') {
+                        document.getElementById(id).value = fileArray[index - 1].fileName;
+                    } else {
+                        fileArray[index - 1].fileName = document.getElementById(id).value;
+                        // 这里的逻辑和editable textarea 2不完全相同，因为这里是一对多，一个框对多个名称
+                        // 标题只显示当前编辑器的名称，以下注释部分正是因为没有理解这一点而写错的
+                        // <del>更新编辑器顶上的那个标题，即id=editable-textarea</del>
+                        // document.getElementById("editable-textarea").value = fileArray[index-1].fileName;
+
+                        // 重写：每次激活编辑器，都要将题头设为fileArray[i].fileName
+                        // 但是，有一种情况例外，那就是正在修改的时候，没有激活，也需要变化题头
+                        // 判断当前正在编辑文件名的文件的标题，是不是当下激活的编辑器的标题
+
+                        // 找到当前激活的编辑器序号
+                        var active_index = findActiveEditor();
+
+                        if (closeClickSpan == "y" & active_index == index) {
+                            document.getElementById("editable-textarea").value = fileArray[index - 1].fileName;
                         }
-                        closeClickSpan = "n";
                     }
-                
+                    closeClickSpan = "n";
+                }
+
             }
 
             // 每次新增文件时需要运行此函数以配置文件管理器中该文件所属标签的文本框
@@ -1059,12 +1161,12 @@
             // 点击span和点击span上的button事件的分离
             // 可以在不跳转编辑器的情况下修改别的编辑器的文件名
             var closeClickSpan = "n";
-            
-            document.getElementById("title-button-add").addEventListener("click", function(){
+
+            document.getElementById("title-button-add").addEventListener("click", function () {
                 addFile(noCode, "html");
                 // console.log("hi");
             });
-            
+
 
             // 重写file manager
             // UI 部分
@@ -1078,7 +1180,7 @@
             var saveSpan = document.getElementsByClassName("save");
 
             var list = document.querySelector('.file-list');
-                list.addEventListener('click', function(ev) {
+            list.addEventListener('click', function (ev) {
                 if (ev.target.tagName === 'LI' && closeClickSpan == 'n') {
                     // // 激活文件-li区
                     // // 文件列表被选中的文件背景高亮
@@ -1139,7 +1241,7 @@
                 img.className = "title-icon";
                 save_span.appendChild(img);
                 li.appendChild(save_span);
-                
+
                 var trash_span = document.createElement("SPAN");
                 trash_span.className = "trash";
                 var img = document.createElement("IMG");
@@ -1159,15 +1261,15 @@
 
                 // 此处投机取巧，除trash以外，其他原素是借用了trash的length值，因为数值相同
                 for (var i = 0; i < trash.length; i++) {
-                    trash[i].onclick = function() {
+                    trash[i].onclick = function () {
                         // 如果被删除，不再在文件列表中显示该文件
                         var ThisLi = this.parentElement;
                         ThisLi.style.display = "none";
                         // 如果被删除，将该对象的isDelete属性设置为true
                         var index = parseInt(ThisLi.id.toString(10).split('-').pop());
-                        fileArray[index-1].isDelete = "true";
+                        fileArray[index - 1].isDelete = "true";
                         // 如果被删除，更新editorContent
-                        fileArray[index-1].editorContent = fileArray[index-1].editor.getValue();
+                        fileArray[index - 1].editorContent = fileArray[index - 1].editor.getValue();
                         // 如果被删除，第一个文件的li的class设为active
                         // 先检查是否至少存在一个文件，如果一个文件都没有，那么新建一个
                         var fileIndex;
@@ -1176,15 +1278,15 @@
                             if (fileArray[i].isDelete == "false") {
                                 isAllDelete = "n";
                                 fileIndex = i + 1;
-                                
+
                                 break;
                             }
                         }
-                        
+
                         if (isAllDelete == "y") {
                             // 删除时调用addFile函数，addFile函数会调用activeEditor函数，因此此处不用激活
                             addFile(noCode, "html");
-                            
+
                         } else {
                             // 目前文件序列中的第一个文件的li的class设为active
                             console.log(fileIndex);
@@ -1193,7 +1295,7 @@
 
                     }
 
-                    inputSpan[i].onclick = function() {
+                    inputSpan[i].onclick = function () {
                         if (closeClickSpan == 'n') {
                             // // 激活文件-span区
                             // // 文件列表被选中的文件背景高亮
@@ -1204,7 +1306,7 @@
                             // }
                             // var ThisLi = this.parentElement;
                             // ThisLi.classList.toggle('active');
-                            
+
                             var ThisLi = this.parentElement;
                             var index = parseInt(ThisLi.id.toString(10).split('-').pop());
                             activeEditor(index);
@@ -1230,13 +1332,13 @@
                         }
                     }
 
-                    saveSpan[i].onclick = function() {
+                    saveSpan[i].onclick = function () {
                         var ThisLi = this.parentElement;
                         var index = parseInt(ThisLi.id.toString(10).split('-').pop());
                         save(index);
                     }
 
-                    configureFilenameText("file-list-input-" + (i+1).toString(10), "file-list-edit-" + (i+1).toString(10), "filename-modify", "filename-readonly");
+                    configureFilenameText("file-list-input-" + (i + 1).toString(10), "file-list-edit-" + (i + 1).toString(10), "filename-modify", "filename-readonly");
                 }
 
             }
@@ -1251,13 +1353,13 @@
                 editor: null,
                 editorContent: "",
                 editorLanguage: ""
-	        };
+            };
 
             var fileArray = [];
 
             // 在文件列表里新增一个文件，先新增对象，然后刷新视图
             function addFile(code, language) {
-                
+
                 // console.log(fileCounter);
                 // 新建一个container
                 var new_container = document.createElement("DIV");
@@ -1288,7 +1390,7 @@
                 file.editorLanguage = language;
                 // console.log(file.editor);
                 fileArray.push(file);
-                
+
 
                 // 刷新文件列表
                 addFileView();
@@ -1354,13 +1456,13 @@
                 });
 
                 // 遍历所有文件，isActive设为false，然后把当前激活的editor的isActive设为true
-                for (var i = 0; i < fileArray.length; i ++) {
+                for (var i = 0; i < fileArray.length; i++) {
                     fileArray[i].isActive = "false";
                 }
                 fileArray[index - 1].isActive = "true";
 
                 // 激活时题头要设为当前的文件名
-                document.getElementById("editable-textarea").value = fileArray[index-1].fileName;
+                document.getElementById("editable-textarea").value = fileArray[index - 1].fileName;
 
                 // 激活时语法栏要设为当前model的语言
                 // 暂时没找到api
@@ -1371,12 +1473,12 @@
 
             function findActiveEditor() {
                 // 找到当前激活的编辑器序号
-                for (var i = 0; i < fileArray.length; i ++) {
-                        if (fileArray[i].isActive == "true") {
-                            var index = i + 1;
-                            return index;
-                        }
+                for (var i = 0; i < fileArray.length; i++) {
+                    if (fileArray[i].isActive == "true") {
+                        var index = i + 1;
+                        return index;
                     }
+                }
                 return -1;
             }
 
@@ -1397,55 +1499,55 @@
             }
 
             function getUploadText(e, callback) {
-                    var files = e.target.files || e.dataTransfer.files;
-                    var file = files[0];
+                var files = e.target.files || e.dataTransfer.files;
+                var file = files[0];
 
-                    if (location.host.indexOf("sitepointstatic") >= 0) return;
+                if (location.host.indexOf("sitepointstatic") >= 0) return;
 
-                    var request = new XMLHttpRequest();
-                    if (request.upload) {
-                        // console.log("CASE 2");
-                        var reader = new FileReader();
+                var request = new XMLHttpRequest();
+                if (request.upload) {
+                    // console.log("CASE 2");
+                    var reader = new FileReader();
 
-                        // 下面这段代码有复用，考虑写成函数
-                        var ext = file.name.toString().split('.').pop();
-                        var filename = file.name.toString().split('.').shift();
-                        var type;
+                    // 下面这段代码有复用，考虑写成函数
+                    var ext = file.name.toString().split('.').pop();
+                    var filename = file.name.toString().split('.').shift();
+                    var type;
 
-                        // 用于自动跳转语法高亮
-                        if (ext === "json") {
-                            type = "json";
-                        } else if (ext === "js") {
-                            type = "javascript";
-                        } else if (ext === "php") {
-                            type = "php";
-                        } else if (ext === "html") {
-                            type = "html";
-                        }else if (ext === "java") {
-                            type = "java";
-                        } else if (ext === "py") {
-                            type = "python";
-                        } else if (ext === "go") {
-                            type = "go";
-                        } else if (ext === "css") {
-                            type = "css";
-                        }
-
-                        reader.readAsText(file);
-
-                        reader.onloadend = function(e) {
-                            drop_code = reader.result;
-                            if (type != null) {
-                                addFile(drop_code, type);
-                                // languageSelect.value = type;
-                            } else {
-                                addFile(drop_code, "html");
-                                // callback();
-                            }
-                            // callback();
-                            // document.getElementById("showtext").innerHTML = filename;
-                        };
+                    // 用于自动跳转语法高亮
+                    if (ext === "json") {
+                        type = "json";
+                    } else if (ext === "js") {
+                        type = "javascript";
+                    } else if (ext === "php") {
+                        type = "php";
+                    } else if (ext === "html") {
+                        type = "html";
+                    } else if (ext === "java") {
+                        type = "java";
+                    } else if (ext === "py") {
+                        type = "python";
+                    } else if (ext === "go") {
+                        type = "go";
+                    } else if (ext === "css") {
+                        type = "css";
                     }
+
+                    reader.readAsText(file);
+
+                    reader.onloadend = function (e) {
+                        drop_code = reader.result;
+                        if (type != null) {
+                            addFile(drop_code, type);
+                            // languageSelect.value = type;
+                        } else {
+                            addFile(drop_code, "html");
+                            // callback();
+                        }
+                        // callback();
+                        // document.getElementById("showtext").innerHTML = filename;
+                    };
+                }
             }
 
 
@@ -1498,8 +1600,8 @@
             // 从json加载示例代码
             function loadDemo() {
                 // $.getJSON("https://www.luochang.ink/gadget/monaco-speech-editor/data/code.json", function(data){
-                $.getJSON("./data/code.json", function(data){
-                    $.each( data, function( key, val ) {
+                $.getJSON("./data/code.json", function (data) {
+                    $.each(data, function (key, val) {
                         var ext = key.toString().split('.').pop();
                         // var filename = key.toString().split('.').shift();
                         var type;
@@ -1513,7 +1615,7 @@
                             type = "php";
                         } else if (ext === "html") {
                             type = "html";
-                        }else if (ext === "java") {
+                        } else if (ext === "java") {
                             type = "java";
                         } else if (ext === "py") {
                             type = "python";
@@ -1530,9 +1632,9 @@
                         }
                         // 加入文件的函数是不能指定文件名的，下面这个方法取巧了，可以说是手动更新
                         var index = fileCounter - 1;
-                        fileArray[index-1].fileName = key;
-                        document.getElementById("file-list-input-" + index.toString(10)).value = fileArray[index-1].fileName;
-                        document.getElementById("editable-textarea").value = fileArray[index-1].fileName;
+                        fileArray[index - 1].fileName = key;
+                        document.getElementById("file-list-input-" + index.toString(10)).value = fileArray[index - 1].fileName;
+                        document.getElementById("editable-textarea").value = fileArray[index - 1].fileName;
 
 
                     });
@@ -1550,10 +1652,10 @@
                 // logger
                 // 重写console.log
                 // implement it by hack way
-                var injection = "<script" + ">(function (logger) {conso"+"le.old = console.log;console.log = function () {var output = \"\", arg, i;for (var i = 0; i < argu"+"ments.length; i++) {arg = argume"+"nts[i];output += \"<span class='log-\" + (typeof arg) + \"'>\";if (ty"+"peof arg === \"object\" \&"+"\&typeof JSON === \"object\" \&"+"\&typeof JSON.stringify === \"function\") {output += JSON.stringify(arg);   } else {output += arg;   }output += '<" + "/span>\&nbsp;';}logger.innerHTML += output + '<br>';console.old.apply(undefined, arguments);};})(document.getElementById('logger'));<" + "/script>";
-                var hideAllElem = "<script" + ">var nodes = document.all;for(var i=0;i<nodes.length;i++){var o = nodes[i];o.style.display = 'none';}<"+"/script>";
-                var showLog = "<script" + ">document.getElementsByTagName('html')[0].style.display = 'block';document.getElementsByTagName('body')[0].style.display = 'block';document.getElementById('logger').style.display = 'block'; var cn = document.getElementById('logger').childNodes;for (var i = 0; i < cn.length; i++) {cn[i].style = 'display: block;';}<"+"/script>";
-                var logInput =  "<link rel=\"stylesheet\" href=\"./src/style.css\">" + "<pre id='logger'></pre>" + injection + text + hideAllElem + showLog;
+                var injection = "<script" + ">(function (logger) {conso" + "le.old = console.log;console.log = function () {var output = \"\", arg, i;for (var i = 0; i < argu" + "ments.length; i++) {arg = argume" + "nts[i];output += \"<span class='log-\" + (typeof arg) + \"'>\";if (ty" + "peof arg === \"object\" \&" + "\&typeof JSON === \"object\" \&" + "\&typeof JSON.stringify === \"function\") {output += JSON.stringify(arg);   } else {output += arg;   }output += '<" + "/span>\&nbsp;';}logger.innerHTML += output + '<br>';console.old.apply(undefined, arguments);};})(document.getElementById('logger'));<" + "/script>";
+                var hideAllElem = "<script" + ">var nodes = document.all;for(var i=0;i<nodes.length;i++){var o = nodes[i];o.style.display = 'none';}<" + "/script>";
+                var showLog = "<script" + ">document.getElementsByTagName('html')[0].style.display = 'block';document.getElementsByTagName('body')[0].style.display = 'block';document.getElementById('logger').style.display = 'block'; var cn = document.getElementById('logger').childNodes;for (var i = 0; i < cn.length; i++) {cn[i].style = 'display: block;';}<" + "/script>";
+                var logInput = "<link rel=\"stylesheet\" href=\"./src/style.css\">" + "<pre id='logger'></pre>" + injection + text + hideAllElem + showLog;
                 newIframe("log-iframe");
                 document.getElementById("log-iframe").contentDocument.write(logInput);
                 // 防止myEditor里的代码注入导致的背景颜色变化
@@ -1584,254 +1686,255 @@
             // document.getElementById("left-nav-button-4").click();
             // document.getElementById("night-mode-input").click();
             // document.getElementById("speak-document").click();
-            // document.getElementById("console-button").click();
+            document.getElementById("console-button").click();
             // document.getElementById("left-nav-button-4").click();
-            
+
             // overDocSpeak();
             // overLineSpeak();
             // testSymbol();
 
-                
-                
+
+
 
 
         });
 
         // -------------------------------------------------------------
-            
-            // overlay
-            // var navStatus = "c";
 
-            // function clickOpenNav() {
-            //     if (navStatus == "c") {
-            //         openNav();
-            //         navStatus = "o";
-            //     } else if (navStatus == "o") {
-            //         off();
-            //         navStatus = "c";
-            //     }
-            // }
+        // overlay
+        // var navStatus = "c";
 
-            // function closeByOverlay() {
-            //     off();
-            //     navStatus = "c"
-            // }
-            
-            // function openNav() {
-            //     on();
-            //     document.getElementById("mySidenav").style.width = "300px";
-            // }
+        // function clickOpenNav() {
+        //     if (navStatus == "c") {
+        //         openNav();
+        //         navStatus = "o";
+        //     } else if (navStatus == "o") {
+        //         off();
+        //         navStatus = "c";
+        //     }
+        // }
 
-            // function closeNav() {
-            //     document.getElementById("mySidenav").style.width = "0";
-            // }
+        // function closeByOverlay() {
+        //     off();
+        //     navStatus = "c"
+        // }
 
-            // function on() {
-            //     document.getElementById("overlay").style.display = "block";
-            // }
+        // function openNav() {
+        //     on();
+        //     document.getElementById("mySidenav").style.width = "300px";
+        // }
 
-            // function off() {
-            //     closeNav();
-            //     document.getElementById("overlay").style.display = "none";
-            // }
+        // function closeNav() {
+        //     document.getElementById("mySidenav").style.width = "0";
+        // }
 
+        // function on() {
+        //     document.getElementById("overlay").style.display = "block";
+        // }
 
-
-            var leftSidebarStatus = "c";
-            var leftSidebarSelected = "";
-            var leftSidebarSelect = "";
+        // function off() {
+        //     closeNav();
+        //     document.getElementById("overlay").style.display = "none";
+        // }
 
 
-            function openLeftSideBar() {
-              document.getElementById("left-sidebar").style.width = "250px";
-              document.getElementById("header").style.marginLeft = "250px";
-              document.getElementById("toolbar").style.marginLeft = "250px";
-              document.getElementById("console-bar").style.marginLeft = "250px";
-              var conta = document.getElementsByClassName("container");
-              for (var i = 0; i < conta.length; i++) {
+
+        var leftSidebarStatus = "c";
+        var leftSidebarSelected = "";
+        var leftSidebarSelect = "";
+
+
+        function openLeftSideBar() {
+            document.getElementById("left-sidebar").style.width = "250px";
+            document.getElementById("header").style.marginLeft = "250px";
+            document.getElementById("toolbar").style.marginLeft = "250px";
+            document.getElementById("console-bar").style.marginLeft = "250px";
+            var conta = document.getElementsByClassName("container");
+            for (var i = 0; i < conta.length; i++) {
                 conta[i].style.marginLeft = "250px";
-              }
             }
+        }
 
-            function closeLeftSideBar() {
-              document.getElementById("left-sidebar").style.width = "0";
-              document.getElementById("header").style.marginLeft = "0";
-              document.getElementById("toolbar").style.marginLeft = "0";
-              document.getElementById("console-bar").style.marginLeft = "0";
-              var conta = document.getElementsByClassName("container");
-              for (var i = 0; i < conta.length; i++) {
+        function closeLeftSideBar() {
+            document.getElementById("left-sidebar").style.width = "0";
+            document.getElementById("header").style.marginLeft = "0";
+            document.getElementById("toolbar").style.marginLeft = "0";
+            document.getElementById("console-bar").style.marginLeft = "0";
+            var conta = document.getElementsByClassName("container");
+            for (var i = 0; i < conta.length; i++) {
                 conta[i].style.marginLeft = "0px";
-              }
-
-              var i, tablinks;
-              tablinks = document.getElementsByClassName("left-nav-button");
-              for (var i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-              }
-
             }
 
-            function clickLeftNav(evt, sidebarName) {
-              // 选择对应tab的内容
-              var i, tabcontent, tablinks;
-              tabcontent = document.getElementsByClassName("tabcontent");
-              for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-              }
-
-              document.getElementById(sidebarName).style.display = "block";
-
-              tablinks = document.getElementsByClassName("left-nav-button");
-              for (var i = 0; i < tablinks.length; i++) {
+            var i, tablinks;
+            tablinks = document.getElementsByClassName("left-nav-button");
+            for (var i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
-              }
+            }
 
-              evt.currentTarget.className += " active";
+        }
 
-              //控制sidebar的开关，因为closeLeftSideBar()内的语句，本节代码和上一节顺序不可对调
-              leftSidebarSelected = leftSidebarSelect;
-              leftSidebarSelect = sidebarName;
-              if (leftSidebarStatus == "c") {
+        function clickLeftNav(evt, sidebarName) {
+            // 选择对应tab的内容
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            document.getElementById(sidebarName).style.display = "block";
+
+            tablinks = document.getElementsByClassName("left-nav-button");
+            for (var i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            evt.currentTarget.className += " active";
+
+            //控制sidebar的开关，因为closeLeftSideBar()内的语句，本节代码和上一节顺序不可对调
+            leftSidebarSelected = leftSidebarSelect;
+            leftSidebarSelect = sidebarName;
+            if (leftSidebarStatus == "c") {
                 openLeftSideBar();
                 leftSidebarStatus = "o";
-              } else if (leftSidebarSelected == leftSidebarSelect) {
+            } else if (leftSidebarSelected == leftSidebarSelect) {
                 closeLeftSideBar();
                 leftSidebarStatus = "c"
                 leftSidebarSelect = "";
-              }
             }
+        }
 
 
-            
 
-            // sidebar
-            function hideSection(evt, section_id, icon_id) {
-                var selectedElement = document.getElementById(section_id);
-                var selectedIcon = document.getElementById(icon_id);
-                if (evt.currentTarget.className.toString().split(' ').pop() != "hidden") {
-                    selectedElement.style.display = "none";
-                    evt.currentTarget.className += " hidden";
-                    selectedIcon.style = "-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-o-transform: rotate(-90deg);-ms-transform: rotate(-90deg);transform: rotate(-90deg);";
-                } else {
-                    selectedElement.style.display = "block";
-                    evt.currentTarget.className = evt.currentTarget.className.replace(" hidden", "");
-                    selectedIcon.style = "";
+
+        // sidebar
+        function hideSection(evt, section_id, icon_id) {
+            var selectedElement = document.getElementById(section_id);
+            var selectedIcon = document.getElementById(icon_id);
+            if (evt.currentTarget.className.toString().split(' ').pop() != "hidden") {
+                selectedElement.style.display = "none";
+                evt.currentTarget.className += " hidden";
+                selectedIcon.style = "-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-o-transform: rotate(-90deg);-ms-transform: rotate(-90deg);transform: rotate(-90deg);";
+            } else {
+                selectedElement.style.display = "block";
+                evt.currentTarget.className = evt.currentTarget.className.replace(" hidden", "");
+                selectedIcon.style = "";
+            }
+        }
+
+        // full screen
+        var headerHidden = "y"
+        function hideHeader() {
+            if (headerHidden == "n") {
+                document.getElementById("header").style.display = "none";
+                document.getElementById("toolbar").style.top = "0px";
+                // document.getElementById("container").style.top = "28px";
+                var conta = document.getElementsByClassName("container");
+                for (var i = 0; i < conta.length; i++) {
+                    conta[i].style.top = "28px";
                 }
-            }
-
-            // full screen
-            var headerHidden = "y"
-            function hideHeader() {
-                if (headerHidden == "n") {
-                    document.getElementById("header").style.display = "none";
-                    document.getElementById("toolbar").style.top = "0px";
-                    // document.getElementById("container").style.top = "28px";
-                    var conta = document.getElementsByClassName("container");
-                    for (var i = 0; i < conta.length; i++) {
-                        conta[i].style.top = "28px";
-                    }
-                    headerHidden = "y";
-                } else {
-                    document.getElementById("header").style.display = "block";
-                    document.getElementById("toolbar").style.top = "50px";
-                    // document.getElementById("container").style.top = "78px";
-                    var conta = document.getElementsByClassName("container");
-                    for (var i = 0; i < conta.length; i++) {
-                        conta[i].style.top = "78px";
-                    }
-                    headerHidden = "n";
+                headerHidden = "y";
+            } else {
+                document.getElementById("header").style.display = "block";
+                document.getElementById("toolbar").style.top = "50px";
+                // document.getElementById("container").style.top = "78px";
+                var conta = document.getElementsByClassName("container");
+                for (var i = 0; i < conta.length; i++) {
+                    conta[i].style.top = "78px";
                 }
+                headerHidden = "n";
             }
+        }
 
-            // console button
-            document.getElementById("console-button").addEventListener("click", function(){
-                hideConsole();
-            });
+        // console button
+        document.getElementById("console-button").addEventListener("click", function () {
+            hideConsole();
+        });
 
 
-            var consoleToggle = "h"
-            function hideConsole() {
-                if (consoleToggle == "h") {
-                    // 打开状态
-                    // 显示run button
-                    document.getElementById("console-button-run").style.display = "inline-block";
-                    // 打开状态下，为console bar 加一条上边线
-                    document.getElementById("console-bar").style.borderTop = "1px solid #bbbbbb";
-                    // Code for Safari
-                    document.getElementById("console-bar").style.WebkitTransform = "translateY(-280px)"; 
-                    // Code for IE9
-                    document.getElementById("console-bar").style.msTransform = "translateY(-280px)"; 
-                    // Standard syntax
-                    document.getElementById("console-bar").style.transform = "translateY(-280px)"; 
-                    consoleToggle = "s";
-                } else {
-                    // 关闭状态
-                    // 隐藏run button
-                    document.getElementById("console-button-run").style.display = "none";
-                    // 关闭状态下，去掉上边线
-                    document.getElementById("console-bar").style.borderTop = "0px none #FFFFFF";
-                    // Code for Safari
-                    document.getElementById("console-bar").style.WebkitTransform = "translateY(0)"; 
-                    // Code for IE9
-                    document.getElementById("console-bar").style.msTransform = "translateY(0)"; 
-                    // Standard syntax
-                    document.getElementById("console-bar").style.transform = "translateY(0)"; 
-                    consoleToggle = "h";
-                }
+        var consoleToggle = "h"
+        function hideConsole() {
+            if (consoleToggle == "h") {
+                // 打开状态
+                // 显示run button
+                document.getElementById("console-button-run").style.display = "inline-block";
+                // 打开状态下，为console bar 加一条上边线
+                document.getElementById("console-bar").style.borderTop = "1px solid #bbbbbb";
+                // Code for Safari
+                document.getElementById("console-bar").style.WebkitTransform = "translateY(-280px)";
+                // Code for IE9
+                document.getElementById("console-bar").style.msTransform = "translateY(-280px)";
+                // Standard syntax
+                document.getElementById("console-bar").style.transform = "translateY(-280px)";
+                consoleToggle = "s";
+            } else {
+                // 关闭状态
+                // 隐藏run button
+                document.getElementById("console-button-run").style.display = "none";
+                // 关闭状态下，去掉上边线
+                document.getElementById("console-bar").style.borderTop = "0px none #FFFFFF";
+                // Code for Safari
+                document.getElementById("console-bar").style.WebkitTransform = "translateY(0)";
+                // Code for IE9
+                document.getElementById("console-bar").style.msTransform = "translateY(0)";
+                // Standard syntax
+                document.getElementById("console-bar").style.transform = "translateY(0)";
+                consoleToggle = "h";
             }
+        }
 
 
-            // router
-            // 利用路由加载设置偏好
-            function Router() {
-                this.routes = {};
-                this.currentUrl = '';
-            }
-            Router.prototype.route = function(path, callback) {
-                this.routes[path] = callback || function(){};
-            };
-            Router.prototype.refresh = function() {
-                this.currentUrl = location.hash.slice(1) || '/';
-                this.routes[this.currentUrl]();
-            };
-            Router.prototype.init = function() {
-                window.addEventListener('load', this.refresh.bind(this), false);
-                window.addEventListener('hashchange', this.refresh.bind(this), false);
-            }
-            window.Router = new Router();
-            window.Router.init();
+        // router
+        // 利用路由加载设置偏好
+        function Router() {
+            this.routes = {};
+            this.currentUrl = '';
+        }
+        Router.prototype.route = function (path, callback) {
+            this.routes[path] = callback || function () { };
+        };
+        Router.prototype.refresh = function () {
+            this.currentUrl = location.hash.slice(1) || '/';
+            this.routes[this.currentUrl]();
+        };
+        Router.prototype.init = function () {
+            window.addEventListener('load', this.refresh.bind(this), false);
+            window.addEventListener('hashchange', this.refresh.bind(this), false);
+        }
+        window.Router = new Router();
+        window.Router.init();
 
-            Router.route('/', function() {
-                // do nothing
-                // remove this function will cause an error
-            });
-            Router.route('dark', function() {
-                document.getElementById("night-mode-input").click();
-            });
-            Router.route('full-screen', function() {
-                document.getElementById("left-nav-button-1").click();
-                document.getElementById("hide-header").click();
-            });
-            Router.route('load-demo', function() {
-                document.getElementById("load-demo").click();
-            });
-            Router.route('console', function() {
-                document.getElementById("console-button").click();
-            });
-            Router.route('run', function() {
-                document.getElementById("console-button").click();
-                document.getElementById("console-button-run").click();
-            });
-            Router.route('dark+run', function() {
-                document.getElementById("night-mode-input").click();
-                document.getElementById("console-button").click();
-                document.getElementById("console-button-run").click();
-            });
+        Router.route('/', function () {
+            // do nothing
+            // remove this function will cause an error
+        });
+        Router.route('dark', function () {
+            document.getElementById("night-mode-input").click();
+        });
+        Router.route('full-screen', function () {
+            document.getElementById("left-nav-button-1").click();
+            document.getElementById("hide-header").click();
+        });
+        Router.route('load-demo', function () {
+            document.getElementById("load-demo").click();
+        });
+        Router.route('console', function () {
+            document.getElementById("console-button").click();
+        });
+        Router.route('run', function () {
+            document.getElementById("console-button").click();
+            document.getElementById("console-button-run").click();
+        });
+        Router.route('dark+run', function () {
+            document.getElementById("night-mode-input").click();
+            document.getElementById("console-button").click();
+            document.getElementById("console-button-run").click();
+        });
 
 
 
-            
 
-        </script>
-    </body>
+
+    </script>
+</body>
+
 </html>

@@ -764,7 +764,7 @@ body {
     top: 20px;
     bottom: 0;
     left: 0;
-    width: calc((100vw - 50px)*0.5);
+    width: calc((100vw - 50px)*0.6);
     overflow: hidden;
     background: #FFF;
   }
@@ -780,7 +780,7 @@ body {
     position: absolute;
     top: 20px;
     bottom: 0;
-    left: calc((100vw - 50px)*0.5);
+    left: calc((100vw - 50px)*0.6);
     right: 0;
     background: #202020;
     overflow: auto;
