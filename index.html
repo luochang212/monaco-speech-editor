@@ -174,14 +174,6 @@
                     <div class="pitch-value">1</div>
                 </div>
                 <select class="voice-select"></select>
-
-                <span id="voice-feedback" class="navbar-toggle" style="padding-top: 10px;">
-                        Voice Feedback
-                        <label class="switch">
-                            <input id="voice-feedback-input" type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
-                    </span>
             </div>
 
             <button class="nav-title" id="mode-controller-title"
@@ -213,9 +205,35 @@
                 </span>
             </div>
 
+            <button class="nav-title" id="accessibility-controller-title"
+                onclick="hideSection(event, 'accessibility-controller', 'title-icon-4-3');"><img class="title-icon"
+                    id="title-icon-4-3" src="./images/sort-down-solid.svg" alt="down"> Accessibility</button>
+            <div class="navbar" id="accessibility-controller">
+                <span id="voice-feedback" class="navbar-toggle" style="padding-top: 10px;">
+                    Voice Feedback
+                    <label class="switch">
+                        <input id="voice-feedback-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span id="voice-cue" class="navbar-toggle" style="padding-top: 10px;">
+                    Voice Cue
+                    <label class="switch">
+                        <input id="voice-cue-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+
+                <!-- <span id="font-size" class="navbar-toggle" style="padding-top: 10px;">
+                    Font Size
+                    <input type="number" id="font-size-input" value="12"
+                        style="width: 25px; max-height:20px; text-align:left; position: relative; left: 135px; font-style: oblique; border-radius: 3px; overflow: hidden;">
+                </span> -->
+            </div>
+
             <button class="nav-title" id="theme-controller-title"
-                onclick="hideSection(event, 'theme-controller', 'title-icon-4-3');"><img class="title-icon"
-                    id="title-icon-4-3" src="./images/sort-down-solid.svg" alt="down"> Theme</button>
+                onclick="hideSection(event, 'theme-controller', 'title-icon-4-4');"><img class="title-icon"
+                    id="title-icon-4-4" src="./images/sort-down-solid.svg" alt="down"> Theme</button>
             <div class="navbar" id="theme-controller">
                 <span id="night-mode" class="navbar-toggle" style="padding-top: 10px;">
                     Night Mode
@@ -227,8 +245,8 @@
             </div>
 
             <button class="nav-title" id="console-controller-title"
-                onclick="hideSection(event, 'console-controller', 'title-icon-4-4');"><img class="title-icon"
-                    id="title-icon-4-4" src="./images/sort-down-solid.svg" alt="down"> Console</button>
+                onclick="hideSection(event, 'console-controller', 'title-icon-4-5');"><img class="title-icon"
+                    id="title-icon-4-5" src="./images/sort-down-solid.svg" alt="down"> Console</button>
             <div class="navbar" id="console-controller">
                 <span id="hide-log-area" class="navbar-toggle" style="padding-top: 10px;">
                     Hide Console Log Area
@@ -244,7 +262,6 @@
                         <span class="slider round"></span>
                     </label>
                 </span>
-                
             </div>
 
 
@@ -455,6 +472,12 @@
                 return editor;
             }
 
+            /**
+            * ============================================================================
+            *                                   (/^▽^)/
+            *                                EVENT LISTENER!
+            * ============================================================================
+            */
 
             document.getElementById("speak-document").addEventListener("click", function () {
                 speakDocument();
@@ -498,7 +521,7 @@
                     // document.getElementById("console-button").style.color = "#FFF";
                     // document.getElementById("console-button-run").style.color = "#FFF";
                     var btn_bar = document.getElementById('console-button-bar');
-                    for (var i = 0; i < btn_bar.children.length; i ++) {
+                    for (var i = 0; i < btn_bar.children.length; i++) {
                         btn_bar.children[i].style.color = "#FFF";
                     }
                 } else {
@@ -509,7 +532,7 @@
                     // document.getElementById("console-button").style.color = "inherit";
                     // document.getElementById("console-button-run").style.color = "inherit";
                     var btn_bar = document.getElementById('console-button-bar');
-                    for (var i = 0; i < btn_bar.children.length; i ++) {
+                    for (var i = 0; i < btn_bar.children.length; i++) {
                         btn_bar.children[i].style.color = "inherit";
                     }
                 }
@@ -589,9 +612,6 @@
 
 
 
-            // document.getElementById("test-button").addEventListener("click", function(){
-            //     // editorFontSize = 15;
-            // });
 
 
 
@@ -601,6 +621,61 @@
 
 
 
+
+
+            // voice cue
+            var voiceCueToggle = false;
+            document.getElementById("voice-cue-input").addEventListener("click", function () {
+                if (document.getElementById("voice-cue-input").checked === true) {
+                    voiceCueToggle = true;
+                } else {
+                    voiceCueToggle = false;
+                }
+            });
+            // click switch
+            document.getElementById('sidebar-4').addEventListener("click", function (evt) {
+                if (voiceCueToggle == true) {
+                    if (evt.target.tagName == "INPUT" && evt.target.id != 'rate' && evt.target.id != 'pitch') {
+                        if (evt.target.checked == true) {
+                            // console.log(evt.target.parentElement.parentElement.innerText)
+                            easySpeak('open' + evt.target.parentElement.parentElement.innerText);
+                        } else if (evt.target.checked == false) {
+                            easySpeak('close' + evt.target.parentElement.parentElement.innerText);
+                        }
+                    }
+                }
+            });
+            
+            var allElem = document.all;
+            var allBtns = [];
+            var allSpans = [];
+            var allLeftNavBtms = [];
+            for (var i = 0; i < allElem.length; i++) {
+                if (allElem[i].tagName == 'BUTTON') {
+                    // console.log(allElem[i].tagName);
+                    allBtns.push(allElem[i]);
+                } else if (allElem[i].tagName == 'SPAN') {
+                    allSpans.push(allElem[i]);
+                } else if (allElem[i].className == 'left-nav-button') {
+                    allLeftNavBtms.push(allElem[i]);
+                }
+            }
+            // hover button
+            for (var i = 0; i < allBtns.length; i++) {
+                allBtns[i].addEventListener("mouseover", function (evt) {
+                    if (voiceCueToggle == true) {
+                        easySpeak(this.innerText + 'button');
+                    }
+                });
+            }
+            // hover span
+            for (var i = 0; i < allSpans.length; i++) {
+                allSpans[i].addEventListener("mouseover", function (evt) {
+                    if (voiceCueToggle == true) {
+                        easySpeak(this.innerText);
+                    }
+                });
+            }
 
 
 
@@ -645,11 +720,18 @@
             // });
             /* ------------------------------------------------------------------------ */
 
+            /**
+            * ============================================================================
+            *                                 ヽ/❀o ل͜ o\ﾉ
+            *                               SPEECH SYNTHESIS!!!
+            * ============================================================================
+            */
+
             function easySpeak(val) {
-                doStop();
-                inputTxt = val;
-                speak();
-            }
+                    doStop();
+                    inputTxt = val;
+                    speak();
+                }
 
             // 模式控制器，全局变量，始终只有一个值（废话）
             var modeController = 'easySpeak';
@@ -958,35 +1040,9 @@
             //     console.log(editor.getValue());
             // });
 
-
-            function save(index) {
-                download(fileArray[index - 1].fileName, fileArray[index - 1].editor.getValue());
-
-                // var filename = prompt("Please input filename:", "");
-                // if (filename == null || filename == "") {
-                //     // alert("Please input something!");
-                // } else {
-                //     var text = myEditor.getValue();
-                //     download(filename, text);
-                // }
-            }
-
-            function download(filename, text) {
-                var element = document.createElement('a');
-                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-                element.setAttribute('download', filename);
-
-                element.style.display = 'none';
-                document.body.appendChild(element);
-
-                element.click();
-
-                document.body.removeChild(element);
-            }
-
             var languageSelect = document.querySelector('.language-picker');
 
-            // -------------------------- 语法高亮
+            // 语法高亮
             function syntaxHighlight(langName) {
                 var index = findActiveEditor();
                 monaco.editor.setModelLanguage(window.monaco.editor.getModels()[index - 1], langName)
@@ -994,13 +1050,10 @@
                 // console.log(fileArray);
             }
 
-
             languageSelect.onchange = function () {
                 syntaxHighlight(languageSelect.value);
                 // document.getElementById('test').innerHTML = languageSelect.value;
             }
-
-            // -----------------------------
 
             var currentLineNumber = 1;
             var currentColumnNumber = 1;
@@ -1141,10 +1194,18 @@
 
             // keyup event
             document.onkeyup = function (e) {
-                if (e.ctrlKey && e.altKey && e.which == 80) {
+                if (e.ctrlKey && e.altKey && (e.which == 80 || e.which == 13)) {
                     play();
                 } else if (e.ctrlKey && e.altKey && e.which == 83) {
                     doStop();
+                } else if (e.ctrlKey && e.altKey && e.which == 38) {
+                    backward();
+                    play();
+                } else if (e.ctrlKey && e.altKey && e.which == 40) {
+                    forward();
+                    play();
+                } else if (e.ctrlKey && e.altKey && e.which == 74) {
+                    document.getElementById("showLineNumber").focus();
                 }
             };
 
@@ -1155,11 +1216,13 @@
                 }
             }
 
+            /**
+            * ============================================================================
+            *                                 ⌒(❀>◞౪◟<❀)⌒
+            *                               FILE MANAGER!!!
+            * ============================================================================
+            */
 
-
-
-
-            // --------------------------------------------------------
             // editable textarea
             function configureEditableTextarea(id, modifyClassName, readOnlyClassName) {
                 var textarea = document.getElementById(id);
@@ -1526,7 +1589,7 @@
                     if (voiceFbToggole === 't') {
                         // console.log(toggle);
                         // console.log('b');
-                        easySpeak(charSpeak( char ));
+                        easySpeak(charSpeak(char));
                     }
                 });
             }
@@ -1569,7 +1632,7 @@
                             endLineNumber: currentLineNumber,
                             endColumn: currentColumnNumber,
                         });
-                        easySpeak(charSpeak( char ));
+                        easySpeak(charSpeak(char));
                     }
                 });
 
@@ -1600,6 +1663,12 @@
                 return -1;
             }
 
+            /**
+            * ============================================================================
+            *                               ヾ（〃＾∇＾）ﾉ♪
+            *                           UPLOAD AND DOWNLOAD!!!!
+            * ============================================================================
+            */
 
             // 上传
             // dropzone
@@ -1706,6 +1775,33 @@
 
             configureFileSelect("upload");
 
+            // download
+            // 下载功能
+            function save(index) {
+                download(fileArray[index - 1].fileName, fileArray[index - 1].editor.getValue());
+
+                // var filename = prompt("Please input filename:", "");
+                // if (filename == null || filename == "") {
+                //     // alert("Please input something!");
+                // } else {
+                //     var text = myEditor.getValue();
+                //     download(filename, text);
+                // }
+            }
+
+            function download(filename, text) {
+                var element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+                element.setAttribute('download', filename);
+
+                element.style.display = 'none';
+                document.body.appendChild(element);
+
+                element.click();
+
+                document.body.removeChild(element);
+            }
+
             // trash
             // 垃圾桶功能
             function findDeletedFiles() {
@@ -1795,7 +1891,7 @@
 
             // open iframe in new window
             function openInNewWindow() {
-                var win = window.open("", "Title", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=780,height=200,top="+(screen.height-400)+",left="+(screen.width-840));
+                var win = window.open("", "Title", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=780,height=200,top=" + (screen.height - 400) + ",left=" + (screen.width - 840));
                 var text = myEditor.getValue();
                 win.document.write(text);
                 // win.document.body.innerHTML = text;
@@ -1822,6 +1918,7 @@
             // document.getElementById("speak-document").click();
             // document.getElementById("console-button").click();
             // document.getElementById("left-nav-button-4").click();
+            // document.getElementById("voice-cue-input").click();
 
 
             // overDocSpeak();
@@ -1994,7 +2091,7 @@
                 document.getElementById("console-button-open-tab").style.display = "inline-block";
                 // 打开状态下，所有console button类的按钮高度调为29px，字体大小调为14px
                 var btn_bar = document.getElementById('console-button-bar');
-                for (var i = 0; i < btn_bar.children.length; i ++) {
+                for (var i = 0; i < btn_bar.children.length; i++) {
                     btn_bar.children[i].style.height = '29px';
                     btn_bar.children[i].style.fontSize = '14px';
                 }
@@ -2018,7 +2115,7 @@
                 document.getElementById("console-button-open-tab").style.display = "none";
                 // 关闭状态下，所有console button类的按钮高度调为20px，字体大小调为12px
                 var btn_bar = document.getElementById('console-button-bar');
-                for (var i = 0; i < btn_bar.children.length; i ++) {
+                for (var i = 0; i < btn_bar.children.length; i++) {
                     btn_bar.children[i].style.height = '20px';
                     btn_bar.children[i].style.fontSize = '12px';
                 }
@@ -2040,21 +2137,21 @@
 
         document.getElementById("night-mode-input").addEventListener("click", function () {
             // console.log('asdfasdf');
-                if (document.getElementById("night-mode-input").checked === true) {
-                    console_border_color = "#000000";
-                    // 夜间模式下，将console button bar 下边线的颜色改为#000000
-                    // document.getElementById("console-button-bar").style.borderBottom = "1px " + console_border_style + console_border_color;
-                    // 夜间模式下，将console bar 上边线的颜色改为#000000
-                    document.getElementById("console-bar").style.borderTop = console_border_style + console_border_color;
-                } else {
-                    console_border_color = "#bbbbbb";
-                    // 白天模式下，将console button bar 下边线的颜色改为#bbbbbb
-                    // document.getElementById("console-button-bar").style.borderBottom = "1px " + console_border_style + console_border_color;
-                    // 白天模式下，将console bar 上边线的颜色改为#bbbbbb
-                    document.getElementById("console-bar").style.borderTop = console_border_style + console_border_color;
-                }
-                // console.log(document.getElementById("console-bar").style.borderTop)
-            });
+            if (document.getElementById("night-mode-input").checked === true) {
+                console_border_color = "#000000";
+                // 夜间模式下，将console button bar 下边线的颜色改为#000000
+                // document.getElementById("console-button-bar").style.borderBottom = "1px " + console_border_style + console_border_color;
+                // 夜间模式下，将console bar 上边线的颜色改为#000000
+                document.getElementById("console-bar").style.borderTop = console_border_style + console_border_color;
+            } else {
+                console_border_color = "#bbbbbb";
+                // 白天模式下，将console button bar 下边线的颜色改为#bbbbbb
+                // document.getElementById("console-button-bar").style.borderBottom = "1px " + console_border_style + console_border_color;
+                // 白天模式下，将console bar 上边线的颜色改为#bbbbbb
+                document.getElementById("console-bar").style.borderTop = console_border_style + console_border_color;
+            }
+            // console.log(document.getElementById("console-bar").style.borderTop)
+        });
 
 
         // router
@@ -2081,6 +2178,9 @@
             // do nothing
             // remove this function will cause an error
         });
+        Router.route('load-demo', function () {
+            document.getElementById("load-demo").click();
+        });
         Router.route('dark', function () {
             document.getElementById("night-mode-input").click();
         });
@@ -2088,17 +2188,10 @@
             document.getElementById("left-nav-button-1").click();
             document.getElementById("hide-header").click();
         });
-        Router.route('load-demo', function () {
-            document.getElementById("load-demo").click();
-        });
-        Router.route('console', function () {
-            document.getElementById("console-button").click();
-        });
         Router.route('run', function () {
             document.getElementById("console-button").click();
-            document.getElementById("console-button-run").click();
         });
-        Router.route('dark+run', function () {
+        Router.route('dark&run', function () {
             document.getElementById("night-mode-input").click();
             document.getElementById("console-button").click();
         });
