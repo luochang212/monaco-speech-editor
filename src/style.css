@@ -11,7 +11,7 @@ body {
   #header {
     position: fixed;
     top: 0px;
-    left: 49px;
+    left: 50px;
     right: 0;
     height: 50px;
     /* background: #2b2b2b; */
@@ -419,6 +419,8 @@ body {
     width: 250px;
     margin: 0;
     padding: 5px 0 5px 10px;
+    position: relative;
+    height: 28px;
     overflow: hidden;
     
     text-align: left;
@@ -470,7 +472,9 @@ body {
 
     float:right;
     padding: 5px 8px;
+    position: relative;
     width: 30px;
+    height: 28px;
     z-index: 9999;
   }
 
@@ -501,6 +505,7 @@ body {
     font-size: 13px;
     outline:none;
     width: 250px;
+    overflow: hidden;
   }
 
   .filename-div:hover {
