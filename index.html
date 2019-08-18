@@ -140,16 +140,20 @@
                 onclick="hideSection(event, 'position-controller', 'title-icon-3-2');"><img class="title-icon"
                     id="title-icon-3-2" src="./images/sort-down-solid.svg" alt="down"> Cursor Position</button>
             <div class="navbar" id="position-controller">
-
                 <button id="search-cursor-position">Search Cursor Position</button>
                 <button id="cursor-jump-to-line">Cursor Jump To Line</button>
-
-                <!-- <button onclick="cursorPosition();">Search Cursor Position</button>
-                    <button onclick="clickJumpToLine();">Cursor Jump To Line</button> -->
             </div>
+
+            <button class="nav-title" id="tutorial-controller-title"
+                onclick="hideSection(event, 'tutorial-controller', 'title-icon-3-3');"><img class="title-icon"
+                    id="title-icon-3-3" src="./images/sort-down-solid.svg" alt="down"> Tutorial</button>
+            <div class="navbar" id="tutorial-controller">
+                <button id="audio-tutorial">Audio Tutorial</button>
+            </div>
+
             <button class="nav-title" id="trash-controller-title"
-                onclick="hideSection(event, 'trash-controller', 'title-icon-3-3');"><img class="title-icon"
-                    id="title-icon-3-3" src="./images/sort-down-solid.svg" alt="down"> Trash</button>
+                onclick="hideSection(event, 'trash-controller', 'title-icon-3-4');"><img class="title-icon"
+                    id="title-icon-3-4" src="./images/sort-down-solid.svg" alt="down"> Trash</button>
             <div class="navbar" id="trash-controller">
                 <button id="find-deleted-files">Find Deleted Files</button>
             </div>
@@ -180,7 +184,7 @@
                 onclick="hideSection(event, 'mode-controller', 'title-icon-4-2');"><img class="title-icon"
                     id="title-icon-4-2" src="./images/sort-down-solid.svg" alt="down"> Mode</button>
             <div class="navbar" id="mode-controller">
-                <span id="character-mode" class="navbar-toggle" style="padding-top: 10px;">
+                <span id="character-mode" class="navbar-toggle">
                     Character Mode
                     <label class="switch">
                         <input id="character-mode-input" type="checkbox">
@@ -188,7 +192,7 @@
                     </label>
                 </span>
 
-                <span id="code-mode" class="navbar-toggle" style="padding-top: 10px;">
+                <span id="code-mode" class="navbar-toggle">
                     Code Mode
                     <label class="switch">
                         <input id="code-mode-input" type="checkbox">
@@ -196,7 +200,7 @@
                     </label>
                 </span>
 
-                <span id="overview-mode" class="navbar-toggle" style="padding-top: 10px;">
+                <span id="overview-mode" class="navbar-toggle">
                     Overview Mode
                     <label class="switch">
                         <input id="overview-mode-input" type="checkbox">
@@ -209,14 +213,14 @@
                 onclick="hideSection(event, 'accessibility-controller', 'title-icon-4-3');"><img class="title-icon"
                     id="title-icon-4-3" src="./images/sort-down-solid.svg" alt="down"> Accessibility</button>
             <div class="navbar" id="accessibility-controller">
-                <span id="voice-feedback" class="navbar-toggle" style="padding-top: 10px;">
+                <span id="voice-feedback" class="navbar-toggle">
                     Voice Feedback
                     <label class="switch">
                         <input id="voice-feedback-input" type="checkbox">
                         <span class="slider round"></span>
                     </label>
                 </span>
-                <span id="voice-cue" class="navbar-toggle" style="padding-top: 10px;">
+                <span id="voice-cue" class="navbar-toggle">
                     Voice Cue
                     <label class="switch">
                         <input id="voice-cue-input" type="checkbox">
@@ -224,7 +228,7 @@
                     </label>
                 </span>
 
-                <!-- <span id="font-size" class="navbar-toggle" style="padding-top: 10px;">
+                <!-- <span id="font-size" class="navbar-toggle">
                     Font Size
                     <input type="number" id="font-size-input" value="12"
                         style="width: 25px; max-height:20px; text-align:left; position: relative; left: 135px; font-style: oblique; border-radius: 3px; overflow: hidden;">
@@ -235,7 +239,7 @@
                 onclick="hideSection(event, 'theme-controller', 'title-icon-4-4');"><img class="title-icon"
                     id="title-icon-4-4" src="./images/sort-down-solid.svg" alt="down"> Theme</button>
             <div class="navbar" id="theme-controller">
-                <span id="night-mode" class="navbar-toggle" style="padding-top: 10px;">
+                <span id="night-mode" class="navbar-toggle">
                     Night Mode
                     <label class="switch">
                         <input id="night-mode-input" type="checkbox">
@@ -248,14 +252,14 @@
                 onclick="hideSection(event, 'console-controller', 'title-icon-4-5');"><img class="title-icon"
                     id="title-icon-4-5" src="./images/sort-down-solid.svg" alt="down"> Console</button>
             <div class="navbar" id="console-controller">
-                <span id="hide-log-area" class="navbar-toggle" style="padding-top: 10px;">
+                <span id="hide-log-area" class="navbar-toggle">
                     Hide Console Log Area
                     <label class="switch">
                         <input id="log-area-input" type="checkbox">
                         <span class="slider round"></span>
                     </label>
                 </span>
-                <span id="hide-result-area" class="navbar-toggle" style="padding-top: 10px;">
+                <span id="hide-result-area" class="navbar-toggle">
                     Hide Rendering Result Area
                     <label class="switch">
                         <input id="result-area-input" type="checkbox">
@@ -609,6 +613,10 @@
                     voiceFbToggole = false;
                 }
             });
+            document.getElementById("audio-tutorial").addEventListener("click", function () {
+                    var val = 'Here is a short introduction about Monaco Speech Editor. Press control, alt and s, if you want to stop this audio. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read code. For example, you can play the synthetic speech of current code line by pressing control, option and p on Mac or control, alt and p on window. Play next code line by pressing control, alt and arrow down key. Play previous code line by pressing control alt and arrow up key. If you want it to speak the whole document, please press control alt and d. Monaco Speech Editor provides three modes to meet the different needs of reviewing code. There are character mode, code mode and overview mode. If you want to get accurate information about your code, you should use character mode, it will read every symbol, such as bracket or space. Code mode provides regular content of your code, some less important elements will be ignored. Overview mode will provide the outline information of this code line or this document, depending on your choice. Except powerful audio player, Monaco Speech Editor also provides incredible support in terms of file management. You can upload, download, add a new file, delete a file, change the file name by the build-in file manager. If you delete a file accidentally, you can recover the file by trash before you refresh current webpage. In addition, Monaco Speech Editor can also compile html file, It will render the html file in an iframe at the lower left corner of the editor. It can also output the result of consile dot log in an iframe at the lower right corner of the editor. There are many useful functionality, like using router to load setting. It will be introduced in my thesis. please enjoy and have fun. Thanks for listening.';
+                    easySpeak(val);
+            });
 
 
 
@@ -645,7 +653,7 @@
                     }
                 }
             });
-            
+
             var allElem = document.all;
             var allBtns = [];
             var allSpans = [];
@@ -728,10 +736,10 @@
             */
 
             function easySpeak(val) {
-                    doStop();
-                    inputTxt = val;
-                    speak();
-                }
+                doStop();
+                inputTxt = val;
+                speak();
+            }
 
             // 模式控制器，全局变量，始终只有一个值（废话）
             var modeController = 'easySpeak';
