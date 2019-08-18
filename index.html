@@ -228,6 +228,14 @@
                     </label>
                 </span>
 
+                <span id="spot-light" class="navbar-toggle">
+                    Spot Light
+                    <label class="switch">
+                        <input id="spot-light-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+
                 <!-- <span id="font-size" class="navbar-toggle">
                     Font Size
                     <input type="number" id="font-size-input" value="12"
@@ -389,6 +397,14 @@
         </div>
     </div>
 
+    <div id="overlay"></div>
+
+    <div id="spot-light-canvas">
+        <div id="spot-light-1" class="spot-light-div">1</div>
+        <div id="spot-light-2" class="spot-light-div">12</div>
+        <div id="spot-light-3" class="spot-light-div">321</div>
+        <div id="spot-light-4" class="spot-light-div">331</div>
+    </div>
 
 
     <!--<div id="container" class="container"></div>-->
@@ -614,9 +630,59 @@
                 }
             });
             document.getElementById("audio-tutorial").addEventListener("click", function () {
-                    var val = 'Here is a short introduction about Monaco Speech Editor. Press control, alt and s, if you want to stop this audio. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read code. For example, you can play the synthetic speech of current code line by pressing control, option and p on Mac or control, alt and p on window. Play next code line by pressing control, alt and arrow down key. Play previous code line by pressing control alt and arrow up key. If you want it to speak the whole document, please press control alt and d. Moreover, Monaco Speech Editor provides three modes to meet the different needs of reviewing code. There are character mode, code mode and overview mode. If you want to get accurate information about your code, you should use character mode, it will read every symbol, such as bracket or space. Code mode provides regular content of your code, some less important elements will be ignored. Overview mode will provide the outline information of this code line or this document, depending on your choice. Except powerful audio player, Monaco Speech Editor also provides incredible support in terms of file management. You can upload, download, add a new file, delete a file, change the file name by the build-in file manager. If you delete a file accidentally, you can recover the file by trash before you refresh current webpage. In addition, Monaco Speech Editor can also compile html file, It will render the html file in an iframe at the lower left corner of the editor. It can also output the result of consile dot log in an iframe at the lower right corner of the editor. There are many useful functionality, like using router to load setting. It will be introduced in my thesis. please enjoy and have fun. Thanks for listening.';
-                    easySpeak(val);
+                var val = 'Here is a short introduction about Monaco Speech Editor. Press control, alt and s, if you want to stop this audio. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read code. For example, you can play the synthetic speech of current code line by pressing control, option and p on Mac or control, alt and p on window. Play next code line by pressing control, alt and arrow down key. Play previous code line by pressing control alt and arrow up key. If you want it to speak the whole document, please press control alt and d. Moreover, Monaco Speech Editor provides three modes to meet the different needs of reviewing code. There are character mode, code mode and overview mode. If you want to get accurate information about your code, you should use character mode, it will read every symbol, such as bracket or space. Code mode provides regular content of your code, some less important elements will be ignored. Overview mode will provide the outline information of this code line or this document, depending on your choice. Except powerful audio player, Monaco Speech Editor also provides incredible support in terms of file management. You can upload, download, add a new file, delete a file, change the file name by the build-in file manager. If you delete a file accidentally, you can recover the file by trash before you refresh current webpage. In addition, Monaco Speech Editor can also compile html file, It will render the html file in an iframe at the lower left corner of the editor. It can also output the result of consile dot log in an iframe at the lower right corner of the editor. There are many useful functionality, like using router to load setting. It will be introduced in my thesis. please enjoy and have fun. Thanks for listening.';
+                easySpeak(val);
             });
+            document.getElementById("spot-light-input").addEventListener("click", function () {
+                if (document.getElementById("spot-light-input").checked === true) {
+                    document.getElementById("overlay").style.display = "block";
+                    document.getElementById("spot-light-canvas").style.display = "block";
+                    var topPos = document.getElementById('spot-light-1').offsetTop;
+                    var scrollDownDistance = 0;
+                    var innerElementHeight;
+                    var innerElementNumber = 4;  // 滑动元素总数
+                    var elementVisibleNumber = 3; // 可见元素总数
+                    document.addEventListener("keyup", (e) => {
+                        innerElementHeight =  document.getElementById('spot-light-1').offsetHeight;
+                        console.log(innerElementHeight);
+                        // e.preventDefault();
+                        if (e.which == 37) {
+                            // 左键
+                        } else if (e.which == 38) {
+                            // 上键
+            
+                            scrollDownDistance -= innerElementHeight;
+                            console.log(scrollDownDistance);
+                            document.getElementById('spot-light-canvas').scrollTop = topPos + scrollDownDistance;
+                        } else if (e.which == 39) {
+                            // 右键
+                        } else if (e.which == 40) {
+                            // 下键
+                            
+                            console.log("hi")
+                            // document.getElementById("spot-light-top-elem").style.top = "50px;"
+                            // document.getElementById("spot-light-top-elem").scrollTop = "15";
+                            // console.log(document.getElementById("spot-light-2").scrollTop);
+                            scrollDownDistance += innerElementHeight;
+                            document.getElementById('spot-light-canvas').scrollTop = topPos + scrollDownDistance;
+                            // var width = document.getElementById('spot-light-1').offsetWidth;
+                            // console.log(width);
+                        }
+                    });
+                } else {
+
+                }
+            });
+            document.getElementById("overlay").addEventListener("click", function () {
+                document.getElementById("spot-light-canvas").style.display = "none";
+                document.getElementById("overlay").style.display = "none";
+                document.getElementById("spot-light-input").checked = false;
+            });
+
+            // spot light 内容滚动事件
+
+
+
 
 
 
@@ -1117,6 +1183,13 @@
                 }
             }
 
+            function doStop() {
+                pauseResume = 'R';
+                clickNumber = 0;
+                window.speechSynthesis.cancel();
+                return false;
+            }
+
             function play() {
                 var testTxt = myEditor.getModel().getLineContent(currentLineNumber);
                 if (testTxt == "") {
@@ -1134,11 +1207,13 @@
                     document.getElementById("play-pause").src = "./images/pause-solid.svg";
                 } else {
                     doPauseResume();
+                    // console.log(clickNumber);
                 }
             }
 
             function backward() {
                 doStop();
+                // clickNumber = 0;
                 if (currentLineNumber <= 1) {
                     easySpeak("This is the first line");
                     // alert("This is the first line.");
@@ -1152,6 +1227,14 @@
 
             function forward() {
                 doStop();
+                // clickNumber = 0;
+                // console.log(clickNumber);
+                // 可恶，摩纳哥里的变量只能进不能出，我都忘了
+                // 摩纳哥的这个限制让这里出了奇怪的bug
+                // 啥bug呢？就是用快捷键换行的时候会迷之把play()当暂停使用，这是因为一个语音进程没有自然结束，clickNumber没有归零
+                // 在doStop里手动置零就可以了
+                // 整了半天才想起来这个设定
+                // 我还呆呆地去script.js里加了一句clickNumber = 0;
                 var maxLine = myEditor.getModel().getLineCount();
                 if (currentLineNumber >= maxLine) {
                     easySpeak("This is the last line");
@@ -1201,7 +1284,7 @@
             }
 
             // keyup event
-            document.onkeyup = function (e) {
+            document.addEventListener('keyup', (e) => {
                 if (e.ctrlKey && e.altKey && (e.which == 80 || e.which == 13)) {
                     play();
                 } else if (e.ctrlKey && e.altKey && e.which == 83) {
@@ -1215,7 +1298,7 @@
                 } else if (e.ctrlKey && e.altKey && e.which == 74) {
                     document.getElementById("showLineNumber").focus();
                 }
-            };
+            });
 
             // 按下enter时光标移动，从这个函数我知道了keyup和keydown的区别，这里只能用keyup
             function handleEnter() {
@@ -1925,9 +2008,9 @@
             // document.getElementById("night-mode-input").click();
             // document.getElementById("speak-document").click();
             // document.getElementById("console-button").click();
-            // document.getElementById("left-nav-button-4").click();
+            document.getElementById("left-nav-button-4").click();
             // document.getElementById("voice-cue-input").click();
-
+            document.getElementById("spot-light-input").click();
 
             // overDocSpeak();
             // overLineSpeak();
@@ -2200,7 +2283,7 @@
             document.getElementById("console-button").click();
         });
         Router.route('tutorial', function () {
-            setTimeout(() => { document.getElementById("audio-tutorial").click();}, 1000 );
+            setTimeout(() => { document.getElementById("audio-tutorial").click(); }, 1000);
         });
         Router.route('dark&run', function () {
             document.getElementById("night-mode-input").click();

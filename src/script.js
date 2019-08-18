@@ -88,11 +88,12 @@ if (speechSynthesis.onvoiceschanged !== undefined) {
 // 	return false;
 // }
 
-function doStop() {
-	pauseResume = 'R';
-	window.speechSynthesis.cancel();
-	return false;
-}
+// function doStop() {
+//   pauseResume = 'R';
+//   clickNumber = 0;
+// 	window.speechSynthesis.cancel();
+// 	return false;
+// }
 
 pitch.onchange = function() {
   pitchValue.textContent = pitch.value;
