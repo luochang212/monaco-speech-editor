@@ -400,10 +400,10 @@
     <div id="overlay"></div>
 
     <div id="spot-light-canvas">
-        <div id="spot-light-1" class="spot-light-div">1</div>
+        <!-- <div id="spot-light-1" class="spot-light-div">1</div>
         <div id="spot-light-2" class="spot-light-div">12</div>
         <div id="spot-light-3" class="spot-light-div">321</div>
-        <div id="spot-light-4" class="spot-light-div">331</div>
+        <div id="spot-light-4" class="spot-light-div">331</div> -->
     </div>
 
 
@@ -633,53 +633,206 @@
                 var val = 'Here is a short introduction about Monaco Speech Editor. Press control, alt and s, if you want to stop this audio. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read code. For example, you can play the synthetic speech of current code line by pressing control, option and p on Mac or control, alt and p on window. Play next code line by pressing control, alt and arrow down key. Play previous code line by pressing control alt and arrow up key. If you want it to speak the whole document, please press control alt and d. Moreover, Monaco Speech Editor provides three modes to meet the different needs of reviewing code. There are character mode, code mode and overview mode. If you want to get accurate information about your code, you should use character mode, it will read every symbol, such as bracket or space. Code mode provides regular content of your code, some less important elements will be ignored. Overview mode will provide the outline information of this code line or this document, depending on your choice. Except powerful audio player, Monaco Speech Editor also provides incredible support in terms of file management. You can upload, download, add a new file, delete a file, change the file name by the build-in file manager. If you delete a file accidentally, you can recover the file by trash before you refresh current webpage. In addition, Monaco Speech Editor can also compile html file, It will render the html file in an iframe at the lower left corner of the editor. It can also output the result of consile dot log in an iframe at the lower right corner of the editor. There are many useful functionality, like using router to load setting. It will be introduced in my thesis. please enjoy and have fun. Thanks for listening.';
                 easySpeak(val);
             });
+            // ------------------------------------------------------------------------------------------------------------------
+            // 在这里输入spot light 成员
+            var SLNameArray = ['character-mode-input', 'code-mode-input', 'overview-mode-input', 'voice-feedback-input', 'voice-cue-input'];
+            // ------------------------------------------------------------------------------------------------------------------
             document.getElementById("spot-light-input").addEventListener("click", function () {
                 if (document.getElementById("spot-light-input").checked === true) {
                     document.getElementById("overlay").style.display = "block";
                     document.getElementById("spot-light-canvas").style.display = "block";
+                    // 最顶和最底为空元素，滑动时不可选中
+                    // 滑动前把选项的选中状态，选中与否，用颜色表示，深色的表示选中，浅色表示没有选中
+                    // 此功能不直接调用函数，用模拟点击事件控制可能更好一点？
+                    // 每次操作结束后，更新一遍状态，因为有的设置之间是相互关联的，改了一个，其他的也会跟着变
+                    // 1. init 获取更新
+                    // -----------
+                    // 2. 选中事件
+                    // 3. 模拟点击
+                    // 4. 点击后获取更新
+                    // -----------
+                    // spot light 成员
+                    // 用作初始化的createSLMember 函数在全局的init函数里调用
+                    // createSLMember(SLNameArray);
+
+
                     var topPos = document.getElementById('spot-light-1').offsetTop;
-                    var scrollDownDistance = 0;
+                    var scrollDownDistance = 0; // 滑动的距离
                     var innerElementHeight;
-                    var innerElementNumber = 4;  // 滑动元素总数
-                    var elementVisibleNumber = 3; // 可见元素总数
+                    var innerElementNumber = SLNameArray.length;  // 元素总数
+                    var elementVisibleNumber = 3; // 可见元素数量
+                    var selectElemIndex = 1; // 选中元素序号
+
+                    // 除了全局init外，本函数内也需要初始化，以在第二，第三，第n次打开时运行正确
+                    updateSLColor(1);
+                    updateSLStatus();
+                    document.getElementById('spot-light-canvas').scrollTop =  0;
+
+
                     document.addEventListener("keyup", (e) => {
-                        innerElementHeight =  document.getElementById('spot-light-1').offsetHeight;
-                        console.log(innerElementHeight);
+                        innerElementHeight = document.getElementById('spot-light-1').offsetHeight;
+                        // console.log(innerElementHeight);
                         // e.preventDefault();
+
                         if (e.which == 37) {
                             // 左键
+                            // 左右键改变状态
+                            // 因为只有开和关两种状态，所以左右键是等价的，功能都一样
+                            // 处理按下左键触发的事件
+                            // 模拟点击该选项
+                            document.getElementById(SLNameArray[selectElemIndex - 1]).click();
+                            updateSLStatus();
                         } else if (e.which == 38) {
                             // 上键
-            
-                            scrollDownDistance -= innerElementHeight;
-                            console.log(scrollDownDistance);
+                            // 滑动距离限制
+                            // if ((scrollDownDistance - innerElementHeight) > -0.01) { // 减了以后，依旧是个非负数才让减
+                            if (selectElemIndex > 1) {
+                                scrollDownDistance -= innerElementHeight;
+                                // console.log(selectElemIndex)
+                                selectElemIndex -= 1;
+                            }
+                            // 在上面的if控制语句之后的selectElemIndex是准确的div序号
+                            // 移动后更新着色
+                            updateSLColor(selectElemIndex);
+
+
+                            // console.log(scrollDownDistance);
                             document.getElementById('spot-light-canvas').scrollTop = topPos + scrollDownDistance;
                         } else if (e.which == 39) {
                             // 右键
+                            // 处理按下右键触发的事件
+                            // 模拟点击该选项
+                            document.getElementById(SLNameArray[selectElemIndex - 1]).click();
+                            updateSLStatus();
                         } else if (e.which == 40) {
                             // 下键
-                            
-                            console.log("hi")
+
+                            // console.log("hi")
                             // document.getElementById("spot-light-top-elem").style.top = "50px;"
                             // document.getElementById("spot-light-top-elem").scrollTop = "15";
                             // console.log(document.getElementById("spot-light-2").scrollTop);
-                            scrollDownDistance += innerElementHeight;
+
+                            // 滑动距离限制
+                            // if ((scrollDownDistance + innerElementHeight) < (innerElementNumber - elementVisibleNumber) * innerElementHeight + 0.01) {  // 加了以后不能超过可以滑动的最大距离 
+                            if (selectElemIndex <= (innerElementNumber-1)) {
+                                scrollDownDistance += innerElementHeight;
+                                // console.log(selectElemIndex)
+                                selectElemIndex += 1;
+                            }
+                            // 在上面的if控制语句之后的selectElemIndex是准确的div序号
+                            // 移动后更新着色
+                            updateSLColor(selectElemIndex);
+                            // console.log(scrollDownDistance);
                             document.getElementById('spot-light-canvas').scrollTop = topPos + scrollDownDistance;
                             // var width = document.getElementById('spot-light-1').offsetWidth;
                             // console.log(width);
+                        } else {
+                            // 按下除方向键之外的所有按键，关闭spot light
+                            document.getElementById('overlay').click();
                         }
                     });
+
                 } else {
+                    // 关闭的时候取消对方向键的监听
 
                 }
             });
+
+
+            // 用于动态创建spot-light-div
+            var SLArray;  // 这是全局变量
+            function createSLMember(SLNameArray) {
+                // init
+                // spot light 成员
+                var SoptLightMember = {
+                    name: "",
+                    status: false
+                }
+                var SLArray = [];
+
+                // SLArray的第一个元素是空元素
+                var div = document.createElement('DIV');
+                var newMember = Object.create(SoptLightMember);
+                newMember.name = '';
+                newMember.status = false;
+                SLArray.push(newMember);
+
+                for (var i = 0; i < SLNameArray.length; i++) {
+                    var SLName = document.getElementById(SLNameArray[i]).parentElement.parentElement.innerText;
+                    var SLStatus = document.getElementById(SLNameArray[i]).checked;
+                    var newMember = Object.create(SoptLightMember);
+                    newMember.name = SLName;
+                    newMember.status = SLStatus;
+                    SLArray.push(newMember);
+                }
+
+                // SLArray的最后一个元素是空元素
+                var div = document.createElement('DIV');
+                var newMember = Object.create(SoptLightMember);
+                newMember.name = "";
+                newMember.status = false;
+                SLArray.push(newMember);
+
+                // console.log(SLArray);
+
+                // 动态创建spot light视图
+                for (var i = 0; i < SLArray.length; i++) {
+                    var div = document.createElement('DIV');
+                    div.className = 'spot-light-div';
+                    div.id = 'spot-light-' + (i + 1).toString(10);
+                    // console.log(SLArray[i].status);
+                    // console.log((SLArray[i].status)?": on":": off")
+                    if (i != 0 && i != SLArray.length-1) {
+                        div.innerText = SLArray[i].name + (SLArray[i].status?":  on":": off");
+                    }
+                    // 默认中间元素被选中
+                    if (i == 1) {
+                        div.style.backgroundColor = "#b1b1b1";
+                        div.style.fontSize = "28px";
+                    }
+                    document.getElementById('spot-light-canvas').appendChild(div);
+                }
+
+                return SLArray;
+            }
+
+            // 着深色的方块总在中间
+            // 着色更新器
+            function updateSLColor(index) {
+                var allDiv = document.getElementById('spot-light-canvas').children;
+                // console.log(allDiv.length)
+                for (var i = 0; i < allDiv.length; i++) {
+                    allDiv[i].style.backgroundColor = 'transparent';
+                    allDiv[i].style.fontSize = "25px";
+                } 
+                allDiv[index].style.backgroundColor = '#b1b1b1'; // 被选中的字背景深一点
+                allDiv[index].style.fontSize = "28px"; // 被选中的字字体大一点
+            } 
+
+            
+            // 更新 spot light 成员状态
+            // 更新整张div表
+            function updateSLStatus() {
+                // 更新 spot light 成员状态
+                for (var i = 1; i < SLArray.length - 1; i++) {
+                    var SLStatus = document.getElementById(SLNameArray[i - 1]).checked;
+                    SLArray[i].status = SLStatus;
+                }
+
+                // 更新整张div表
+                var allDiv = document.getElementById('spot-light-canvas').children;
+                for (var i = 1; i < allDiv.length - 1; i ++) {
+                    allDiv[i].innerText = SLArray[i].name + (SLArray[i].status?":  on":": off");
+                }
+            }
+
+
+
             document.getElementById("overlay").addEventListener("click", function () {
                 document.getElementById("spot-light-canvas").style.display = "none";
                 document.getElementById("overlay").style.display = "none";
                 document.getElementById("spot-light-input").checked = false;
             });
-
-            // spot light 内容滚动事件
 
 
 
@@ -1995,7 +2148,10 @@
                 // win.document.body.innerHTML = text;
             }
 
+            // 全局初始化函数
             function init() {
+                // 初始化spot light
+                SLArray = createSLMember(SLNameArray)
                 document.getElementById("left-nav-button-1").click();
                 // addFile(javaCode);
                 addFile(htmlCode, "html");
@@ -2008,6 +2164,7 @@
             // document.getElementById("night-mode-input").click();
             // document.getElementById("speak-document").click();
             // document.getElementById("console-button").click();
+            document.getElementById("code-mode-input").click();
             document.getElementById("left-nav-button-4").click();
             // document.getElementById("voice-cue-input").click();
             document.getElementById("spot-light-input").click();

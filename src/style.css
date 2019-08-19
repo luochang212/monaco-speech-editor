@@ -153,7 +153,8 @@ body {
     top: 25%;
     width: 40%;
     height: 51%;
-    background: #fff;
+    /* background: #fff; */
+    background: #c0c0c0;
     z-index: 999999;
     border-radius: 13px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -167,13 +168,15 @@ body {
     width: 100%;
     left: 0;
     right: 0;
-    background: #C0C0C0;
-    /* color: #000000; */
+    /* background: #c0c0c0; */
+    background: transparent;
     text-align: center;
     line-height: calc(100vh * 0.17);
     display: inline-block;
     vertical-align: middle;
     overflow: hide;
+    font-size: 25px;
+    color: #333333;
   }
   
   .sidenav {
