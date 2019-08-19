@@ -139,10 +139,6 @@
                 <button id="speak-console-log">Speak Console Log</button>
                 <button id="stop-speaking">Stop Speaking</button>
 
-                <!-- <button onclick="speakDocument();">Speak Document</button>
-                    <button onclick="speakByLine();">Speak By Line</button>
-                    <button onclick="doStop();">Stop Speaking</button> -->
-
             </div>
             <button class="nav-title" id="position-controller-title"
                 onclick="hideSection(event, 'position-controller', 'title-icon-3-2');"><img class="title-icon"
@@ -291,10 +287,6 @@
                     </label>
                 </span>
             </div>
-
-
-
-
 
 
         </div>
@@ -446,33 +438,6 @@
     </div>
 
 
-    <!--<div id="container" class="container"></div>-->
-
-    <!--<div id="overlay" onclick="closeByOverlay()"></div>
-
-        <div id="mySidenav" class="sidenav">
-            <div id="sidenav-content">
-                <h1>Setting</h1>
-
-                <div class="option">
-					<label for="rate">Rate</label>
-                    <input type="range" min="0.1" max="2" step="0.1" name="rate" id="rate" value="1">
-                    <div class="rate-value">1</div>
-                </div>
-                    
-                <div class="option">
-                    <label for="pitch">Pitch</label>
-                    <input type="range" min="0.1" max="2" step="0.1" name="pitch" id="pitch" value="1">
-                    <div class="pitch-value">1</div>
-                </div>
-
-                <select class="voice-select"></select>
-
-                <br>
-
-                <h1>Shortcuts</h1>
-            </div>
-        </div>-->
 
     <!-- OR ANY OTHER AMD LOADER HERE INSTEAD OF loader.js -->
     <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
@@ -485,7 +450,6 @@
         // var editorFontSize = 35;
 
         // var defaultValue = "/* Write your code here. */\n\nfunction isDeleted(element) { \n    var id_str = element.id;\n    id_str = id_str.replace(\"btn\",\"\"); \n    var id_num = parseInt(id_str);\n\n    if (delete_flag == true) {\n        delete_flag = false;\n        subArray[id_num].isDelete = \"true\";\n        element.value=\"×\";\n    } else {\n        delete_flag = true;\n        subArray[id_num].isDelete = \"false\";\n        element.value=\"\";\n    }\n}";
-        // var noneValue = "";
 
 
         require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' } });
@@ -577,8 +541,6 @@
                     document.getElementById("toolbar").style.background = "#333";
                     document.getElementById("toolbar").style.color = "#FFFFF0";
                     document.getElementById("console-bar").style.background = "#333";
-                    // document.getElementById("console-button").style.color = "#FFF";
-                    // document.getElementById("console-button-run").style.color = "#FFF";
                     var btn_bar = document.getElementById('console-button-bar');
                     for (var i = 0; i < btn_bar.children.length; i++) {
                         btn_bar.children[i].style.color = "#FFF";
@@ -588,8 +550,6 @@
                     document.getElementById("toolbar").style.background = "#F5F5F5";
                     document.getElementById("toolbar").style.color = "#000000";
                     document.getElementById("console-bar").style.background = "#F5F5F5";
-                    // document.getElementById("console-button").style.color = "inherit";
-                    // document.getElementById("console-button-run").style.color = "inherit";
                     var btn_bar = document.getElementById('console-button-bar');
                     for (var i = 0; i < btn_bar.children.length; i++) {
                         btn_bar.children[i].style.color = "inherit";
@@ -891,8 +851,6 @@
                     var div = document.createElement('DIV');
                     div.className = 'spot-light-div';
                     div.id = 'spot-light-' + (i + 1).toString(10);
-                    // console.log(SLArray[i].status);
-                    // console.log((SLArray[i].status)?": on":": off")
                     if (i != 0 && i != SLArray.length - 1) {
                         div.innerText = SLArray[i].name + (SLArray[i].status ? ":  on" : ": off");
                     }
@@ -1172,7 +1130,7 @@
             
 
 
-            // editor2.setValue('ddddddd');
+
 
             /* ------------------------------------------------------------------------ */
             // require(['vs/editor/editor.main'], function() {
@@ -1420,6 +1378,119 @@
                 return res;
             }
 
+            // code mode
+            function codeSpeak(val) {
+                // important symbols won't be ignored
+                // 重要的符号不省略
+                // 部分采取charSpeak的策略，但是没有在每个字符之间都加空格，只在转成文字的符号前后加了空格
+                var res = '';
+                for (var i = 0; i < val.length; i++) {
+                    var temp = val[i];
+                    switch (temp) {
+                        case '!':
+                            temp = " exclamation ";
+                            break;
+                        case '\"':
+                            temp = " quotation mark ";
+                            break;
+                        case '#':
+                            temp = " number sign ";
+                            break;
+                        case '$':
+                            temp = " dollar sign ";
+                            break;
+                        case '%':
+                            temp = " percent ";
+                            break;
+                        case '&':
+                            temp = " ampersand ";
+                            break;
+                        case '\'':
+                            temp = " apostrophe ";
+                            break;
+                        case '(':
+                            temp = " left parenthesis ";
+                            break;
+                        case ')':
+                            temp = " right parenthesis ";
+                            break;
+                        case '*':
+                            temp = " asterisk ";
+                            break;
+                        case '+':
+                            temp = " plus ";
+                            break;
+                        case ',':
+                            temp = " comma ";
+                            break;
+                        case '-':
+                            temp = " hyphen ";
+                            break;
+                        case '.':
+                            temp = " full stop ";
+                            break;
+                        case '/':
+                            temp = " solidus ";
+                            break;
+                        case ':':
+                            temp = " colon ";
+                            break;
+                        case ';':
+                            temp = " semicolon ";
+                            break;
+                        case '<':
+                            temp = " less than ";
+                            break;
+                        case '=':
+                            temp = " equals ";
+                            break;
+                        case '>':
+                            temp = " greater than ";
+                            break;
+                        case '?':
+                            temp = " question mark ";
+                            break;
+                        case '@':
+                            temp = " at ";
+                            break;
+                        case '[':
+                            temp = " left square bracket ";
+                            break;
+                        case '\\':
+                            temp = " reverse solidus ";
+                            break;
+                        case ']':
+                            temp = " right square bracket ";
+                            break;
+                        case '^':
+                            temp = " circumflex accent ";
+                            break;
+                        case '_':
+                            temp = " low line ";
+                            break;
+                        case '`':
+                            temp = " grave accent ";
+                            break;
+                        case '{':
+                            temp = " left curly bracket ";
+                            break;
+                        case '|':
+                            temp = " vertical line ";
+                            break;
+                        case '}':
+                            temp = " right curly bracket ";
+                            break;
+                        case '~':
+                            temp = " tilde ";
+                            break;
+                        default:
+                            temp = val[i];
+                    }
+                    res += temp;
+                }
+                return res;
+            }
+
 
             // overview mode
             function overDocSpeak() {
@@ -1456,7 +1527,7 @@
                 } else if (modeController == 'charSpeak') {
                     easySpeak(charSpeak(myEditor.getValue()));
                 } else if (modeController == 'codeSpeak') {
-                    // easySpeak(myEditor.getValue());
+                    easySpeak(codeSpeak(myEditor.getValue()));
                 } else if (modeController == 'overSpeak') {
                     easySpeak(overDocSpeak());
                 } else {
@@ -1470,7 +1541,7 @@
                 } else if (modeController == 'charSpeak') {
                     easySpeak(charSpeak(myEditor.getModel().getLineContent(line_number)));
                 } else if (modeController == 'codeSpeak') {
-                    // easySpeak(myEditor.getModel().getLineContent(line_number));
+                    easySpeak(codeSpeak(myEditor.getModel().getLineContent(line_number)));
                 } else if (modeController == 'overSpeak') {
                     easySpeak(overLineSpeak(line_number));
                 } else {
@@ -2532,44 +2603,7 @@
 
         });
 
-        // -------------------------------------------------------------
-
-        // overlay
-        // var navStatus = "c";
-
-        // function clickOpenNav() {
-        //     if (navStatus == "c") {
-        //         openNav();
-        //         navStatus = "o";
-        //     } else if (navStatus == "o") {
-        //         off();
-        //         navStatus = "c";
-        //     }
-        // }
-
-        // function closeByOverlay() {
-        //     off();
-        //     navStatus = "c"
-        // }
-
-        // function openNav() {
-        //     on();
-        //     document.getElementById("mySidenav").style.width = "300px";
-        // }
-
-        // function closeNav() {
-        //     document.getElementById("mySidenav").style.width = "0";
-        // }
-
-        // function on() {
-        //     document.getElementById("overlay").style.display = "block";
-        // }
-
-        // function off() {
-        //     closeNav();
-        //     document.getElementById("overlay").style.display = "none";
-        // }
-
+        // ------------------------------------------------------------------------------------
 
 
         var leftSidebarStatus = "c";
