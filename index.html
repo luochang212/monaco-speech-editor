@@ -98,11 +98,17 @@
                 onclick="hideSection(event, 'demo-controller', 'title-icon-1-2');"><img class="title-icon"
                     id="title-icon-1-2" src="./images/sort-down-solid.svg" alt="down"> Demo</button>
             <div class="navbar" id="demo-controller">
-                <p id="load-demo-text">You can load demo from a JSON file.</p>
+                <p id="load-demo-text">You can load demos from a JSON file.</p>
                 <button id="load-demo">Load Demo</button>
             </div>
 
-            <!-- <button id="test-button">test</button> -->
+            <button class="nav-title" id="tutorial-controller-title"
+                onclick="hideSection(event, 'tutorial-controller', 'title-icon-1-3');"><img class="title-icon"
+                    id="title-icon-1-3" src="./images/sort-down-solid.svg" alt="down"> Tutorial</button>
+            <div class="navbar" id="tutorial-controller">
+                <p id="audio-tutorial-text">Listen to the features of this application.</p>
+                <button id="audio-tutorial">Quick Start</button>
+            </div>
 
         </div>
 
@@ -146,16 +152,9 @@
                 <button id="cursor-jump-to-line">Cursor Jump To Line</button>
             </div>
 
-            <button class="nav-title" id="tutorial-controller-title"
-                onclick="hideSection(event, 'tutorial-controller', 'title-icon-3-3');"><img class="title-icon"
-                    id="title-icon-3-3" src="./images/sort-down-solid.svg" alt="down"> Tutorial</button>
-            <div class="navbar" id="tutorial-controller">
-                <button id="audio-tutorial">Audio Tutorial</button>
-            </div>
-
             <button class="nav-title" id="trash-controller-title"
-                onclick="hideSection(event, 'trash-controller', 'title-icon-3-4');"><img class="title-icon"
-                    id="title-icon-3-4" src="./images/sort-down-solid.svg" alt="down"> Trash</button>
+                onclick="hideSection(event, 'trash-controller', 'title-icon-3-3');"><img class="title-icon"
+                    id="title-icon-3-3" src="./images/sort-down-solid.svg" alt="down"> Trash</button>
             <div class="navbar" id="trash-controller">
                 <button id="find-deleted-files">Find Deleted Files</button>
             </div>
@@ -670,7 +669,8 @@
                 }
             });
             document.getElementById("audio-tutorial").addEventListener("click", function () {
-                var val = 'Here is a short introduction about Monaco Speech Editor. Press control, alt and s, if you want to stop this audio. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read code. For example, you can play the synthetic speech of current code line by pressing control, option and p on Mac or control, alt and p on window. Play next code line by pressing control, alt and arrow down key. Play previous code line by pressing control alt and arrow up key. If you want it to speak the whole document, please press control alt and d. Moreover, Monaco Speech Editor provides three modes to meet the different needs of reviewing code. There are character mode, code mode and overview mode. If you want to get accurate information about your code, you should use character mode, it will read every symbol, such as bracket or space. Code mode provides regular content of your code, some less important elements will be ignored. Overview mode will provide the outline information of this code line or this document, depending on your choice. Except powerful audio player, Monaco Speech Editor also provides incredible support in terms of file management. You can upload, download, add a new file, delete a file, change the file name by the build-in file manager. If you delete a file accidentally, you can recover the file by trash before you refresh current webpage. In addition, Monaco Speech Editor can also compile html file, It will render the html file in an iframe at the lower left corner of the editor. It can also output the result of consile dot log in an iframe at the lower right corner of the editor. There are many useful functionality, like using router to load setting. It will be introduced in my thesis. please enjoy and have fun. Thanks for listening.';
+                // var val = 'Here is a short introduction about Monaco Speech Editor. Press control, alt and s, if you want to stop this audio. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read code. For example, you can play the synthetic speech of current code line by pressing control, option and p on Mac or control, alt and p on window. Play next code line by pressing control, alt and arrow down key. Play previous code line by pressing control alt and arrow up key. If you want it to speak the whole document, please press control alt and d. Moreover, Monaco Speech Editor provides three modes to meet the different needs of reviewing code. There are character mode, code mode and overview mode. If you want to get accurate information about your code, you should use character mode, it will read every symbol, such as bracket or space. Code mode provides regular content of your code, some less important elements will be ignored. Overview mode will provide the outline information of this code line or this document, depending on your choice. Except powerful audio player, Monaco Speech Editor also provides incredible support in terms of file management. You can upload, download, add a new file, delete a file, change the file name by the build-in file manager. If you delete a file accidentally, you can recover the file by trash before you refresh current webpage. In addition, Monaco Speech Editor can also compile html file, It will render the html file in an iframe at the lower left corner of the editor. It can also output the result of consile dot log in an iframe at the lower right corner of the editor. There are many useful functionality, like using router to load setting. It will be introduced in my thesis. please enjoy and have fun. Thanks for listening.';
+                var val = "Welcome to Monaco Speech Editor! If you want to stop this audio, please press control, alt, and S, in windows system, or press control, option and S, on mac system. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read, edit and compile code. If you want to explore these features, please press control, option, and I, to open linear index.  Linear index is a feature list. When you open linear index,  please press arrow, up, or arrow down key to select the feature. Once a feature is selected, It will tell you the feature name and hotkey automatically. If you want to explore the setting of Monaco speech editor, please press control, option, and space to open spot light. Spot light is a list of setting. When you open spot light, you can press arrow, up, or arrow down key to select different setting, press arrow left or arrow right key to toggle the switch. Considering that spot light would tell you the name of the setting automatically when you jump from one setting to another. My advice is to open the voice cue, so you can hear the setting status when you change a setting. To open voice cue, please open spot light first, then press arrow left or arrow right key. This is the end of the quick start, please enjoy yourself!";
                 easySpeak(val);
             });
             document.getElementById("open-console-input").addEventListener("click", function () {
@@ -685,7 +685,6 @@
                 } else {
                     easySpeak(content);
                 }
-
             });
             document.getElementById("speak-console-log").addEventListener("click", function () {
                 var doc = getIframeDocument('log-iframe');
@@ -1046,7 +1045,7 @@
                 var fullName = allDiv[index].innerText;
                 var realName = fullName.split('(').shift();
                 var realhotKey = fullName.split('+').pop().replace(")", "");
-                easySpeak(realName + ' hot key is control and alt and ' + realhotKey + ' In windows systems. On Mac systems, hot key is control and option and ' + realhotKey);
+                easySpeak(realName + ', hot key is control, alt and ' + realhotKey + ' In windows systems. On Mac systems, hot key is control, option and ' + realhotKey);
             }
 
             // 关闭 linear index
@@ -1070,6 +1069,7 @@
                     easySpeak('close voice cue');
                 }
             });
+
             // click switch
             document.getElementById('sidebar-4').addEventListener("click", function (evt) {
                 if (voiceCueToggle == true) {
@@ -1115,6 +1115,61 @@
                 });
             }
 
+            // 手动加的提示音
+            // click
+            document.getElementById('left-nav-button-1').addEventListener("click", function (evt) {
+                if (voiceCueToggle == true) {
+                    easySpeak('you click explorer navigation button');
+                }
+            });
+            document.getElementById('left-nav-button-2').addEventListener("click", function (evt) {
+                if (voiceCueToggle == true) {
+                    easySpeak('you click upload navigation button');
+                }
+            });
+            document.getElementById('left-nav-button-3').addEventListener("click", function (evt) {
+                if (voiceCueToggle == true) {
+                    easySpeak('you click feature list navigation button');
+                }
+            });
+            document.getElementById('left-nav-button-4').addEventListener("click", function (evt) {
+                if (voiceCueToggle == true) {
+                    easySpeak('you click setting navigation button');
+                }
+            });
+            document.getElementById('editable-textarea').addEventListener("dblclick", function (evt) {
+                if (voiceCueToggle == true) {
+                    easySpeak('you can modify the file name now, press enter to update the file name');
+                }
+            });
+
+            // mouseover
+            document.getElementById('left-nav-button-1').addEventListener("mouseover", function (evt) {
+                if (voiceCueToggle == true) {
+                    easySpeak('explorer navigation button');
+                }
+            });
+            document.getElementById('left-nav-button-2').addEventListener("mouseover", function (evt) {
+                if (voiceCueToggle == true) {
+                    easySpeak('upload navigation button');
+                }
+            });
+            document.getElementById('left-nav-button-3').addEventListener("mouseover", function (evt) {
+                if (voiceCueToggle == true) {
+                    easySpeak('feature list navigation button');
+                }
+            });
+            document.getElementById('left-nav-button-4').addEventListener("mouseover", function (evt) {
+                if (voiceCueToggle == true) {
+                    easySpeak('setting navigation button');
+                }
+            });
+            document.getElementById('editable-textarea').addEventListener("mouseover", function (evt) {
+                if (voiceCueToggle == true) {
+                    easySpeak('file name text area, double click to modify the file name');
+                }
+            });
+            
 
 
             // editor2.setValue('ddddddd');
@@ -1685,6 +1740,10 @@
                     // 光标聚焦到jump to line
                     // j
                     document.getElementById("showLineNumber").focus();
+                } else if (e.ctrlKey && e.altKey && e.which == 73) {
+                    // 打开linear index
+                    // i
+                    document.getElementById("linear-index-input").click();
                 } else if (e.ctrlKey && e.altKey && e.which == 70) {
                     // 打开voice feedback
                     // f
@@ -1726,8 +1785,10 @@
 
             // 为了防止按快捷键时输入空格
             document.addEventListener('keydown', (e) => {
-                if (e.ctrlKey && e.altKey && e.which == 32) { // space
+                if (e.ctrlKey && e.altKey && e.which == 32) { 
                     // 取消对编辑器的聚焦
+                    // spot light
+                    // space
                     document.activeElement.blur();
                     document.getElementById("spot-light-input").click();
                 }
@@ -2443,6 +2504,8 @@
                 addFile(htmlCode, "html");
                 // document.getElementById("hide-header").click(); 必须在 addFile(); 之后
                 document.getElementById("hide-header").click();
+                // 默认收起tutorial
+                // document.getElementById("tutorial-controller-title").click();
             }
             init();
 
