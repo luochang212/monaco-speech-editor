@@ -129,6 +129,8 @@
 
                 <button id="speak-document">Speak Document</button>
                 <button id="speak-by-line">Speak By Line</button>
+                <button id="speak-console-result">Speak Console Result</button>
+                <button id="speak-console-log">Speak Console Log</button>
                 <button id="stop-speaking">Stop Speaking</button>
 
                 <!-- <button onclick="speakDocument();">Speak Document</button>
@@ -260,6 +262,13 @@
                 onclick="hideSection(event, 'console-controller', 'title-icon-4-5');"><img class="title-icon"
                     id="title-icon-4-5" src="./images/sort-down-solid.svg" alt="down"> Console</button>
             <div class="navbar" id="console-controller">
+                <span id="open-console-bar" class="navbar-toggle">
+                    Console Bar
+                    <label class="switch">
+                        <input id="open-console-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
                 <span id="hide-log-area" class="navbar-toggle">
                     Hide Console Log Area
                     <label class="switch">
@@ -633,11 +642,37 @@
                 var val = 'Here is a short introduction about Monaco Speech Editor. Press control, alt and s, if you want to stop this audio. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read code. For example, you can play the synthetic speech of current code line by pressing control, option and p on Mac or control, alt and p on window. Play next code line by pressing control, alt and arrow down key. Play previous code line by pressing control alt and arrow up key. If you want it to speak the whole document, please press control alt and d. Moreover, Monaco Speech Editor provides three modes to meet the different needs of reviewing code. There are character mode, code mode and overview mode. If you want to get accurate information about your code, you should use character mode, it will read every symbol, such as bracket or space. Code mode provides regular content of your code, some less important elements will be ignored. Overview mode will provide the outline information of this code line or this document, depending on your choice. Except powerful audio player, Monaco Speech Editor also provides incredible support in terms of file management. You can upload, download, add a new file, delete a file, change the file name by the build-in file manager. If you delete a file accidentally, you can recover the file by trash before you refresh current webpage. In addition, Monaco Speech Editor can also compile html file, It will render the html file in an iframe at the lower left corner of the editor. It can also output the result of consile dot log in an iframe at the lower right corner of the editor. There are many useful functionality, like using router to load setting. It will be introduced in my thesis. please enjoy and have fun. Thanks for listening.';
                 easySpeak(val);
             });
+            document.getElementById("open-console-input").addEventListener("click", function () {
+                document.getElementById('console-button').click();
+            });
+            document.getElementById("speak-console-result").addEventListener("click", function () {
+                var doc = getIframeDocument('result-iframe');
+                var content = doc.body.innerText;
+                // 暂时只能用easySpeak来念
+                if (content == '') {
+                    easySpeak('console result is empty');
+                } else {
+                    easySpeak(content);
+                }
+                
+            });
+            document.getElementById("speak-console-log").addEventListener("click", function () {
+                var doc = getIframeDocument('log-iframe');
+                var logger = doc.getElementById('logger');
+                if (logger == null) {
+                    easySpeak('console log is empty');
+                } else {
+                    easySpeak(content.innerText);
+                }
+            });
+            
 
 
 
 
 
+
+            
 
 
 
@@ -650,7 +685,7 @@
 
             // ------------------------------------------------------------------------------------------------------------------
             // 在这里输入spot light 成员
-            var SLNameArray = ['character-mode-input', 'code-mode-input', 'overview-mode-input', 'voice-feedback-input', 'voice-cue-input', 'night-mode-input', 'log-area-input', 'result-area-input'];
+            var SLNameArray = ['voice-cue-input', 'character-mode-input', 'code-mode-input', 'overview-mode-input', 'voice-feedback-input', 'night-mode-input','open-console-input', 'log-area-input', 'result-area-input'];
 
             var topPos;  // = document.getElementById('spot-light-1').offsetTop;
             var innerElementHeight;
@@ -853,6 +888,8 @@
                 allDiv[index].style.fontSize = "28px"; // 被选中的字字体大一点
             }
 
+            // 当按上下键切换时，可以打开声音提示
+            // 待完成特性
 
             // 更新 spot light 成员状态
             // 更新整张div表
@@ -1472,22 +1509,76 @@
             // 快捷键设置
             document.addEventListener('keyup', (e) => {
                 // e.preventDefault();
-                if (e.ctrlKey && e.altKey && (e.which == 80 || e.which == 13)) { // enter or p
+                if (e.ctrlKey && e.altKey && (e.which == 80 || e.which == 13)) { 
+                    // 播放
+                    // enter or p
                     play();
-                } else if (e.ctrlKey && e.altKey && e.which == 83) { // s
+                } else if (e.ctrlKey && e.altKey && e.which == 83) { 
+                    // 终止
+                    // s
                     doStop();
-                } else if (e.ctrlKey && e.altKey && e.which == 38) { // arrow up
+                } else if (e.ctrlKey && e.altKey && e.which == 38) { 
+                    // 光标移动到下一行，并自动播放当前行
+                    // arrow up
                     backward();
                     play();
-                } else if (e.ctrlKey && e.altKey && e.which == 40) { // arrow down
+                } else if (e.ctrlKey && e.altKey && e.which == 40) { 
+                    // 光标移动到上一行，并自动播放当前行
+                    // arrow down
                     forward();
                     play();
-                } else if (e.ctrlKey && e.altKey && e.which == 74) { // j
+                } else if (e.ctrlKey && e.altKey && e.which == 65) { 
+                    // 切换到chracter mode
+                    // a
+                    document.getElementById('character-mode-input').click();
+                }else if (e.ctrlKey && e.altKey && e.which == 79) { 
+                    // 切换到code mode
+                    // o
+                    document.getElementById('code-mode-input').click();
+                }else if (e.ctrlKey && e.altKey && e.which == 86) { 
+                    // 切换到overview mode
+                    // v
+                    document.getElementById('overview-mode-input').click();
+                } else if (e.ctrlKey && e.altKey && e.which == 74) { 
+                    // 光标聚焦到jump to line
+                    // j
                     document.getElementById("showLineNumber").focus();
-                } else if (e.ctrlKey && e.altKey && e.which == 68) { // d
+                } else if (e.ctrlKey && e.altKey && e.which == 70) { 
+                    // 打开voice feedback
+                    // f
+                    document.getElementById('voice-feedback-input').click();
+                } else if (e.ctrlKey && e.altKey && e.which == 85) { 
+                    // 打开voice cue
+                    // u
+                    document.getElementById('voice-cue-input').click();
+                } else if (e.ctrlKey && e.altKey && e.which == 68) { 
+                    // speak document
+                    // d
                     speakDocument();
-                } else if (e.ctrlKey && e.altKey && e.which == 67) { // c
+                } else if (e.ctrlKey && e.altKey && e.which == 69) { 
+                    // 读console result
+                    // e
+                    document.getElementById('speak-console-result').click();
+                } else if (e.ctrlKey && e.altKey && e.which == 76) { 
+                    // 读console log
+                    // l
+                    document.getElementById('speak-console-log').click();
+                } else if (e.ctrlKey && e.altKey && e.which == 67) { 
+                    // 汇报光标位置
+                    // c
                     cursorPosition();
+                } else if (e.ctrlKey && e.altKey && e.which == 66) { 
+                    // 打开console bar
+                    // b
+                    document.getElementById('console-button').click();
+                } else if (e.ctrlKey && e.altKey && e.which == 82) { 
+                    // console bar 的运行按钮
+                    // r
+                    document.getElementById('console-button-run').click();
+                } else if (e.ctrlKey && e.altKey && e.which == 78) { 
+                    // 打开夜间模式
+                    // n
+                    document.getElementById('night-mode-input').click();
                 }
             });
 
@@ -2195,6 +2286,12 @@
                 // win.document.body.innerHTML = text;
             }
 
+            function getIframeDocument(iframe_id) {
+                var iframe = document.getElementById(iframe_id);
+                var doc = iframe.contentWindow.document;
+                return doc;
+            }
+
             // 全局初始化函数
             function init() {
                 // 初始化spot light
@@ -2402,6 +2499,8 @@
                 // Standard syntax
                 document.getElementById("console-bar").style.transform = "translateY(-310px)";
                 consoleToggle = "s";
+                // 将设置里的open console bar开关打开
+                document.getElementById('open-console-input').checked = true;
             } else {
                 // 关闭状态
                 // 隐藏run button console-button-open-window console-button-open-tab
@@ -2424,6 +2523,8 @@
                 // Standard syntax
                 document.getElementById("console-bar").style.transform = "translateY(0)";
                 consoleToggle = "h";
+                // 将设置里的open console bar开关关闭
+                document.getElementById('open-console-input').checked = false;
             }
         }
 
