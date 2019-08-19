@@ -469,7 +469,7 @@
             // var pythonCode = "from PyQt5.QtWidgets import *\nimport sys\n\n\nclass Window(QMainWindow):\n    def __init__(self):\n        super().__init__()\n\n        # set the title of main window\n        self.setWindowTitle('My first window - www.luochang.ink')\n\n        # set the size of window\n        self.Width = 500\n        self.height = int(0.618 * self.Width)\n        self.resize(self.Width, self.height)\n\n\nif __name__ == '__main__':\n    app = QApplication(sys.argv)\n    ex = Window()\n    ex.show()\n    sys.exit(app.exec_())";
             // var jsCode = "// Open or close the navbar\n\nfunction openNav() {\n  on();\n  document.getElementById(\"mySidenav\").style.width = \"40%\";\n  document.body.style.backgroundColor = \"rgba(0,0,0,0.5)\";\n}\nfunction closeNav() {\n  document.getElementById(\"mySidenav\").style.width = \"0\";\n  document.body.style.backgroundColor = \"white\";\n}\nfunction on() {\n  document.getElementById(\"overlay\").style.display = \"block\";\n}\nfunction off() {\n  closeNav();\n  document.getElementById(\"overlay\").style.display = \"none\";\n}";
             // var javaCode = "class Solution {\n    public ListNode swapPairs(ListNode head) {\n        ListNode p, q, pre;\n        ListNode headNode = new ListNode(0);\n        headNode.next = head; \n        p = head;\n        if ( p == null || p.next == null ) return headNode.next;\n        q = head.next;\n        pre = headNode;\n        while (p != null & p.next != null) {\n            p.next = q.next;\n            q.next = p;\n            pre.next = q;\n            p = p.next;\n            if (p == null) break;\n            q = p.next;\n            pre = pre.next.next;\n        }\n        return headNode.next;\n    }\n}";
-            var htmlCode = "<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>what time is it?<" + "/title>\n<style type=\"text/css\">\n	body {\n		font-family: \"Source Han Sans\", \"San Francisco\", \"PingFang SC\", \"Hiragino Sans GB\", \"Droid Sans Fallback\", \"Microsoft YaHei\", sans-serif;\n		font-size: 14px;\n		color: #333;\n	}\n	p {\n		margin: 1em 0;\n	}\n	p:empty {\n		height: 1.5em;\n	}\n	main {\n		margin: 0 5em;\n		max-width: 48em;\n	}\n	h1 {\n		margin: 1em 0;\n		font-size: 24px;\n		font-weight: 300;\n	}\n	button {\n		background: #fff;\n		border: 1px solid #ccc;\n		border-radius: 2px;\n		line-height: 1;\n		padding: .5em;\n	}\n<" + "/style>\n<" + "/head>\n\n<body>\n<main>\n		\n	<h1>what time is it?<" + "/h1>\n	<p>© 2019 Chang Luo<" + "/p>\n	<hr>\n	\n	<p>Excuse me, what time is it now O_O ???<" + "/p>\n	<br>\n	\n	<button type=\"button\" onclick=\"document.getElementById('time').innerHTML = Date()\">\n		Click Me\n	<" + "/button>\n\n	<p id=\"time\"><" + "/p>\n	\n<" + "/main>" + "\n<script" + ">\n	console.log('Hi there! Welcome to Monaco Speech Editor.');\n	console.log('Monaco Speech Editor is an open source web application.');\n	console.log('The repo address is https://github.com/luochang212/monaco-speech-editor');\n	console.log(\"If you like this web application or think it's useful,\");\n	console.log('could you give me a star on GitHub (●°u°●)​ 」');\n<" + "/script>" + "\n<" + "/body>\n<" + "/html>"
+            var htmlCode = "<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>What time is it?<" + "/title>\n<style type=\"text/css\">\n	body {\n		font-family: \"Source Han Sans\", \"San Francisco\", \"PingFang SC\", \"Hiragino Sans GB\", \"Droid Sans Fallback\", \"Microsoft YaHei\", \"sans-serif\";\n		font-size: 14px;\n		color: #333;\n	}\n	p {\n		margin: 1em 0;\n	}\n	p:empty {\n		height: 1.5em;\n	}\n	main {\n		margin: 0 5em;\n		max-width: 48em;\n	}\n	h1 {\n		margin: 1em 0;\n		font-size: 24px;\n		font-weight: 300;\n	}\n	button {\n		background: #fff;\n		border: 1px solid #ccc;\n		border-radius: 2px;\n		line-height: 1;\n		padding: .5em;\n	}\n<" + "/style>\n<" + "/head>\n\n<body>\n<main>\n		\n	<h1>What time is it?<" + "/h1>\n	<p>© 2019 Chang Luo<" + "/p>\n	<hr>\n	\n	<p>Excuse me, what time is it now O_O ???<" + "/p>\n	<br>\n	\n	<button type=\"button\" onclick=\"document.getElementById('time').innerHTML = Date()\">\n		Click Me\n	<" + "/button>\n\n	<p id=\"time\"><" + "/p>\n	\n<" + "/main>" + "\n<script" + ">\n	console.log('Hi there! Welcome to Monaco Speech Editor.');\n	console.log('Monaco Speech Editor is an open source web application.');\n	console.log('The repo address is https://github.com/luochang212/monaco-speech-editor');\n	console.log(\"If you like this web application or think it's useful,\");\n	console.log('could you give me a star on GitHub (●°u°●)​ 」');\n<" + "/script>" + "\n<" + "/body>\n<" + "/html>"
             var noCode = "";
 
 
@@ -1127,7 +1127,7 @@
                     easySpeak('file name text area, double click to modify the file name');
                 }
             });
-            
+
 
 
 
@@ -1814,6 +1814,7 @@
                 } else if (e.ctrlKey && e.altKey && e.which == 73) {
                     // 打开linear index
                     // i
+                    document.activeElement.blur();
                     document.getElementById("linear-index-input").click();
                 } else if (e.ctrlKey && e.altKey && e.which == 70) {
                     // 打开voice feedback
@@ -1856,7 +1857,7 @@
 
             // 为了防止按快捷键时输入空格
             document.addEventListener('keydown', (e) => {
-                if (e.ctrlKey && e.altKey && e.which == 32) { 
+                if (e.ctrlKey && e.altKey && e.which == 32) {
                     // 取消对编辑器的聚焦
                     // spot light
                     // space
@@ -2374,6 +2375,26 @@
                         type = "go";
                     } else if (ext === "css") {
                         type = "css";
+                    } else if (ext === "cpp" || ext === "C" || ext === "cxx" || ext === "c++" || ext === "cc") {
+                        type = "css";
+                    } else if (ext === "c") {
+                        type = "c";
+                    } else if (ext === "rb") {
+                        type = "ruby";
+                    } else if (ext === "sh") {
+                        type = "shell";
+                    } else if (ext === "swift") {
+                        type = "swift";
+                    } else if (ext === "ts") {
+                        type = "typescript";
+                    } else if (ext === "R") {
+                        type = "r";
+                    } else if (ext === "md") {
+                        type = "markdown";
+                    } else if (ext === "yml") {
+                        type = "yaml";
+                    } else if (ext === "xml") {
+                        type = "xml";
                     }
 
                     reader.readAsText(file);
@@ -2493,6 +2514,26 @@
                             type = "go";
                         } else if (ext === "css") {
                             type = "css";
+                        } else if (ext === "cpp" || ext === "C" || ext === "cxx" || ext === "c++" || ext === "cc") {
+                            type = "css";
+                        } else if (ext === "c") {
+                            type = "c";
+                        } else if (ext === "rb") {
+                            type = "ruby";
+                        } else if (ext === "sh") {
+                            type = "shell";
+                        } else if (ext === "swift") {
+                            type = "swift";
+                        } else if (ext === "ts") {
+                            type = "typescript";
+                        } else if (ext === "R") {
+                            type = "r";
+                        } else if (ext === "md") {
+                            type = "markdown";
+                        } else if (ext === "yml") {
+                            type = "yaml";
+                        } else if (ext === "xml") {
+                            type = "xml";
                         }
 
                         if (type != null) {
