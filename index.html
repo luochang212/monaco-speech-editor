@@ -238,6 +238,14 @@
                     </label>
                 </span>
 
+                <span id="linear-index" class="navbar-toggle">
+                    Linear Index
+                    <label class="switch">
+                        <input id="linear-index-input" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+
                 <!-- <span id="font-size" class="navbar-toggle">
                     Font Size
                     <input type="number" id="font-size-input" value="12"
@@ -413,6 +421,29 @@
         <div id="spot-light-2" class="spot-light-div">12</div>
         <div id="spot-light-3" class="spot-light-div">321</div>
         <div id="spot-light-4" class="spot-light-div">331</div> -->
+    </div>
+
+    <div id="overlay-2"></div>
+
+    <div id="linear-index-canvas">
+        <div id="linear-index-1" class="linear-index-div"></div>
+        <div id="linear-index-2" class="linear-index-div">Speak Document (Ctrl+Alt+D)</div>
+        <div id="linear-index-3" class="linear-index-div">Speak By Line (Ctrl+Alt+P)</div>
+        <div id="linear-index-4" class="linear-index-div">Speak Next Line (Ctrl+Alt+&#8681;)</div>
+        <div id="linear-index-5" class="linear-index-div">Speak previous Line (Ctrl+Alt+&#8679;)</div>
+        <div id="linear-index-6" class="linear-index-div">Speak Console Result (Ctrl+Alt+E)</div>
+        <div id="linear-index-7" class="linear-index-div">Speak Console Log (Ctrl+Alt+L)</div>
+        <div id="linear-index-8" class="linear-index-div">Stop Speaking (Ctrl+Alt+S)</div>
+        <div id="linear-index-9" class="linear-index-div">Search Cursor Position (Ctrl+Alt+C)</div>
+        <div id="linear-index-10" class="linear-index-div">Character Mode (Ctrl+Alt+A)</div>
+        <div id="linear-index-11" class="linear-index-div">Code Mode (Ctrl+Alt+O)</div>
+        <div id="linear-index-12" class="linear-index-div">Overview Mode (Ctrl+Alt+V)</div>
+        <div id="linear-index-13" class="linear-index-div">Voice Feedback (Ctrl+Alt+F)</div>
+        <div id="linear-index-14" class="linear-index-div">Voice Cue (Ctrl+Alt+U)</div>
+        <div id="linear-index-15" class="linear-index-div">Console Bar (Ctrl+Alt+B)</div>
+        <div id="linear-index-16" class="linear-index-div">Running Code (Ctrl+Alt+R)</div>
+        <div id="linear-index-17" class="linear-index-div">Night Mode (Ctrl+Alt+N)</div>
+        <div id="linear-index-18" class="linear-index-div"></div>
     </div>
 
 
@@ -654,7 +685,7 @@
                 } else {
                     easySpeak(content);
                 }
-                
+
             });
             document.getElementById("speak-console-log").addEventListener("click", function () {
                 var doc = getIframeDocument('log-iframe');
@@ -665,14 +696,14 @@
                     easySpeak(content.innerText);
                 }
             });
-            
 
 
 
 
 
 
-            
+
+
 
 
 
@@ -685,7 +716,7 @@
 
             // ------------------------------------------------------------------------------------------------------------------
             // 在这里输入spot light 成员
-            var SLNameArray = ['voice-cue-input', 'character-mode-input', 'code-mode-input', 'overview-mode-input', 'voice-feedback-input', 'night-mode-input','open-console-input', 'log-area-input', 'result-area-input'];
+            var SLNameArray = ['voice-cue-input', 'character-mode-input', 'code-mode-input', 'overview-mode-input', 'voice-feedback-input', 'night-mode-input', 'open-console-input', 'log-area-input', 'result-area-input'];
 
             var topPos;  // = document.getElementById('spot-light-1').offsetTop;
             var innerElementHeight;
@@ -693,13 +724,13 @@
             var elementVisibleNumber = 3; // 可见元素数量
             var selectElemIndex = 1; // 选中元素序号
             var scrollDownDistance = 0; // 滑动的距离
-            var spotLightToggle = true;
+            var spotLightToggle = false;
             // ------------------------------------------------------------------------------------------------------------------
             document.getElementById("spot-light-input").addEventListener("click", function () {
                 if (document.getElementById("spot-light-input").checked === true) {
                     document.getElementById("overlay").style.display = "block";
                     document.getElementById("spot-light-canvas").style.display = "block";
-                    
+
                     // 最顶和最底为空元素，滑动时不可选中
                     // 滑动前把选项的选中状态，选中与否，用颜色表示，深色的表示选中，浅色表示没有选中
                     // 此功能不直接调用函数，用模拟点击事件控制可能更好一点？
@@ -741,7 +772,9 @@
             // 监听键盘方向键
             document.addEventListener("keydown", (e) => {
                 if (spotLightToggle === true) {
-                    SLReact(e)
+                    SLReact(e);
+                } else if (LinearIndexToggle === true) {
+                    LIReact(e);
                 }
             });
 
@@ -915,6 +948,115 @@
                 spotLightToggle = false;
             });
 
+
+            // linear index
+            // 线性索引功能，是功能的索引，是快速查找功能的功能
+            // ------------------------------------------------------------------------------------------------------------------
+            // linear index 的全局变量
+            var topPosLI;  // = document.getElementById('spot-light-1').offsetTop;
+            var innerElementHeightLI;
+            var innerElementNumberLI; // = SLArray.length;  // 元素总数
+            var elementVisibleNumberLI = 3; // 可见元素数量
+            var selectElemIndexLI = 1; // 选中元素序号
+            var scrollDownDistanceLI = 0; // 滑动的距离
+            var LinearIndexToggle = true;
+            // ------------------------------------------------------------------------------------------------------------------
+            // 打开linear index
+            document.getElementById("linear-index-input").addEventListener("click", function () {
+                if (document.getElementById("linear-index-input").checked === true) {
+                    document.getElementById("overlay-2").style.display = "block";
+                    document.getElementById("linear-index-canvas").style.display = "block";
+
+                    // 除了全局init外，本函数内也需要初始化，以在第二，第三，第n次打开时运行正确
+                    selectElemIndexLI = 1; // 选中元素序号
+                    scrollDownDistanceLI = 0; // 滑动的距离
+                    updateSLColorLI(1);
+                    speakLI(1);
+                    document.getElementById('linear-index-canvas').scrollTop = 0;
+
+                    LinearIndexToggle = true;
+                    // console.log(LinearIndexToggle)
+                } else {
+                    LinearIndexToggle = false;
+                }
+            });
+
+
+            // linear index 和 spot light 共用一个监听器
+            var LinearIndexToggle = false;
+            function LIReact(e) {
+                topPosLI = document.getElementById('linear-index-1').offsetTop;
+                innerElementHeightLI = document.getElementById('linear-index-1').offsetHeight;
+                innerElementNumberLI = document.getElementById('linear-index-canvas').children.length - 2;
+
+                if (e.which == 38) {
+                    // 上键
+                    // 滑动距离限制
+                    if (selectElemIndexLI > 1) {
+                        scrollDownDistanceLI -= innerElementHeightLI;
+                        selectElemIndexLI -= 1;
+                    }
+                    document.getElementById('linear-index-canvas').scrollTop = topPosLI + scrollDownDistanceLI;
+                    // 在上面的if控制语句之后的selectElemIndex是准确的div序号
+                    // 移动后更新着色
+                    updateSLColorLI(selectElemIndexLI);
+                    // 移动后自动自动念出该条目的名字以及快捷方式
+                    speakLI(selectElemIndexLI);
+                } else if (e.which == 40) {
+                    // 下键
+                    // 滑动距离限制
+                    if (selectElemIndexLI <= (innerElementNumberLI - 1)) {
+                        scrollDownDistanceLI += innerElementHeightLI;
+                        selectElemIndexLI += 1;
+                    }
+                    document.getElementById('linear-index-canvas').scrollTop = topPosLI + scrollDownDistanceLI;
+                    // 在上面的if控制语句之后的selectElemIndex是准确的div序号
+                    // 移动后更新着色
+                    updateSLColorLI(selectElemIndexLI);
+                    // 移动后自动自动念出该条目的名字以及快捷方式
+                    speakLI(selectElemIndexLI);
+                } else if (e.which == 37) {
+                    // 左键
+                    // read again
+                    speakLI(selectElemIndexLI);
+                } else if (e.which == 39) {
+                    // 右键
+                    // read again
+                    speakLI(selectElemIndexLI);
+                } else {
+                    // 按下除方向键之外的所有按键，关闭linear index
+                    document.getElementById('overlay-2').click();
+                }
+            }
+
+            // linear index 更新着色
+            function updateSLColorLI(index) {
+                var allDiv = document.getElementById('linear-index-canvas').children;
+                for (var i = 0; i < allDiv.length; i++) {
+                    allDiv[i].style.backgroundColor = 'transparent';
+                    allDiv[i].style.fontSize = "25px";
+                }
+                allDiv[index].style.backgroundColor = '#b1b1b1'; // 被选中的字背景深一点
+                allDiv[index].style.fontSize = "28px"; // 被选中的字字体大一点
+            }
+
+            // 移动后自动自动念出该条目的名字以及快捷方式
+            function speakLI(index) {
+                var allDiv = document.getElementById('linear-index-canvas').children;
+                var fullName = allDiv[index].innerText;
+                var realName = fullName.split('(').shift();
+                var realhotKey = fullName.split('+').pop().replace(")", "");
+                easySpeak(realName + ' hot key is control and alt and ' + realhotKey + ' In windows systems. On Mac systems, hot key is control and option and ' + realhotKey);
+            }
+
+            // 关闭 linear index
+            document.getElementById("overlay-2").addEventListener("click", function () {
+                document.getElementById("linear-index-canvas").style.display = "none";
+                document.getElementById("overlay-2").style.display = "none";
+                document.getElementById("linear-index-input").checked = false;
+                LinearIndexToggle = false;
+                doStop();
+            });
 
 
 
@@ -1509,73 +1651,73 @@
             // 快捷键设置
             document.addEventListener('keyup', (e) => {
                 // e.preventDefault();
-                if (e.ctrlKey && e.altKey && (e.which == 80 || e.which == 13)) { 
+                if (e.ctrlKey && e.altKey && (e.which == 80 || e.which == 13)) {
                     // 播放
                     // enter or p
                     play();
-                } else if (e.ctrlKey && e.altKey && e.which == 83) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 83) {
                     // 终止
                     // s
                     doStop();
-                } else if (e.ctrlKey && e.altKey && e.which == 38) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 38) {
                     // 光标移动到下一行，并自动播放当前行
                     // arrow up
                     backward();
                     play();
-                } else if (e.ctrlKey && e.altKey && e.which == 40) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 40) {
                     // 光标移动到上一行，并自动播放当前行
                     // arrow down
                     forward();
                     play();
-                } else if (e.ctrlKey && e.altKey && e.which == 65) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 65) {
                     // 切换到chracter mode
                     // a
                     document.getElementById('character-mode-input').click();
-                }else if (e.ctrlKey && e.altKey && e.which == 79) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 79) {
                     // 切换到code mode
                     // o
                     document.getElementById('code-mode-input').click();
-                }else if (e.ctrlKey && e.altKey && e.which == 86) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 86) {
                     // 切换到overview mode
                     // v
                     document.getElementById('overview-mode-input').click();
-                } else if (e.ctrlKey && e.altKey && e.which == 74) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 74) {
                     // 光标聚焦到jump to line
                     // j
                     document.getElementById("showLineNumber").focus();
-                } else if (e.ctrlKey && e.altKey && e.which == 70) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 70) {
                     // 打开voice feedback
                     // f
                     document.getElementById('voice-feedback-input').click();
-                } else if (e.ctrlKey && e.altKey && e.which == 85) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 85) {
                     // 打开voice cue
                     // u
                     document.getElementById('voice-cue-input').click();
-                } else if (e.ctrlKey && e.altKey && e.which == 68) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 68) {
                     // speak document
                     // d
                     speakDocument();
-                } else if (e.ctrlKey && e.altKey && e.which == 69) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 69) {
                     // 读console result
                     // e
                     document.getElementById('speak-console-result').click();
-                } else if (e.ctrlKey && e.altKey && e.which == 76) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 76) {
                     // 读console log
                     // l
                     document.getElementById('speak-console-log').click();
-                } else if (e.ctrlKey && e.altKey && e.which == 67) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 67) {
                     // 汇报光标位置
                     // c
                     cursorPosition();
-                } else if (e.ctrlKey && e.altKey && e.which == 66) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 66) {
                     // 打开console bar
                     // b
                     document.getElementById('console-button').click();
-                } else if (e.ctrlKey && e.altKey && e.which == 82) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 82) {
                     // console bar 的运行按钮
                     // r
                     document.getElementById('console-button-run').click();
-                } else if (e.ctrlKey && e.altKey && e.which == 78) { 
+                } else if (e.ctrlKey && e.altKey && e.which == 78) {
                     // 打开夜间模式
                     // n
                     document.getElementById('night-mode-input').click();
@@ -2312,6 +2454,7 @@
             // document.getElementById("left-nav-button-4").click();
             // document.getElementById("voice-cue-input").click();
             // document.getElementById("spot-light-input").click();
+            // document.getElementById("linear-index-input").click();
 
             // overDocSpeak();
             // overLineSpeak();
