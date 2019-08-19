@@ -9,14 +9,14 @@
     <link rel="shortcut icon" type="image/png" href="./images/logo-1.jpeg">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- <script>
-            // Check before leave website
-            window.addEventListener('beforeunload', function (e) {
-                // Cancel the event
-                e.preventDefault();
-                // Chrome requires returnValue to be set
-                e.returnValue = 'Do you sure';
-            });
-        </script> -->
+        // Check before leave website
+        window.addEventListener('beforeunload', function (e) {
+            // Cancel the event
+            e.preventDefault();
+            // Chrome requires returnValue to be set
+            e.returnValue = 'Do you sure';
+        });
+    </script> -->
 </head>
 
 <body>
@@ -630,7 +630,7 @@
             });
             document.getElementById("audio-tutorial").addEventListener("click", function () {
                 // var val = 'Here is a short introduction about Monaco Speech Editor. Press control, alt and s, if you want to stop this audio. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read code. For example, you can play the synthetic speech of current code line by pressing control, option and p on Mac or control, alt and p on window. Play next code line by pressing control, alt and arrow down key. Play previous code line by pressing control alt and arrow up key. If you want it to speak the whole document, please press control alt and d. Moreover, Monaco Speech Editor provides three modes to meet the different needs of reviewing code. There are character mode, code mode and overview mode. If you want to get accurate information about your code, you should use character mode, it will read every symbol, such as bracket or space. Code mode provides regular content of your code, some less important elements will be ignored. Overview mode will provide the outline information of this code line or this document, depending on your choice. Except powerful audio player, Monaco Speech Editor also provides incredible support in terms of file management. You can upload, download, add a new file, delete a file, change the file name by the build-in file manager. If you delete a file accidentally, you can recover the file by trash before you refresh current webpage. In addition, Monaco Speech Editor can also compile html file, It will render the html file in an iframe at the lower left corner of the editor. It can also output the result of consile dot log in an iframe at the lower right corner of the editor. There are many useful functionality, like using router to load setting. It will be introduced in my thesis. please enjoy and have fun. Thanks for listening.';
-                var val = "Welcome to Monaco Speech Editor! If you want to stop this audio, please press control, alt, and S, in windows system, or press control, option and S, on mac system. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read, edit and compile code. If you want to explore these features, please press control, option, and I, to open linear index.  Linear index is a feature list. When you open linear index,  please press arrow, up, or arrow down key to select the feature. Once a feature is selected, It will tell you the feature name and hotkey automatically. If you want to explore the setting of Monaco speech editor, please press control, option, and space to open spot light. Spot light is a list of setting. When you open spot light, you can press arrow, up, or arrow down key to select different setting, press arrow left or arrow right key to toggle the switch. Considering that spot light would tell you the name of the setting automatically when you jump from one setting to another. My advice is to open the voice cue, so you can hear the setting status when you change a setting. To open voice cue, please open spot light first, then press arrow left or arrow right key. This is the end of the quick start, please enjoy yourself!";
+                var val = "Welcome to Monaco Speech Editor! If you want to stop this audio, please press control, alt, and S, in windows system, or press control, option and S, on mac system. Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read, edit and compile code. If you want to explore these features, please press control, option, and I, to open linear index.  Linear index is a feature list. When you open linear index,  please press arrow, up, or arrow down key to select the feature. Once a feature is selected, It will tell you the feature name and hotkey automatically. If you want to explore the setting of Monaco speech editor, please press control, option, and space to open spot light. Spot light is a list of setting. When you open spot light, you can press arrow, up, or arrow down key to select different setting, press arrow left or arrow right key to toggle the switch. Considering that spot light would tell you the name of the setting automatically when you jump from one setting to another. My advice is to open the voice cue, so you can hear the setting status when you change a setting. To open voice cue, please open spot light first, then press arrow left or arrow right key. If you want to quit spot light or linear index, please press any key except direction keys. This is the end of the quick start, please enjoy yourself!";
                 easySpeak(val);
             });
             document.getElementById("open-console-input").addEventListener("click", function () {
@@ -684,6 +684,7 @@
             var selectElemIndex = 1; // 选中元素序号
             var scrollDownDistance = 0; // 滑动的距离
             var spotLightToggle = false;
+            var activePosi = null;  // 鼠标焦点位置
             // ------------------------------------------------------------------------------------------------------------------
             document.getElementById("spot-light-input").addEventListener("click", function () {
                 if (document.getElementById("spot-light-input").checked === true) {
@@ -704,11 +705,17 @@
                     // 用作初始化的createSLMember 函数在全局的init函数里调用
                     // createSLMember(SLNameArray);
 
+                    // 把鼠标在编辑器中的位置记下
+                    // 让它失焦
+                    activePosi = document.activeElement;
+                    activePosi.blur();
+
 
                     // 除了全局init外，本函数内也需要初始化，以在第二，第三，第n次打开时运行正确
                     selectElemIndex = 1; // 选中元素序号
                     scrollDownDistance = 0; // 滑动的距离
                     updateSLColor(1);
+                    speakSL(1);
                     updateSLStatus();
                     document.getElementById('spot-light-canvas').scrollTop = 0;
 
@@ -731,8 +738,10 @@
             // 监听键盘方向键
             document.addEventListener("keydown", (e) => {
                 if (spotLightToggle === true) {
+                    // e.preventDefault()
                     SLReact(e);
                 } else if (LinearIndexToggle === true) {
+                    // e.preventDefault()
                     LIReact(e);
                 }
             });
@@ -767,6 +776,7 @@
                     // 在上面的if控制语句之后的selectElemIndex是准确的div序号
                     // 移动后更新着色
                     updateSLColor(selectElemIndex);
+                    speakSL(selectElemIndex);
 
 
                     // console.log(scrollDownDistance);
@@ -799,6 +809,7 @@
                     // 在上面的if控制语句之后的selectElemIndex是准确的div序号
                     // 移动后更新着色
                     updateSLColor(selectElemIndex);
+                    speakSL(selectElemIndex);
                     // console.log(scrollDownDistance);
                     document.getElementById('spot-light-canvas').scrollTop = topPos + scrollDownDistance;
                     // var width = document.getElementById('spot-light-1').offsetWidth;
@@ -878,6 +889,13 @@
                 allDiv[index].style.fontSize = "28px"; // 被选中的字字体大一点
             }
 
+            // 阅读当前div里的文本
+            function speakSL(index) {
+                var allDiv = document.getElementById('spot-light-canvas').children;
+                // console.log(allDiv[index].innerText);
+                easySpeak(allDiv[index].innerText);
+            }
+
             // 当按上下键切换时，可以打开声音提示
             // 待完成特性
 
@@ -903,6 +921,11 @@
                 document.getElementById("overlay").style.display = "none";
                 document.getElementById("spot-light-input").checked = false;
                 spotLightToggle = false;
+                // 鼠标回到原焦点
+                if (activePosi != null) {
+                    activePosi.focus();
+                }
+                activePosi = null;
             });
 
 
@@ -923,6 +946,11 @@
                 if (document.getElementById("linear-index-input").checked === true) {
                     document.getElementById("overlay-2").style.display = "block";
                     document.getElementById("linear-index-canvas").style.display = "block";
+
+                    // 把鼠标在编辑器中的位置记下
+                    // 让它失焦
+                    activePosi = document.activeElement;
+                    activePosi.blur();
 
                     // 除了全局init外，本函数内也需要初始化，以在第二，第三，第n次打开时运行正确
                     selectElemIndexLI = 1; // 选中元素序号
@@ -1003,7 +1031,7 @@
                 var fullName = allDiv[index].innerText;
                 var realName = fullName.split('(').shift();
                 var realhotKey = fullName.split('+').pop().replace(")", "");
-                easySpeak(realName + ', hot key is control, alt and ' + realhotKey + ' In windows systems. On Mac systems, hot key is control, option and ' + realhotKey);
+                easySpeak(realName + ', hot key is control, alt and ' + realhotKey + ', In windows systems. On Mac systems, hot key is control, option and ' + realhotKey);
             }
 
             // 关闭 linear index
@@ -1013,6 +1041,11 @@
                 document.getElementById("linear-index-input").checked = false;
                 LinearIndexToggle = false;
                 doStop();
+                // 鼠标回到原焦点
+                if (activePosi != null) {
+                    activePosi.focus();
+                }
+                activePosi = null;
             });
 
 
@@ -1391,7 +1424,7 @@
                             temp = " exclamation ";
                             break;
                         case '\"':
-                            temp = " quotation mark ";
+                            temp = " quotation ";
                             break;
                         case '#':
                             temp = " number sign ";
@@ -1814,7 +1847,8 @@
                 } else if (e.ctrlKey && e.altKey && e.which == 73) {
                     // 打开linear index
                     // i
-                    document.activeElement.blur();
+                    // 虽然这个失焦事件可以防止按键时光标到处跑，但当我蒙上眼睛测试以后发现，要回到焦点就真的很难
+                    // document.activeElement.blur();
                     document.getElementById("linear-index-input").click();
                 } else if (e.ctrlKey && e.altKey && e.which == 70) {
                     // 打开voice feedback
@@ -1861,7 +1895,8 @@
                     // 取消对编辑器的聚焦
                     // spot light
                     // space
-                    document.activeElement.blur();
+                    // 虽然这个失焦事件可以防止按键时光标到处跑，但当我蒙上眼睛测试以后发现，要回到焦点就真的很难
+                    // document.activeElement.blur();
                     document.getElementById("spot-light-input").click();
                 }
             });
@@ -2618,6 +2653,8 @@
                 document.getElementById("hide-header").click();
                 // 默认收起tutorial
                 // document.getElementById("tutorial-controller-title").click();
+                // 默认打开code mode
+                document.getElementById("code-mode-input").click();
             }
             init();
 
@@ -2871,13 +2908,31 @@
         Router.route('tutorial', function () {
             setTimeout(() => { document.getElementById("audio-tutorial").click(); }, 1000);
         });
+        Router.route('spotlight', function () {
+            document.getElementById("spot-light-input").click();
+        });
+        Router.route('linear-index', function () {
+            document.getElementById("linear-index-input").click();
+        });
+        Router.route('character-mode', function () {
+            document.getElementById("character-mode-input").click();
+        });
+        Router.route('code-mode', function () {
+            document.getElementById("code-mode-input").click();
+        });
+        Router.route('overview-mode', function () {
+            document.getElementById("overview-mode-input").click();
+        });
+        Router.route('voice-feedback', function () {
+            document.getElementById("voice-feedback-input").click();
+        });
+        Router.route('voice-cue', function () {
+            document.getElementById("voice-cue-input").click();
+        });
         Router.route('dark&run', function () {
             document.getElementById("night-mode-input").click();
             document.getElementById("console-button").click();
         });
-
-
-
 
 
     </script>
