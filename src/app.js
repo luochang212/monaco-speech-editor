@@ -1549,7 +1549,7 @@ require(['vs/editor/editor.main'], function () {
     var closeClickSpan = "n";
 
     document.getElementById("title-button-add").addEventListener("click", function () {
-        addFile(noCode, "html");
+        addFile(noCode, "html", "");
         // console.log("hi");
     });
 
@@ -1607,7 +1607,8 @@ require(['vs/editor/editor.main'], function () {
     function addFileView() {
         var li = document.createElement("li");
         li.id = "li-" + fileCounter.toString(10);
-        var file_name = "Untitled-" + fileCounter.toString(10);
+        // var file_name = "Untitled-" + fileCounter.toString(10);
+        var file_name = fileArray[fileCounter - 1].fileName;
         var input = document.createElement("input");
         input.readOnly = true;
         input.className = "filename-readonly";
@@ -1671,7 +1672,7 @@ require(['vs/editor/editor.main'], function () {
 
                 if (isAllDelete == "y") {
                     // 删除时调用addFile函数，addFile函数会调用activeEditor函数，因此此处不用激活
-                    addFile(noCode, "html");
+                    addFile(noCode, "html", "");
 
                 } else {
                     // 目前文件序列中的第一个文件的li的class设为active
@@ -1744,7 +1745,7 @@ require(['vs/editor/editor.main'], function () {
     var fileArray = [];
 
     // 在文件列表里新增一个文件，先新增对象，然后刷新视图
-    function addFile(code, language) {
+    function addFile(code, language, fn) {
 
         // console.log(fileCounter);
         // 新建一个container
@@ -1769,7 +1770,11 @@ require(['vs/editor/editor.main'], function () {
         // 更新对象的属性
         var file = Object.create(Files);
         file.fileId = fileCounter.toString(10);
-        file.fileName = 'Untitled-' + file.fileId;
+        if (fn == '') {
+            file.fileName = 'Untitled-' + file.fileId;
+        } else {
+            file.fileName = fn;
+        }
         file.editor = editor;
         // editorContent服务于垃圾回收功能，仅在删除前更新
         file.editorContent = editor.getValue();
@@ -1988,10 +1993,10 @@ require(['vs/editor/editor.main'], function () {
             reader.onloadend = function (e) {
                 drop_code = reader.result;
                 if (type != null) {
-                    addFile(drop_code, type);
+                    addFile(drop_code, type, file.name.toString());
                     // languageSelect.value = type;
                 } else {
-                    addFile(drop_code, "html");
+                    addFile(drop_code, "html", file.name.toString());
                     // callback();
                 }
                 // callback();
@@ -2012,7 +2017,7 @@ require(['vs/editor/editor.main'], function () {
     }
 
     function updateDropCode() {
-        addFile(drop_code, "html");
+        addFile(drop_code, "html", "");
         // fileArray[findActiveEditor()]
         // document.getElementById("test").innerHTML = drop_code;
     }
@@ -2123,15 +2128,15 @@ require(['vs/editor/editor.main'], function () {
                 }
 
                 if (type != null) {
-                    addFile(val, type);
+                    addFile(val, type, key);
                 } else {
-                    addFile(val, "html");
+                    addFile(val, "html", key);
                 }
                 // 加入文件的函数是不能指定文件名的，下面这个方法取巧了，可以说是手动更新
-                var index = fileCounter - 1;
-                fileArray[index - 1].fileName = key;
-                document.getElementById("file-list-input-" + index.toString(10)).value = fileArray[index - 1].fileName;
-                document.getElementById("editable-textarea").value = fileArray[index - 1].fileName;
+                // var index = fileCounter - 1;
+                // fileArray[index - 1].fileName = key;
+                // document.getElementById("file-list-input-" + index.toString(10)).value = fileArray[index - 1].fileName;
+                // document.getElementById("editable-textarea").value = fileArray[index - 1].fileName;
 
 
             });
@@ -2199,7 +2204,7 @@ require(['vs/editor/editor.main'], function () {
         SLArray = createSLMember(SLNameArray)
         document.getElementById("left-nav-button-1").click();
         // addFile(javaCode);
-        addFile(htmlCode, "html");
+        addFile(htmlCode, "html", "");
         // document.getElementById("hide-header").click(); 必须在 addFile(); 之后
         document.getElementById("hide-header").click();
         // 默认收起tutorial

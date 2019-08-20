@@ -1,3 +1,6 @@
+'use strict'
+
+
 var synth = window.speechSynthesis;
 
 var inputTxt = "";
@@ -14,17 +17,17 @@ var voices = [];
 function populateVoiceList() {
   voices = synth.getVoices().sort(function (a, b) {
     const aname = a.name.toUpperCase(), bname = b.name.toUpperCase();
-    if ( aname < bname ) return -1;
-    else if ( aname == bname ) return 0;
+    if (aname < bname) return -1;
+    else if (aname == bname) return 0;
     else return +1;
   });
   var selectedIndex = voiceSelect.selectedIndex < 0 ? 0 : voiceSelect.selectedIndex;
   voiceSelect.innerHTML = '';
-  for(i = 0; i < voices.length ; i++) {
+  for (var i = 0; i < voices.length; i++) {
     var option = document.createElement('option');
     option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
-    
-    if(voices[i].default) {
+
+    if (voices[i].default) {
       option.textContent += ' -- DEFAULT';
     }
 
@@ -40,10 +43,10 @@ if (speechSynthesis.onvoiceschanged !== undefined) {
   speechSynthesis.onvoiceschanged = populateVoiceList;
 }
 
-pitch.onchange = function() {
+pitch.onchange = function () {
   pitchValue.textContent = pitch.value;
 }
 
-rate.onchange = function() {
+rate.onchange = function () {
   rateValue.textContent = rate.value;
 }
