@@ -1075,6 +1075,119 @@ require(['vs/editor/editor.main'], function () {
         return res;
     }
 
+    // code music mode
+    // 构造一种数据类型
+    // false: 不是符号
+    // true: 是符号
+    var Word = {
+        value: "",
+        isSymbol: false
+    }
+
+    function findSymbolIndex(val) {
+        // 文本预处理
+        // 建一个数组用来存代码段
+        // 当遇到一个符号时，返回符号在val中的index，然后再在符号的前后进行切割，再把切割后的代码段存放进数组里
+        var codeArray = [];
+        var symbolIndex;
+        var symbolIndexArr = [];
+        var temp;
+        for (var i = 0; i < val.length; i++) {
+            temp = val[i];
+            switch (temp) {
+                case '(':
+                    symbolIndex = i;
+                    break;
+                case ')':
+                    symbolIndex = i;
+                    break;
+                case ';':
+                    symbolIndex = i;
+                    break;
+                case '\"':
+                    symbolIndex = i;
+                    break;
+                case '<':
+                    symbolIndex = i;
+                    break;
+                case '>':
+                    symbolIndex = i;
+                    break;
+                case '[':
+                    symbolIndex = i;
+                    break;
+                case ']':
+                    symbolIndex = i;
+                    break;
+                case '{':
+                    symbolIndex = i;
+                    break;
+                case '}':
+                    symbolIndex = i;
+                    break;
+                default:
+                    symbolIndex = -1;
+            }
+            if (symbolIndex != -1) {
+                symbolIndexArr.push(symbolIndex);
+            }
+        }
+        return symbolIndexArr;
+    }
+
+    function createWordArray(val) {
+        var symbolIndexArray = findSymbolIndex(val); // 所有特殊符号在val里的index序号的集合
+        // 下面的循环对symbolIndexArray里的序号进行遍历
+        // 下面这个变量是用来记录我们循环中遍历到的序号的前一个序号在数值上加一的数
+        var previousIndex = 0;
+        var tempStr;
+        var wordArray = [];
+        for (var i = 0; i < symbolIndexArray.length; i++) {
+            // 该val[symbolIndexArray[i]]之前，val[symbolIndexArray[i]-1]之后的字符串
+            tempStr = val.slice(previousIndex, symbolIndexArray[i]);
+            if (tempStr != '') {
+                var newWord = Object.create(Word);
+                newWord.value = tempStr;
+                newWord.isSymbol = false;
+                wordArray.push(newWord);
+            }
+
+            // 该val[symbolIndexArray[i]]进入数值
+            var newWord = Object.create(Word);
+            newWord.value = val[symbolIndexArray[i]];
+            newWord.isSymbol = true;
+            wordArray.push(newWord);
+
+            // 更新previousIndex
+            previousIndex = symbolIndexArray[i] + 1;
+        }
+        return wordArray;
+    }
+
+    function codeMusicSpeak(val) {
+        // 把回车去掉
+        val = val.replace(/(\r\n|\n|\r)/gm, "");
+
+        var wordArray = createWordArray(val);  // 带判断是否是特殊符号的字符串集合
+        for (var i = 0; i < wordArray.length; i++) {
+            // 除非上一段语音结束，否则不能播放下一段
+            // if () {
+            //     if (wordArray[i].isSymbol == false) {
+            //         codeSpeak(wordArray[i].value);
+            //     } else {
+
+            //     }
+            // }
+
+        }
+
+
+
+    }
+
+
+
+
 
     // overview mode
     function overDocSpeak() {
@@ -1259,7 +1372,6 @@ require(['vs/editor/editor.main'], function () {
 
     function doStop() {
         pauseResume = 'R';
-        clickNumber = 0;
         window.speechSynthesis.cancel();
         return false;
     }
@@ -1287,6 +1399,7 @@ require(['vs/editor/editor.main'], function () {
 
     function backward() {
         doStop();
+        clickNumber = 0;
         // clickNumber = 0;
         if (currentLineNumber <= 1) {
             easySpeak("This is the first line");
@@ -1301,6 +1414,7 @@ require(['vs/editor/editor.main'], function () {
 
     function forward() {
         doStop();
+        clickNumber = 0;
         // clickNumber = 0;
         // console.log(clickNumber);
         // 可恶，摩纳哥里的变量只能进不能出，我都忘了
@@ -2230,6 +2344,15 @@ require(['vs/editor/editor.main'], function () {
     // openInNewWindow();
     // openInNewTab();
     // voiceFeedback();
+    // console.log(findSymbolIndex(myEditor.getValue()));
+    // console.log(findSymbolIndex(myEditor.getValue()));
+
+    // console.log(createWordArray(myEditor.getValue()));
+
+    // var myString = myEditor.getValue();
+    // var String = myString.replace(/(\r\n|\n|\r)/gm, ""); // var String = myString.replace(/(\r\n|\n|\r)/gm, "<br />");
+    // // console.log(myString);
+    // console.log(String);
 
 
 
