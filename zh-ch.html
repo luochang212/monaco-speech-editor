@@ -9,8 +9,8 @@
     <meta name="keywords" content="speech,editor,code editor,blind,visually impaired,accessibility,JavaScript">
     <meta name="author" content="Chang Luo">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../src/style.css">
-    <link rel="shortcut icon" type="image/png" href="../images/logo-1.jpeg">
+    <link rel="stylesheet" href="./src/style.css">
+    <link rel="shortcut icon" type="image/png" href="./images/logo-1.jpeg">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- <script>
         // Check before leave website
@@ -73,7 +73,7 @@
 
         <div id="github-link">
             <a href="https://github.com/luochang212/monaco-speech-editor" target="_blank"><img
-                    src="../images/GitHub-Mark-Light-64px.png" alt="github"></a>
+                    src="./images/GitHub-Mark-Light-64px.png" alt="github"></a>
         </div>
     </div>
 
@@ -85,9 +85,9 @@
             </div>
             <button class="nav-title" id="file-manager-title"
                 onclick="hideSection(event, 'file-manager', 'title-icon-1-1');"><img class="title-icon"
-                    id="title-icon-1-1" src="../images/sort-down-solid.svg" alt="down"> 文件管理 </button>
+                    id="title-icon-1-1" src="./images/sort-down-solid.svg" alt="down"> 文件管理 </button>
             <button id="title-button-add"><img class="title-icon" id="title-icon-add"
-                    src="../images/plus-circle-solid.svg" alt="plus-circle-solid" height="12px" width="12px"></button>
+                    src="./images/plus-circle-solid.svg" alt="plus-circle-solid" height="12px" width="12px"></button>
 
 
 
@@ -100,7 +100,7 @@
 
             <button class="nav-title" id="demo-controller-title"
                 onclick="hideSection(event, 'demo-controller', 'title-icon-1-2');"><img class="title-icon"
-                    id="title-icon-1-2" src="../images/sort-down-solid.svg" alt="down"> 示例</button>
+                    id="title-icon-1-2" src="./images/sort-down-solid.svg" alt="down"> 示例</button>
             <div class="navbar" id="demo-controller">
                 <p id="load-demo-text">你可以从JSON文件里导入示例文件。</p>
                 <button id="load-demo">导入示例</button>
@@ -108,7 +108,7 @@
 
             <button class="nav-title" id="tutorial-controller-title"
                 onclick="hideSection(event, 'tutorial-controller', 'title-icon-1-3');"><img class="title-icon"
-                    id="title-icon-1-3" src="../images/sort-down-solid.svg" alt="down"> 教程</button>
+                    id="title-icon-1-3" src="./images/sort-down-solid.svg" alt="down"> 教程</button>
             <div class="navbar" id="tutorial-controller">
                 <p id="audio-tutorial-text">点击按钮播放语音教程。</p>
                 <button id="audio-tutorial">播放教程</button>
@@ -134,7 +134,7 @@
             </div>
             <button class="nav-title" id="speach-controller-title"
                 onclick="hideSection(event, 'speach-controller', 'title-icon-3-1');"><img class="title-icon"
-                    id="title-icon-3-1" src="../images/sort-down-solid.svg" alt="down"> 语音合成</button>
+                    id="title-icon-3-1" src="./images/sort-down-solid.svg" alt="down"> 语音合成</button>
             <div class="navbar" id="speach-controller">
 
                 <button id="speak-document">朗读全文</button>
@@ -146,7 +146,7 @@
             </div>
             <button class="nav-title" id="position-controller-title"
                 onclick="hideSection(event, 'position-controller', 'title-icon-3-2');"><img class="title-icon"
-                    id="title-icon-3-2" src="../images/sort-down-solid.svg" alt="down"> 光标位置</button>
+                    id="title-icon-3-2" src="./images/sort-down-solid.svg" alt="down"> 光标位置</button>
             <div class="navbar" id="position-controller">
                 <button id="search-cursor-position">汇报光标位置</button>
                 <button id="cursor-jump-to-line">跳转光标位置</button>
@@ -154,7 +154,7 @@
 
             <button class="nav-title" id="trash-controller-title"
                 onclick="hideSection(event, 'trash-controller', 'title-icon-3-3');"><img class="title-icon"
-                    id="title-icon-3-3" src="../images/sort-down-solid.svg" alt="down"> 垃圾桶</button>
+                    id="title-icon-3-3" src="./images/sort-down-solid.svg" alt="down"> 垃圾桶</button>
             <div class="navbar" id="trash-controller">
                 <button id="find-deleted-files">找回删除的内容</button>
             </div>
@@ -166,7 +166,7 @@
             </div>
             <button class="nav-title" id="voice-controller-title"
                 onclick="hideSection(event, 'voice-controller', 'title-icon-4-1');"><img class="title-icon"
-                    id="title-icon-4-1" src="../images/sort-down-solid.svg" alt="down"> 声音</button>
+                    id="title-icon-4-1" src="./images/sort-down-solid.svg" alt="down"> 声音</button>
             <div class="navbar" id="voice-controller">
                 <div class="option">
                     <label for="rate">Rate</label>
@@ -183,7 +183,7 @@
 
             <button class="nav-title" id="mode-controller-title"
                 onclick="hideSection(event, 'mode-controller', 'title-icon-4-2');"><img class="title-icon"
-                    id="title-icon-4-2" src="../images/sort-down-solid.svg" alt="down"> 朗读模式</button>
+                    id="title-icon-4-2" src="./images/sort-down-solid.svg" alt="down"> 朗读模式</button>
             <div class="navbar" id="mode-controller">
                 <span id="character-mode" class="navbar-toggle">
                     字符模式
@@ -220,7 +220,7 @@
 
             <button class="nav-title" id="accessibility-controller-title"
                 onclick="hideSection(event, 'accessibility-controller', 'title-icon-4-3');"><img class="title-icon"
-                    id="title-icon-4-3" src="../images/sort-down-solid.svg" alt="down"> 辅助功能</button>
+                    id="title-icon-4-3" src="./images/sort-down-solid.svg" alt="down"> 辅助功能</button>
             <div class="navbar" id="accessibility-controller">
                 <span id="voice-feedback" class="navbar-toggle">
                     语音反馈
@@ -271,7 +271,7 @@
 
             <button class="nav-title" id="theme-controller-title"
                 onclick="hideSection(event, 'theme-controller', 'title-icon-4-4');"><img class="title-icon"
-                    id="title-icon-4-4" src="../images/sort-down-solid.svg" alt="down"> 主题</button>
+                    id="title-icon-4-4" src="./images/sort-down-solid.svg" alt="down"> 主题</button>
             <div class="navbar" id="theme-controller">
                 <span id="night-mode" class="navbar-toggle">
                     夜间模式
@@ -284,7 +284,7 @@
 
             <button class="nav-title" id="console-controller-title"
                 onclick="hideSection(event, 'console-controller', 'title-icon-4-5');"><img class="title-icon"
-                    id="title-icon-4-5" src="../images/sort-down-solid.svg" alt="down"> 控制台选项</button>
+                    id="title-icon-4-5" src="./images/sort-down-solid.svg" alt="down"> 控制台选项</button>
             <div class="navbar" id="console-controller">
                 <span id="open-console-bar" class="navbar-toggle">
                     打开控制台
@@ -379,23 +379,23 @@
         <div class="voice-controller">
             <!-- <button onclick="backward();"> -->
             <button id="backward">
-                <img src="../images/step-backward-solid.svg" alt="step-backward-solid" height="20px">
+                <img src="./images/step-backward-solid.svg" alt="step-backward-solid" height="20px">
             </button>
 
             <!-- <button onclick="play();" style="padding:4px 7px 0 10px;"> -->
             <button id="play" style="padding:4px 7px 0 10px;">
-                <img id="play-pause" src="../images/play-solid.svg" alt="pause-solid" height="18px"
+                <img id="play-pause" src="./images/play-solid.svg" alt="pause-solid" height="18px"
                     style="padding-bottom:1px;">
             </button>
 
             <!-- <button onclick="forward();"> -->
             <button id="forward">
-                <img src="../images/step-forward-solid.svg" alt="step-forward-solid" height="20px">
+                <img src="./images/step-forward-solid.svg" alt="step-forward-solid" height="20px">
             </button>
 
             <!-- <button onclick="hideHeader();" id="hide-header"> -->
             <button id="hide-header">
-                <img src="../images/compress-solid.svg" alt="compress-solid" height="20px">
+                <img src="./images/compress-solid.svg" alt="compress-solid" height="20px">
             </button>
         </div>
 
@@ -486,9 +486,9 @@
         <audio id="Snare" src="https://luochang212.github.io/audio/Snare.mp3"></audio>
     </div>
 
-    <script src="../node_modules/monaco-editor/min/vs/loader.js"></script>
-    <script src="../src/speech.js"></script>
-    <script src="../src/app-zh-cn.js"></script>
+    <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script src="./src/speech.js"></script>
+    <script src="./src/app.js"></script>
 </body>
 
 </html>
