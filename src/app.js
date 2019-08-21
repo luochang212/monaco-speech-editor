@@ -1605,6 +1605,10 @@ require(['vs/editor/editor.main'], function () {
             // 切换到code mode
             // o
             document.getElementById('code-mode-input').click();
+        } else if (e.ctrlKey && e.altKey && e.which == 77) {
+            // 切换到music mode
+            // m
+            document.getElementById('music-mode-input').click();
         } else if (e.ctrlKey && e.altKey && e.which == 86) {
             // 切换到overview mode
             // v
