@@ -1,12 +1,21 @@
 'use strict'
 
+// 和app的区别
+// require.config({ paths: { 'vs': '../node_modules/monaco-editor/min/vs' } });   // 路径里多了一个点
+// document.getElementById("play-pause").src = "../images/play-solid.svg";  // 路径里多了一个点
+// document.getElementById("play-pause").src = "../images/pause-solid.svg";  // 路径里多了一个点
+// document.getElementById("play-pause").src = "../images/pause-solid.svg";  // 路径里多了一个点
+// document.getElementById("play-pause").src = "../images/play-solid.svg";  // 路径里多了一个点
+// var logInput = "<link rel=\"stylesheet\" href=\"../src/style.css\">" + "<div id='logger'></div>" + injection + text + hideAllElem + showLog;  // style.css前的路径多了一个点
+// addFileView() 函数里./images前加了三个点
+
 
 // var editor;
 // var editorFontSize = 35;
 // var defaultValue = "/* Write your code here. */\n\nfunction isDeleted(element) { \n    var id_str = element.id;\n    id_str = id_str.replace(\"btn\",\"\"); \n    var id_num = parseInt(id_str);\n\n    if (delete_flag == true) {\n        delete_flag = false;\n        subArray[id_num].isDelete = \"true\";\n        element.value=\"×\";\n    } else {\n        delete_flag = true;\n        subArray[id_num].isDelete = \"false\";\n        element.value=\"\";\n    }\n}";
 
 
-require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' } });
+require.config({ paths: { 'vs': '../node_modules/monaco-editor/min/vs' } });
 
 require(['vs/editor/editor.main'], function () {
 
@@ -1423,12 +1432,12 @@ require(['vs/editor/editor.main'], function () {
     function doPauseResume() {
         if (pauseResume == 'R') {
             window.speechSynthesis.pause();
-            document.getElementById("play-pause").src = "./images/play-solid.svg";
+            document.getElementById("play-pause").src = "../images/play-solid.svg";
             // document.getElementById('control-button').setAttribute("class", "play");
             pauseResume = 'P';
         } else if (pauseResume == 'P') {
             window.speechSynthesis.resume();
-            document.getElementById("play-pause").src = "./images/pause-solid.svg";
+            document.getElementById("play-pause").src = "../images/pause-solid.svg";
             // document.getElementById('control-button').setAttribute("class", "pause");
             pauseResume = 'R';
         } else {
@@ -1448,7 +1457,7 @@ require(['vs/editor/editor.main'], function () {
         if (inputTxt !== '') {
             var utterThis = new SpeechSynthesisUtterance(inputTxt);
             utterThis.onend = function (event) {
-                document.getElementById("play-pause").src = "./images/play-solid.svg";
+                document.getElementById("play-pause").src = "../images/play-solid.svg";
                 clickNumber = 0;
                 pauseResume = 'R';
                 if (musicToggle == true) {
@@ -1493,7 +1502,7 @@ require(['vs/editor/editor.main'], function () {
             // 第一次点击是播放，第二第三第n次该键的功能变成播放和暂停，一行播放结束以后clickNumber归零
             pauseResume = 'R';
             speakByLine(currentLineNumber);
-            document.getElementById("play-pause").src = "./images/pause-solid.svg";
+            document.getElementById("play-pause").src = "../images/pause-solid.svg";
         } else {
             doPauseResume();
             // console.log(clickNumber);
@@ -1842,7 +1851,7 @@ require(['vs/editor/editor.main'], function () {
         var save_span = document.createElement("SPAN");
         save_span.className = "save";
         var img = document.createElement("IMG");
-        img.src = "./images/save-solid.svg";
+        img.src = "../images/save-solid.svg";
         img.className = "title-icon";
         save_span.appendChild(img);
         li.appendChild(save_span);
@@ -1850,7 +1859,7 @@ require(['vs/editor/editor.main'], function () {
         var trash_span = document.createElement("SPAN");
         trash_span.className = "trash";
         var img = document.createElement("IMG");
-        img.src = "./images/trash-alt-solid.svg";
+        img.src = "../images/trash-alt-solid.svg";
         img.className = "title-icon";
         trash_span.appendChild(img);
         li.appendChild(trash_span);
@@ -1859,7 +1868,7 @@ require(['vs/editor/editor.main'], function () {
         edit_span.className = "editable";
         edit_span.id = "file-list-edit-" + fileCounter.toString(10);
         var img = document.createElement("IMG");
-        img.src = "./images/pen-solid.svg";
+        img.src = "../images/pen-solid.svg";
         img.className = "title-icon";
         edit_span.appendChild(img);
         li.appendChild(edit_span);
@@ -2375,7 +2384,7 @@ require(['vs/editor/editor.main'], function () {
         var injection = "<script" + ">(function (logger) {conso" + "le.old = console.log;console.log = function () {var output = \"\", arg, i;for (var i = 0; i < argu" + "ments.length; i++) {arg = argume" + "nts[i];output += \"<span class='log-\" + (typeof arg) + \"'>\";if (ty" + "peof arg === \"object\" \&" + "\&typeof JSON === \"object\" \&" + "\&typeof JSON.stringify === \"function\") {output += JSON.stringify(arg);   } else {output += arg;   }output += '<" + "/span>\&nbsp;';}logger.innerHTML += output + '<br>';console.old.apply(undefined, arguments);};})(document.getElementById('logger'));<" + "/script>";
         var hideAllElem = "<script" + ">var nodes = document.all;for(var i=0;i<nodes.length;i++){var o = nodes[i];o.style.display = 'none';}<" + "/script>";
         var showLog = "<script" + ">document.getElementsByTagName('html')[0].style.display = 'block';document.getElementsByTagName('body')[0].style.display = 'block';document.getElementById('logger').style.display = 'block'; var cn = document.getElementById('logger').childNodes;for (var i = 0; i < cn.length; i++) {cn[i].style = 'display: block;';}<" + "/script>";
-        var logInput = "<link rel=\"stylesheet\" href=\"./src/style.css\">" + "<div id='logger'></div>" + injection + text + hideAllElem + showLog;
+        var logInput = "<link rel=\"stylesheet\" href=\"../src/style.css\">" + "<div id='logger'></div>" + injection + text + hideAllElem + showLog;
         newIframe("log-iframe");
         document.getElementById("log-iframe").contentDocument.write(logInput);
         // 防止myEditor里的代码注入导致的背景颜色变化
