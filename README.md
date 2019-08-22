@@ -7,7 +7,7 @@ Monaco Speech Editor is an online code editor for visually impaired people. It p
 
 ## Quick Start
 
-You can start from [this website]( https://luochang212.github.io/gadget/monaco-speech-editor/) or [run it locally]().
+You can start from [this website]( https://luochang212.github.io/gadget/monaco-speech-editor/) or [run locally](https://github.com/luochang212/monaco-speech-editor#run-locally).
 
 - If you are a visually impaired user, Please open the website above and add a router `#tutorial` to play an audio tutorial automatically. PS: this audio might not be played on google chrome because of [the policy of google chrome](https://www.chromestatus.com/feature/5687444770914304).
 
