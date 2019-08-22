@@ -2,4 +2,4 @@
 
 
 
-![](./images/open-sidebar.png)
+![](../images/open-sidebar.png)
