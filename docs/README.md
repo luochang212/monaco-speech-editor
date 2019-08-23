@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Monaco Speech Editor 是一款在线代码编辑器。内置强大的语音辅助功能，来帮助视障人群阅读、编辑和编译代码。
+Monaco Speech Editor 是一款在线代码编辑器。内置强大的语音辅助功能，以帮助视障人群阅读、编辑和编译代码。
 
 ![](../images/open-sidebar.png)
 
