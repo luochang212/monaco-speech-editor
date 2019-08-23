@@ -59,7 +59,7 @@ Accessibility:
 
 - Spotlight: It is a list of settings that allows you to turn on or turn off settings.
 
-- Linear Index: It is a list of features and their corresponding hotkeys.
+- Linear Index: It is a list of features and corresponding hotkeys.
 
 ## Initialize The Editor with Routers
 
@@ -72,21 +72,21 @@ If you are a person with normal vision, Please open the website above and add a 
 
 | Router          | Setting                                           |
 | --------------- | ------------------------------------------------- |
-| #load-demo      | load demo                                         |
-| #dark           | turn on night mode                                |
-| #full-screen    | full screen                                       |
-| #run            | open console bar                                  |
-| #tutorial       | play audio tutorial                               |
-| #spotlight      | turn on spotlight                                 |
-| #linear-index   | turn on linear index                              |
-| #character-mode | trun on character mode                            |
-| #code-mode      | turn on code mode                                 |
-| #overview-mode  | turn on overview mode                             |
-| #voice-feedback | turn on voice feedback                            |
-| #voice-cue      | turn on voice cue                                 |
-| #mute           | disable any autoplay event                        |
-| #dark&run       | turn on night mode and console bar                |
-| #dark&mute      | turn on night mode and disable any autoplay event |
+| #load-demo      | Load demo                                         |
+| #dark           | Turn on night mode                                |
+| #full-screen    | Full screen                                       |
+| #run            | Open console bar                                  |
+| #tutorial       | Play audio tutorial                               |
+| #spotlight      | Turn on spotlight                                 |
+| #linear-index   | Turn on linear index                              |
+| #character-mode | Trun on character mode                            |
+| #code-mode      | Turn on code mode                                 |
+| #overview-mode  | Turn on overview mode                             |
+| #voice-feedback | Turn on voice feedback                            |
+| #voice-cue      | Turn on voice cue                                 |
+| #mute           | Disable any autoplay event                        |
+| #dark&run       | Turn on night mode and console bar                |
+| #dark&mute      | Turn on night mode and disable any autoplay event |
 
 </details>
 
