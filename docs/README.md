@@ -24,10 +24,6 @@ git clone https://github.com/luochang212/monaco-speech-editor.git
 
 然后，打开 `monaco-speech-editor` 文件夹。
 
-```
-cd monaco-speech-editor
-```
-
 最后，点击 `index.html`，此应用将在本地浏览器运行。
 
 ## 特性
@@ -107,7 +103,7 @@ cd monaco-speech-editor
 
 ❓如何使用路由加载 Monaco Speech Editor 的初始设置？
 
-比如通过链接[https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute](https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute)打开网页，由于加载了路由设置`#dark&mute`，Moanaco Speech Editor 将自动为你开启夜间模式，并禁止所有的自动播放事件。更多个性化设置，请查看`完整路由列表`。
+比如通过链接[https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute](https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute)打开网页，由于加载了路由设置`#dark&mute`，Moanaco Speech Editor 将自动为你开启夜间模式，并禁止所有的自动播放事件。更多个性化设置，请查看完整路由列表。
 
 ## 执照
 

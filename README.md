@@ -24,10 +24,6 @@ git clone https://github.com/luochang212/monaco-speech-editor.git
 
 Then, open `monaco-speech-editor`.
 
-```
-cd monaco-speech-editor
-```
-
 Now, click `index.html`, it will open in your browser.
 
 ## Features
