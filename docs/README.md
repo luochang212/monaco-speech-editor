@@ -105,7 +105,7 @@ cd monaco-speech-editor
 
 不支持。因为本编辑器的两个依赖，Monaco Editor 和 Web Speech API 均不支持移动端浏览器和移动端应用框架。其中，Web Speech API 在部分移动端上完全无法使用。
 
-❓如何使用路由加载 Monaco Speech Editor 的初始设置？
+❓如何使用路由加载 Monaco Speech Editor 的初始设置？
 
 比如通过链接[https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute](https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute)打开网页，由于加载了路由设置`#dark&mute`，Moanaco Speech Editor 将自动为你开启夜间模式，并禁止所有的自动播放事件。更多个性化设置，请查看`完整路由列表`。
 
