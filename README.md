@@ -61,7 +61,7 @@ Accessibility:
 
 - Linear Index: It is a list of features and their corresponding hotkeys.
 
-## Initialize Your Editor with Routers
+## Initialize The Editor with Routers
 
 If you are a visually impaired user, Please open the website above and add a router `#tutorial` after the address to play an audio tutorial automatically. PS: this audio might not be played on google chrome because of [the policy of google chrome](https://www.chromestatus.com/feature/5687444770914304).
 
