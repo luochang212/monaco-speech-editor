@@ -2,6 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[中文文档](https://github.com/luochang212/monaco-speech-editor/tree/master/docs)
+
 Monaco Speech Editor is an online code editor for visually impaired people. It provides several built-in functions to make it easy to read, edit and compile. 
 
 ![](./images/open-sidebar.png)

@@ -107,7 +107,7 @@ cd monaco-speech-editor
 
 ❓如何使用路由加载 Monaco Speech Editor 的初始设置？
 
-比如打开[https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute](https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute)，因为在原网址后加了路由`#dark&mute`，所以通过此链接打开网页，Moanaco Speech Editor 将为你开启夜间模式，并禁止所有的自动播放事件。更多个性化设置，请查看`完整路由列表`。
+比如通过链接[https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute](https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute)打开网页，由于加载了路由设置`#dark&mute`，Moanaco Speech Editor 将自动为你开启夜间模式，并禁止所有的自动播放事件。更多个性化设置，请查看`完整路由列表`。
 
 ## 执照
 
