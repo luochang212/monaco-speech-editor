@@ -242,11 +242,12 @@ require(['vs/editor/editor.main'], function () {
             mute = false;
         }
     });
-    window.addEventListener('resize', () => {
-        myEditor.layout();
-    });
     // 自动resize monaco editor组件大小
     // setTimeout的时间和动画时间有关，动画时间是.2s, 所以setTimeout时间必须大于200
+    window.addEventListener('resize', () => {
+        myEditor.layout();
+        setTimeout(() => { myEditor.layout() }, 300);
+    });
     document.getElementById("left-nav-button-1").addEventListener("click", e => {
         clickLeftNav(e, 'sidebar-1');
         for (i = 0; i < 250; i = i + 1) {
@@ -2018,6 +2019,12 @@ require(['vs/editor/editor.main'], function () {
             new_container.style.top = "28px";
         } else {
             new_container.style.top = "78px";
+        }
+        // 判断sidebar是否打开
+        if (leftSidebarStatus == "o") {
+            new_container.style.left = "300px";
+        } else {
+            new_container.style.left = "50px";
         }
         document.getElementById("monaco-speech-editor").appendChild(new_container);
         // 新建一个editor
