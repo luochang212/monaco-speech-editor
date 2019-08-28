@@ -12,15 +12,6 @@
     <link rel="stylesheet" href="./src/style.css">
     <link rel="shortcut icon" type="image/png" href="./images/logo-1.jpeg">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script>
-        // Check before leave website
-        window.addEventListener('beforeunload', function (e) {
-            // Cancel the event
-            e.preventDefault();
-            // Chrome requires returnValue to be set
-            e.returnValue = 'Do you sure';
-        });
-    </script>
 </head>
 
 <body>
@@ -31,7 +22,7 @@
     </div>
 
     <div id="left-nav">
-        <div role=button class="left-nav-button" id="left-nav-button-1" onclick="clickLeftNav(event, 'sidebar-1')">
+        <div role=button class="left-nav-button" id="left-nav-button-1">
             <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="file-alt"
                 class="svg-inline--fa fa-file-alt fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 384 512">
@@ -41,7 +32,7 @@
             </svg>
         </div>
 
-        <div role=button class="left-nav-button" id="left-nav-button-2" onclick="clickLeftNav(event, 'sidebar-2')">
+        <div role=button class="left-nav-button" id="left-nav-button-2">
             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="upload"
                 class="svg-inline--fa fa-upload fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
@@ -51,7 +42,7 @@
             </svg>
         </div>
 
-        <div role=button class="left-nav-button" id="left-nav-button-3" onclick="clickLeftNav(event, 'sidebar-3')">
+        <div role=button class="left-nav-button" id="left-nav-button-3">
             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tools"
                 class="svg-inline--fa fa-tools fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
@@ -61,7 +52,7 @@
             </svg>
         </div>
 
-        <div role=button class="left-nav-button" id="left-nav-button-4" onclick="clickLeftNav(event, 'sidebar-4')">
+        <div role=button class="left-nav-button" id="left-nav-button-4">
             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cog"
                 class="svg-inline--fa fa-cog fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">

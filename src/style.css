@@ -122,16 +122,16 @@ body {
   }
 
   .container {
-    position: fixed; 
+    position: fixed;
     top: 28px;
     /* top: 78px; */
-    left: 50px; 
+    left: 50px;
     height: calc(100vh - 28px - 20px);
     right: 0;
     margin: 0 auto;
     display: block;
     transition: 0.2s;
-    overflow: scroll; 
+    overflow: hidden;
     z-index: 99;
   }
   

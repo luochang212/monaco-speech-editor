@@ -1,6 +1,15 @@
 'use strict'
 
 
+// // Check before leave website
+// window.addEventListener('beforeunload', function (e) {
+//     // Cancel the event
+//     e.preventDefault();
+//     // Chrome requires returnValue to be set
+//     e.returnValue = 'Do you sure';
+// });
+
+
 // var editor;
 // var editorFontSize = 35;
 // var defaultValue = "/* Write your code here. */\n\nfunction isDeleted(element) { \n    var id_str = element.id;\n    id_str = id_str.replace(\"btn\",\"\"); \n    var id_num = parseInt(id_str);\n\n    if (delete_flag == true) {\n        delete_flag = false;\n        subArray[id_num].isDelete = \"true\";\n        element.value=\"×\";\n    } else {\n        delete_flag = true;\n        subArray[id_num].isDelete = \"false\";\n        element.value=\"\";\n    }\n}";
@@ -231,6 +240,35 @@ require(['vs/editor/editor.main'], function () {
             mute = true;
         } else {
             mute = false;
+        }
+    });
+    window.addEventListener('resize', () => {
+        myEditor.layout();
+    });
+    // 自动resize monaco editor组件大小
+    // setTimeout的时间和动画时间有关，动画时间是.2s, 所以setTimeout时间必须大于200
+    document.getElementById("left-nav-button-1").addEventListener("click", e => {
+        clickLeftNav(e, 'sidebar-1');
+        for (i = 0; i < 250; i = i + 1) {
+            setTimeout(() => { myEditor.layout() }, i);
+        }
+    });
+    document.getElementById("left-nav-button-2").addEventListener("click", e => {
+        clickLeftNav(e, 'sidebar-2');
+        for (i = 0; i < 250; i = i + 1) {
+            setTimeout(() => { myEditor.layout() }, i);
+        }
+    });
+    document.getElementById("left-nav-button-3").addEventListener("click", e => {
+        clickLeftNav(e, 'sidebar-3');
+        for (i = 0; i < 250; i = i + 1) {
+            setTimeout(() => { myEditor.layout() }, i);
+        }
+    });
+    document.getElementById("left-nav-button-4").addEventListener("click", e => {
+        clickLeftNav(e, 'sidebar-4');
+        for (i = 0; i < 250; i = i + 1) {
+            setTimeout(() => { myEditor.layout() }, i);
         }
     });
 
@@ -1987,7 +2025,7 @@ require(['vs/editor/editor.main'], function () {
 
 
         // 新增编辑器向右移动
-        document.getElementById("container-" + fileCounter.toString(10)).style.marginLeft = "250px";
+        // document.getElementById("container-" + fileCounter.toString(10)).style.marginLeft = "250px";
 
         // 更新对象的属性
         var file = Object.create(Files);
@@ -2420,15 +2458,80 @@ require(['vs/editor/editor.main'], function () {
         return doc;
     }
 
+
+    var leftSidebarStatus = "c";
+    var leftSidebarSelected = "";
+    var leftSidebarSelect = "";
+
+
+    function openLeftSideBar() {
+        document.getElementById("left-sidebar").style.width = "250px";
+        document.getElementById("header").style.marginLeft = "250px";
+        document.getElementById("toolbar").style.marginLeft = "250px";
+        document.getElementById("console-bar").style.marginLeft = "250px";
+        var conta = document.getElementsByClassName("container");
+        for (var i = 0; i < conta.length; i++) {
+            conta[i].style.left = "300px";
+        }
+    }
+
+    function closeLeftSideBar() {
+        document.getElementById("left-sidebar").style.width = "0";
+        document.getElementById("header").style.marginLeft = "0";
+        document.getElementById("toolbar").style.marginLeft = "0";
+        document.getElementById("console-bar").style.marginLeft = "0";
+        var conta = document.getElementsByClassName("container");
+        for (var i = 0; i < conta.length; i++) {
+            conta[i].style.left = "50px";
+        }
+
+        var i, tablinks;
+        tablinks = document.getElementsByClassName("left-nav-button");
+        for (var i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+    }
+
+    function clickLeftNav(evt, sidebarName) {
+        // 选择对应tab的内容
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        document.getElementById(sidebarName).style.display = "block";
+
+        tablinks = document.getElementsByClassName("left-nav-button");
+        for (var i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        evt.currentTarget.className += " active";
+
+        //控制sidebar的开关，因为closeLeftSideBar()内的语句，本节代码和上一节顺序不可对调
+        leftSidebarSelected = leftSidebarSelect;
+        leftSidebarSelect = sidebarName;
+        if (leftSidebarStatus == "c") {
+            openLeftSideBar();
+            leftSidebarStatus = "o";
+        } else if (leftSidebarSelected == leftSidebarSelect) {
+            closeLeftSideBar();
+            leftSidebarStatus = "c"
+            leftSidebarSelect = "";
+        }
+    }
+
     // 全局初始化函数
     function init() {
         // 初始化spot light
         SLArray = createSLMember(SLNameArray)
-        document.getElementById("left-nav-button-1").click();
+        // document.getElementById("left-nav-button-1").click();
         // addFile(javaCode);
         addFile(htmlCode, "html", "");
         // document.getElementById("hide-header").click(); 必须在 addFile(); 之后
-        document.getElementById("hide-header").click();
+        // document.getElementById("hide-header").click();
         // 默认收起tutorial
         // document.getElementById("tutorial-controller-title").click();
         // 默认打开code mode
@@ -2471,72 +2574,6 @@ require(['vs/editor/editor.main'], function () {
 });
 
 // ------------------------------------------------------------------------------------
-
-
-var leftSidebarStatus = "c";
-var leftSidebarSelected = "";
-var leftSidebarSelect = "";
-
-
-function openLeftSideBar() {
-    document.getElementById("left-sidebar").style.width = "250px";
-    document.getElementById("header").style.marginLeft = "250px";
-    document.getElementById("toolbar").style.marginLeft = "250px";
-    document.getElementById("console-bar").style.marginLeft = "250px";
-    var conta = document.getElementsByClassName("container");
-    for (var i = 0; i < conta.length; i++) {
-        conta[i].style.marginLeft = "250px";
-    }
-}
-
-function closeLeftSideBar() {
-    document.getElementById("left-sidebar").style.width = "0";
-    document.getElementById("header").style.marginLeft = "0";
-    document.getElementById("toolbar").style.marginLeft = "0";
-    document.getElementById("console-bar").style.marginLeft = "0";
-    var conta = document.getElementsByClassName("container");
-    for (var i = 0; i < conta.length; i++) {
-        conta[i].style.marginLeft = "0px";
-    }
-
-    var i, tablinks;
-    tablinks = document.getElementsByClassName("left-nav-button");
-    for (var i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-}
-
-function clickLeftNav(evt, sidebarName) {
-    // 选择对应tab的内容
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-
-    document.getElementById(sidebarName).style.display = "block";
-
-    tablinks = document.getElementsByClassName("left-nav-button");
-    for (var i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-
-    evt.currentTarget.className += " active";
-
-    //控制sidebar的开关，因为closeLeftSideBar()内的语句，本节代码和上一节顺序不可对调
-    leftSidebarSelected = leftSidebarSelect;
-    leftSidebarSelect = sidebarName;
-    if (leftSidebarStatus == "c") {
-        openLeftSideBar();
-        leftSidebarStatus = "o";
-    } else if (leftSidebarSelected == leftSidebarSelect) {
-        closeLeftSideBar();
-        leftSidebarStatus = "c"
-        leftSidebarSelect = "";
-    }
-}
-
 
 
 
