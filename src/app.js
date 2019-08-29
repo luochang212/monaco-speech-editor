@@ -2160,6 +2160,9 @@ require(['vs/editor/editor.main'], function () {
         // 激活时题头要设为当前的文件名
         document.getElementById("editable-textarea").value = fileArray[index - 1].fileName;
 
+        // 激活时resize窗口大小
+        myEditor.layout();
+
         // 激活时语法栏要设为当前model的语言
         // 暂时没找到api
         // languageSelect.value = 
