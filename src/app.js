@@ -1,13 +1,13 @@
 'use strict'
 
 
-// // Check before leave website
-// window.addEventListener('beforeunload', function (e) {
-//     // Cancel the event
-//     e.preventDefault();
-//     // Chrome requires returnValue to be set
-//     e.returnValue = 'Do you sure';
-// });
+// Check before leave website
+window.addEventListener('beforeunload', function (e) {
+    // Cancel the event
+    e.preventDefault();
+    // Chrome requires returnValue to be set
+    e.returnValue = 'Do you sure';
+});
 
 
 // var editor;
