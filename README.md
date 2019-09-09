@@ -77,7 +77,7 @@ If you are a person with normal vision, Please open the website above and add a 
 | #tutorial       | Play audio tutorial                               |
 | #spotlight      | Turn on spotlight                                 |
 | #linear-index   | Turn on linear index                              |
-| #character-mode | Trun on character mode                            |
+| #character-mode | Turn on character mode                            |
 | #code-mode      | Turn on code mode                                 |
 | #overview-mode  | Turn on overview mode                             |
 | #voice-feedback | Turn on voice feedback                            |
