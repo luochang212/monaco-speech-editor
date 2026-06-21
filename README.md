@@ -10,21 +10,20 @@ Monaco Speech Editor is an online code editor for visually impaired people. It p
 
 ## Quick Start
 
-Try the editor out [on my website]( https://luochang212.github.io/gadget/monaco-speech-editor/).
+Try the editor out [on my website]( https://luochang212.github.io/monaco-speech-editor/).
 
 ## Run Locally
-
-Since this web application was written with pure JS and didn't use any framework, it is easy to run locally.
 
 First, download the repository.
 
 ```
 git clone https://github.com/luochang212/monaco-speech-editor.git
+cd monaco-speech-editor
+npm install
+npm run dev
 ```
 
-Then, open `monaco-speech-editor`.
-
-Now, click `index.html`, it will open in your browser.
+Then open `http://localhost:8080` in your browser.
 
 ## Features
 
@@ -89,11 +88,19 @@ If you are a person with normal vision, Please open the website above and add a 
 </details>
 
 
+## Build
+
+```bash
+npm run build   # output in dist/
+npm run fmt     # format code
+npm run lint    # lint check
+```
+
 ## Dependencies
 
-- [Monaco Editor](https://github.com/microsoft/monaco-editor)
-
-- [Web Speech API](https://w3c.github.io/speech-api/)
+- [Monaco Editor](https://github.com/microsoft/monaco-editor) 0.55
+- [Vite](https://vite.dev) 8
+- [Web Speech API](https://w3c.github.io/speech-api/) (browser built-in)
 
 ## FAQ
 
@@ -103,7 +110,7 @@ No, both Monaco Editor and Web Speech API can't work well on mobile browser.
 
 ❓How to use routers to configure the initial setting？
 
-For example, If you open [https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute](https://luochang212.github.io/gadget/monaco-speech-editor/#dark&mute). Monaco Speech Editor will turn on night mode and disable any autoplay event for you.
+For example, If you open [https://luochang212.github.io/monaco-speech-editor/#dark&mute](https://luochang212.github.io/monaco-speech-editor/#dark&mute). Monaco Speech Editor will turn on night mode and disable any autoplay event for you.
 
 ## License
 
